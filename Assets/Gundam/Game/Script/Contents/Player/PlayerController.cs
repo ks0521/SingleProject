@@ -15,7 +15,7 @@ namespace Contents.Player
     }
     public class PlayerController : MonoBehaviour, IHittable
     {
-        [SerializeField]private Animator _animator;
+        [SerializeField] private Animator _animator;
         [SerializeField] private AnimationClip _hitClip;
         private Rigidbody _rb;
         private float _axisX;
@@ -83,7 +83,7 @@ namespace Contents.Player
         {
             if (!_canControl) return;
             _rb.CustomMove(_axisX, _axisZ, _speed);
-            Debug.Log(_rb.rotation+""+_rb.angularVelocity);
+            //Debug.Log(_rb.rotation+""+_rb.angularVelocity);
         }
         
         void Update()

@@ -22,5 +22,10 @@ public class TestScript : MonoBehaviour
         {
             player.Hit();
         }
+
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            
+        }
     }
 }
