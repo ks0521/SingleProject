@@ -6,22 +6,13 @@ using UnityEngine;
 
 namespace Base.Manager
 {
-    public enum PoolType
-    {
-        MG_Bullet,
-        MG_Shell,
-        Canon_Bullet,
-        Canon_Shell,
-        SRM,
-        LRM
-    }
-
+    
     [System.Serializable]
     public struct PoolData
     {
         public GameObject obj;
         public int count;
-        public PoolType type;
+        public ProjectilePoolType type;
     }
 
     /// <summary> PoolData 한 종을 관리하는 클래스</summary>
@@ -74,11 +65,11 @@ namespace Base.Manager
     public class ObjectPoolManager : MonoBehaviour
     {
         public List<PoolData> data;
-        public static Dictionary<PoolType, ObjectPool> poolDic;
+        public static Dictionary<ProjectilePoolType, ObjectPool> poolDic;
 
         private void Awake()
         {
-            poolDic = new Dictionary<PoolType, ObjectPool>();
+            poolDic = new Dictionary<ProjectilePoolType, ObjectPool>();
             for (int i = 0; i < data.Count; i++)
             {
                 AddDictionary(data[i]);

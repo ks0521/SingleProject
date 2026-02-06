@@ -1,9 +1,12 @@
+using Base.Manager.Test;
 using UnityEngine;
 using Contents.Player;
 
 public class TestScript : MonoBehaviour
 {
     [SerializeField] private PlayerController player;
+    [SerializeField] private PoolID id;
+    [SerializeField] private GameObject obj;
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Tab))
@@ -25,7 +28,13 @@ public class TestScript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F1))
         {
+            obj = ObjectPoolGenericManager.poolDic[id].UsePool(transform.position, Quaternion.identity);
             
+        }
+        
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+            ObjectPoolGenericManager.poolDic[id].ReturnPool(obj);
         }
     }
 }
