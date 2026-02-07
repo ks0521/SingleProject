@@ -1,54 +1,129 @@
 using System;
+using System.Threading;
 using Base.Manager.Test;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using Cysharp.Threading.Tasks.Triggers;
 
+using UnityEditor.Rendering;
+
+/// <summary> 해당 인터페이스는 오브젝트 풀에 저장되는 오브젝트에서 구현해야 한다(ReturnPool 구현에 필요) </summary>
 public interface IObjectPooled
 {
     public void SetReturnPoolKey(PoolID id);
 }
 
+/// <summary> 해당 인터페이스는 오브젝트 풀에서 꺼낼 때 팀 선택이 필요한 오브젝트(투사체나 기체)에서 사용해야한다</summary>
+public interface ITeamSelectable
+{
+    public void SetTeam(GameLayer myTeam);
+}
+
+public enum GameLayer
+{
+    Default = 0,
+    UI = 5,
+    Ground = 6,
+    Crosshair = 7,
+    Ally = 8, //플레이어 및 아군의 콜라이더
+    AllyAttack = 9, //플레이어 및 아군의 공격 투사체 + 레이캐스트
+    Enemy = 11, // 적의 콜라이더
+    EnemyAttack = 12 // 적의 공격 투사체 + 레이캐스트
+}
+
 namespace Contents.Weapon
 {
+    public struct FinalStat
+    {
+        public float Damage;
+        public float Speed;
+        public float FireRate;
+        [Header("Explosion Type Only")]
+        public float ExplosionRadius;
+    }
     /// <summary> 투사체의 이동을 담당하는 클래스</summary>
     public class ProjectileAttack : MonoBehaviour, IObjectPooled
     {
-        private Rigidbody rb;
+        private Rigidbody _rb;
         [SerializeField] private WeaponData _weaponData;
         [SerializeField] private PoolID _returnPoolKey;
+        [SerializeField] private int _hitterLayer; //피해를 입힐 대상
+        [SerializeField] private FinalStat _finalStat;
+        private CancellationTokenSource _token;
         private void Awake()
         {
-            rb = GetComponent<Rigidbody>();
+            _rb = GetComponent<Rigidbody>();
+            _finalStat = new FinalStat();
         }
-        
         private void OnEnable()
         {
             if (_weaponData is null)
             {
                 Debug.LogWarning("WeaPonData is Null");
             }
-            Task().Forget();
+
+            _token = new CancellationTokenSource();
+            TimeOut(_token.Token).Forget();
         }
 
+        public void Init(Vector3 dir, MechStatus stat)
+        {
+            SetStat(dir, stat);
+            SetTeam(stat.mechTeam);
+        }
+
+        public void SetTeam(GameLayer myTeam)
+        {
+            switch (myTeam)
+            {
+                case GameLayer.Ally:
+                    gameObject.layer = (int)GameLayer.AllyAttack;
+                    break;
+                case GameLayer.AllyAttack:
+                    gameObject.layer = (int)GameLayer.AllyAttack;
+                    break;
+                case GameLayer.Enemy:
+                    gameObject.layer = (int)GameLayer.EnemyAttack;
+                    break;
+                case GameLayer.EnemyAttack:
+                    gameObject.layer = (int)GameLayer.EnemyAttack;
+                    break;
+                default:
+                    Debug.LogWarning("중립오브젝트이거나 레이어 설정이 잘못되었습니다");
+                    break;
+            }
+        }
+
+        public void SetStat(Vector3 dir,MechStatus stat)
+        {
+            _finalStat.Damage = _weaponData.damage + stat.increseDmg;
+            _finalStat.FireRate = _weaponData.fireRate;
+            _finalStat.Speed = _weaponData.ProjectileStat.speed + stat.increseFireRate;
+            _finalStat.ExplosionRadius = _weaponData.ProjectileStat.explosionRadius;
+            _rb.velocity = dir * _finalStat.Speed;
+        }
         public void SetReturnPoolKey(PoolID id)
         {
             _returnPoolKey = id;
         }
 
-        async UniTaskVoid Task()
+        async UniTaskVoid TimeOut(CancellationToken token)
         {
-            await UniTask.Delay(TimeSpan.FromSeconds(1f));
+            await UniTask.Delay(TimeSpan.FromSeconds(3f),
+                cancellationToken:token);
+            Debug.Log("시간초과 ");
             ObjectPoolGenericManager.poolDic[_returnPoolKey].ReturnPool(gameObject);
         }
-        void Init()
-        {
-            
-        }
-    
         private void OnCollisionEnter(Collision other)
         {
-            throw new NotImplementedException();
+            Debug.Log("충돌");
+            ObjectPoolGenericManager.poolDic[_returnPoolKey].ReturnPool(gameObject);
+        }
+
+        private void OnDisable()
+        {
+            _token.Cancel();
+            _token.Dispose();
         }
     }
-
 }

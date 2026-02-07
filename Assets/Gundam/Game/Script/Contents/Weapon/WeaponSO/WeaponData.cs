@@ -9,8 +9,8 @@ namespace Contents.Weapon
     public class WeaponData : ScriptableObject
     {
         [Header("Common Status")]
-        public float speed;
         public int fireRate;
+        public float damage;
         public AttackType AttackType;
 
         [Header("ProjectileType Only")] public Projectile ProjectileStat;
@@ -19,7 +19,6 @@ namespace Contents.Weapon
     [Serializable]
     public struct Projectile
     {
-        public float damage;
         public float speed;
         [Header("Explosion Type Only")]
         public float explosionRadius;

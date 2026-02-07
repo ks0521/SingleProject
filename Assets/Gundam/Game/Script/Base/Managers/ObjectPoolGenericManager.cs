@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Base.Manager.Test
 {
-    [System.Serializable]
+    [Serializable]
     public struct PoolData
     {
         public int count;
@@ -71,7 +71,26 @@ namespace Base.Manager.Test
             usingObj.SetActive(true);
             return usingObj;
         }
-
+        /// <summary> 사용시 레이어가 변동되어야 할 객체(총알이나 기체)에 사용</summary>
+        /// <param name="myTeam">호출자의 레이어마스크</param>
+        public GameObject UsePool(Vector3 pos, Quaternion rot, GameLayer myTeam)
+        {
+            if (_pool.Count <= 0)
+            {
+                AddPool(_data.count / 3);
+                _data.count += (_data.count / 3);
+                Debug.Log($"풀 추가 : 현재 {_data.dataSO}의 최대 개수 : {_data.count}");
+            }
+            GameObject usingObj = _pool.Dequeue();
+            if (usingObj.TryGetComponent(out ITeamSelectable obj))
+            {
+                obj.SetTeam(myTeam);
+            } 
+            usingObj.transform.position = pos;
+            usingObj.transform.rotation = rot;
+            usingObj.SetActive(true);
+            return usingObj;
+        }
         /// <summary> 사용이 끝난 오브젝트를 풀에 반환하는 함수</summary>
         /// <param name="returnedObj">반환할 오브젝트</param>
         public void ReturnPool(GameObject returnedObj)
