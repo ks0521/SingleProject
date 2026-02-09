@@ -25,7 +25,7 @@ public class Sensor : MonoBehaviour
     {
         _ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f));
         _prevHit = _hit;
-        Physics.Raycast(_ray, out _hit, 1000f, layerMask);
+        Physics.Raycast(_ray, out _hit, 500f, layerMask);
         
         // 지금 프레임에서 레이캐스트가 적을 처음으로 탐지하지 못함
         if (_hit.collider is null && _prevHit.collider is not null)

@@ -6,7 +6,7 @@ using DG.Tweening;
 
 public class Crosshair : MonoBehaviour
 {
-    [SerializeField] private Sensor sensor;
+    [SerializeField] private WeaponParts sensor;
     [SerializeField] private GameObject targetLockFrame;
     
     [SerializeField] private CrosshairSO _crosshairSo;

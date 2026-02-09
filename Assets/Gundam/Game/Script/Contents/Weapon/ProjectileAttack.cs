@@ -4,7 +4,6 @@ using Base.Manager.Test;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using Cysharp.Threading.Tasks.Triggers;
-
 using UnityEditor.Rendering;
 
 /// <summary> 해당 인터페이스는 오브젝트 풀에 저장되는 오브젝트에서 구현해야 한다(ReturnPool 구현에 필요) </summary>
@@ -25,8 +24,9 @@ public enum GameLayer
     UI = 5,
     Ground = 6,
     Crosshair = 7,
-    Ally = 8, //플레이어 및 아군의 콜라이더
+    Ally = 8, //아군의 콜라이더
     AllyAttack = 9, //플레이어 및 아군의 공격 투사체 + 레이캐스트
+    Player = 10, //플레이어 콜라이더
     Enemy = 11, // 적의 콜라이더
     EnemyAttack = 12 // 적의 공격 투사체 + 레이캐스트
 }
@@ -38,9 +38,9 @@ namespace Contents.Weapon
         public float Damage;
         public float Speed;
         public float FireRate;
-        [Header("Explosion Type Only")]
-        public float ExplosionRadius;
+        [Header("Explosion Type Only")] public float ExplosionRadius;
     }
+
     /// <summary> 투사체의 이동을 담당하는 클래스</summary>
     public class ProjectileAttack : MonoBehaviour, IObjectPooled
     {
@@ -49,12 +49,17 @@ namespace Contents.Weapon
         [SerializeField] private PoolID _returnPoolKey;
         [SerializeField] private int _hitterLayer; //피해를 입힐 대상
         [SerializeField] private FinalStat _finalStat;
+        private Collider _myCollider;
+        private Collider _ownerCollider;
         private CancellationTokenSource _token;
+
         private void Awake()
         {
             _rb = GetComponent<Rigidbody>();
+            _myCollider = GetComponent<Collider>();
             _finalStat = new FinalStat();
         }
+
         private void OnEnable()
         {
             if (_weaponData is null)
@@ -66,10 +71,17 @@ namespace Contents.Weapon
             TimeOut(_token.Token).Forget();
         }
 
-        public void Init(Vector3 dir, MechStatus stat)
+        public void Init(Collider owner, Vector3 dir, MechStatus stat)
         {
+            SetParentSet(owner);
             SetStat(dir, stat);
             SetTeam(stat.mechTeam);
+        }
+
+        public void SetParentSet(Collider owner)
+        {
+            _ownerCollider = owner;
+            Physics.IgnoreCollision(_ownerCollider, _myCollider);
         }
 
         public void SetTeam(GameLayer myTeam)
@@ -94,7 +106,7 @@ namespace Contents.Weapon
             }
         }
 
-        public void SetStat(Vector3 dir,MechStatus stat)
+        public void SetStat(Vector3 dir, MechStatus stat)
         {
             _finalStat.Damage = _weaponData.damage + stat.increseDmg;
             _finalStat.FireRate = _weaponData.fireRate;
@@ -102,6 +114,7 @@ namespace Contents.Weapon
             _finalStat.ExplosionRadius = _weaponData.ProjectileStat.explosionRadius;
             _rb.velocity = dir * _finalStat.Speed;
         }
+
         public void SetReturnPoolKey(PoolID id)
         {
             _returnPoolKey = id;
@@ -110,10 +123,11 @@ namespace Contents.Weapon
         async UniTaskVoid TimeOut(CancellationToken token)
         {
             await UniTask.Delay(TimeSpan.FromSeconds(3f),
-                cancellationToken:token);
+                cancellationToken: token);
             Debug.Log("시간초과 ");
             ObjectPoolGenericManager.poolDic[_returnPoolKey].ReturnPool(gameObject);
         }
+
         private void OnCollisionEnter(Collision other)
         {
             Debug.Log("충돌");
@@ -124,6 +138,11 @@ namespace Contents.Weapon
         {
             _token.Cancel();
             _token.Dispose();
+            //풀로 반환될때 기존 ignore 무시 (다음에 누가쓸지 모름)
+            if (_ownerCollider != null)
+            {
+                Physics.IgnoreCollision(_ownerCollider, _myCollider, false);
+            }
         }
     }
 }
