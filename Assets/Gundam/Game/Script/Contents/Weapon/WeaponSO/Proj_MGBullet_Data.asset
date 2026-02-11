@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f65cccbcc3c72cd4dbe2a4de319f0965, type: 3}
   m_Name: Proj_MGBullet_Data
   m_EditorClassIdentifier: 
-  fireRate: 1
+  RPM: 0
   damage: 0
-  AttackType: 0
-  ProjectileStat:
-    speed: 20
+  attackType: 0
+  projectileStat:
+    speed: 0
     explosionRadius: 0
-  RaycastStat:
+  projectileID: {fileID: 11400000, guid: d0f7842c867271a4dbd7ad49c0f20f85, type: 2}
+  raycastStat:
     range: 0
     canPierce: 0

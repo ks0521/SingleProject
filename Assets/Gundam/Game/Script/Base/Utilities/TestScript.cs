@@ -1,10 +1,12 @@
 using Base.Manager.Test;
+using Contents.Mech;
 using UnityEngine;
 using Contents.Player;
 
 public class TestScript : MonoBehaviour
 {
     [SerializeField] private PlayerController player;
+    [SerializeField] private MechStat stat;
     [SerializeField] private PoolID id;
     [SerializeField] private GameObject obj;
     private void Update()
@@ -23,18 +25,18 @@ public class TestScript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            player.Hit();
+            stat.Hit(10);
         }
 
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            obj = ObjectPoolGenericManager.poolDic[id].UsePool(transform.position, Quaternion.identity);
+            obj = PoolManager.poolDic[id].UsePool(transform.position, Quaternion.identity);
             
         }
         
         if (Input.GetKeyDown(KeyCode.F2))
         {
-            ObjectPoolGenericManager.poolDic[id].ReturnPool(obj);
+            PoolManager.poolDic[id].ReturnPool(obj);
         }
     }
 }

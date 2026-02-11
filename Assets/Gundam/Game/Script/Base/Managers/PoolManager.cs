@@ -103,7 +103,7 @@ namespace Base.Manager.Test
     /// <summary>
     /// 오브젝트 풀을 만드는 클래스(실제 사용은 poolDic만 사용)
     /// </summary>
-    public class ObjectPoolGenericManager : MonoBehaviour
+    public class PoolManager : MonoBehaviour
     {
         [SerializeField] List<PoolData> data;
 

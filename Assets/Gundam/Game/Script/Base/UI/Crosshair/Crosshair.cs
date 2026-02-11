@@ -1,15 +1,16 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Contnts.Player;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.Serialization;
 
 public class Crosshair : MonoBehaviour
 {
-    [SerializeField] private WeaponParts sensor;
+    [SerializeField] private PlayerAim sensor;
     [SerializeField] private GameObject targetLockFrame;
-    
-    [SerializeField] private CrosshairSO _crosshairSo;
+    [SerializeField] private CrosshairSO crosshairSo;
 
     private void Start()
     {

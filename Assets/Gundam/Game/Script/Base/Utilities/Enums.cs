@@ -10,7 +10,7 @@ public enum AttackType
     Raycast
 }
 
-public enum ProjectilePoolType
+public enum ObjectPoolType
 {
     MG_Bullet,
     MG_Shell,

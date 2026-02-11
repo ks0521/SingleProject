@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using Base.Manager.Test;
+using Contents.Mech;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using Cysharp.Threading.Tasks.Triggers;
@@ -73,12 +74,12 @@ namespace Contents.Weapon
 
         public void Init(Collider owner, Vector3 dir, MechStatus stat)
         {
-            SetParentSet(owner);
+            SetParent(owner);
             SetStat(dir, stat);
-            SetTeam(stat.mechTeam);
+            SetTeam((GameLayer)owner.gameObject.layer);
         }
 
-        public void SetParentSet(Collider owner)
+        public void SetParent(Collider owner)
         {
             _ownerCollider = owner;
             Physics.IgnoreCollision(_ownerCollider, _myCollider);
@@ -86,8 +87,9 @@ namespace Contents.Weapon
 
         public void SetTeam(GameLayer myTeam)
         {
+            //Debug.Log(myTeam);
             switch (myTeam)
-            {
+            {   
                 case GameLayer.Ally:
                     gameObject.layer = (int)GameLayer.AllyAttack;
                     break;
@@ -104,14 +106,15 @@ namespace Contents.Weapon
                     Debug.LogWarning("중립오브젝트이거나 레이어 설정이 잘못되었습니다");
                     break;
             }
+            Debug.Log((GameLayer)gameObject.layer);
         }
 
         public void SetStat(Vector3 dir, MechStatus stat)
         {
             _finalStat.Damage = _weaponData.damage + stat.increseDmg;
-            _finalStat.FireRate = _weaponData.fireRate;
-            _finalStat.Speed = _weaponData.ProjectileStat.speed + stat.increseFireRate;
-            _finalStat.ExplosionRadius = _weaponData.ProjectileStat.explosionRadius;
+            _finalStat.FireRate = _weaponData.RPM;
+            _finalStat.Speed = _weaponData.projectileStat.speed + stat.increseFireRate;
+            _finalStat.ExplosionRadius = _weaponData.projectileStat.explosionRadius;
             _rb.velocity = dir * _finalStat.Speed;
         }
 
@@ -125,13 +128,13 @@ namespace Contents.Weapon
             await UniTask.Delay(TimeSpan.FromSeconds(3f),
                 cancellationToken: token);
             Debug.Log("시간초과 ");
-            ObjectPoolGenericManager.poolDic[_returnPoolKey].ReturnPool(gameObject);
+            PoolManager.poolDic[_returnPoolKey].ReturnPool(gameObject);
         }
 
         private void OnCollisionEnter(Collision other)
         {
             Debug.Log("충돌");
-            ObjectPoolGenericManager.poolDic[_returnPoolKey].ReturnPool(gameObject);
+            PoolManager.poolDic[_returnPoolKey].ReturnPool(gameObject);
         }
 
         private void OnDisable()

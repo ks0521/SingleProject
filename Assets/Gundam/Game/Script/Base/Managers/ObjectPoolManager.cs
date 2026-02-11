@@ -12,7 +12,7 @@ namespace Base.Manager
     {
         public GameObject obj;
         public int count;
-        public ProjectilePoolType type;
+        public ObjectPoolType type;
     }
 
     /// <summary> PoolData 한 종을 관리하는 클래스</summary>
@@ -65,11 +65,11 @@ namespace Base.Manager
     public class ObjectPoolManager : MonoBehaviour
     {
         public List<PoolData> data;
-        public static Dictionary<ProjectilePoolType, ObjectPool> poolDic;
+        public static Dictionary<ObjectPoolType, ObjectPool> poolDic;
 
         private void Awake()
         {
-            poolDic = new Dictionary<ProjectilePoolType, ObjectPool>();
+            poolDic = new Dictionary<ObjectPoolType, ObjectPool>();
             for (int i = 0; i < data.Count; i++)
             {
                 AddDictionary(data[i]);

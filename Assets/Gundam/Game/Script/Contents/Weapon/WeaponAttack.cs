@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Contents.Mech;
 using UnityEngine;
 
 namespace Contents.Weapon

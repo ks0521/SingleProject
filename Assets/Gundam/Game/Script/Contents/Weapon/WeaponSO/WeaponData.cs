@@ -2,19 +2,22 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Contents.Weapon
 {
     [CreateAssetMenu]
     public class WeaponData : ScriptableObject
     {
-        [Header("Common Status")]
-        public int fireRate;
+        [FormerlySerializedAs("fireRate")] [Header("Common Status")]
+        public int RPM;
         public float damage;
-        public AttackType AttackType;
+        public AttackType attackType;
 
-        [Header("ProjectileType Only")] public Projectile ProjectileStat;
-        [Header("Raycast Only")] public Raycast RaycastStat;
+        [Header("ProjectileType Only")] 
+        public Projectile projectileStat;
+        public PoolID projectileID;
+        [Header("Raycast Only")] public Raycast raycastStat;
     }
     [Serializable]
     public struct Projectile

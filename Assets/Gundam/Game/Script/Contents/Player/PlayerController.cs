@@ -2,25 +2,35 @@
 using Base.Utilities;
 using System;
 using System.Threading;
+using Contents.Mech;
+using Contents.Weapon;
+using Contnts.Player;
 using Cysharp.Threading.Tasks;
 
 namespace Contents.Player
 {
-    public enum AniMove
+    public struct ShotInfo
     {
-        Idle = 0,
-        Walk = 1,
-        Booster = 2,
-        Jump = 3
+        public WeaponParts curWeaponParts;
+        public AimData aimData;
+        public MechStatus mechStat;
     }
-    public class PlayerController : MonoBehaviour, IHittable
+    public class PlayerController : MonoBehaviour
     {
+        [SerializeField]private MechBehavior _behavior;
         [SerializeField] private Animator _animator;
         [SerializeField] private AnimationClip _hitClip;
+        
+        [SerializeField] private WeaponParts part;
+        [SerializeField] private ShotInfo _shotInfo;
+        private AttackInvoker _attackInvoker;
+        private MechStat _mechStat;
+        private PlayerAim _playerAim;
+        private AimData _curAim;
+        #region MoveValue
         private Rigidbody _rb;
         private float _axisX;
         private float _axisZ;
-
         private bool _canControl; //경직 여부
         private float _hitStopDuration; //경직 시간
         private float _walkSpeed; //걷기 스피드
@@ -30,9 +40,9 @@ namespace Contents.Player
         private Vector3 _jumpVector;
         private AniMove _curMove;
         private AniMove _prevMove;
-
         private int _hitHash;
         private int _speedHash;
+        #endregion
         //나중에 조건부 스킬 추가(대쉬시 / 점프시 .... )
         public event Action<AniMove> OnMoveStateChanged;
 
@@ -42,6 +52,10 @@ namespace Contents.Player
             _rb = GetComponent<Rigidbody>();
             _hitHash =  Animator.StringToHash("Hit");
             _speedHash =  Animator.StringToHash("Speed");
+            _playerAim = GetComponent<PlayerAim>();
+            _attackInvoker = GetComponent<AttackInvoker>();
+            _behavior = GetComponent<MechBehavior>();
+            _mechStat = GetComponent<MechStat>();
         }
 
         void Start()
@@ -59,14 +73,13 @@ namespace Contents.Player
         }
 
         #region Hit
-        public float Hit()
+        public void HitStop()
         {
             HitStop(this.GetCancellationTokenOnDestroy(), _hitStopDuration).Forget();
             Debug.Log("Hit");
-            return 0;
         }
 
-        async UniTaskVoid HitStop(CancellationToken token,float duration )
+        public async UniTaskVoid HitStop(CancellationToken token,float duration )
         {
             _canControl = false;
             _animator.speed = _hitClip.length / duration;
@@ -82,8 +95,7 @@ namespace Contents.Player
         private void FixedUpdate()
         {
             if (!_canControl) return;
-            _rb.CustomMove(_axisX, _axisZ, _speed);
-            //Debug.Log(_rb.rotation+""+_rb.angularVelocity);
+            _behavior.Move(_axisX, _axisZ, _speed);
         }
         
         void Update()
@@ -91,7 +103,13 @@ namespace Contents.Player
             if (!_canControl) return;
             _axisX = Input.GetAxisRaw("Horizontal");
             _axisZ = Input.GetAxisRaw("Vertical");
-            
+            if (Input.GetMouseButtonDown(0))
+            {
+                _curAim = _playerAim.GetAim();
+                Debug.Log($"{_mechStat.stat}");
+                //현재 장착중인 무기부위와 조준 데이터를 가져옴
+                _attackInvoker.AttackInvoke(in _curAim,in part,in _mechStat.stat);
+            }
             if (Input.GetKey(KeyCode.LeftControl))
             {
                 _jumpVector = _rb.velocity;
