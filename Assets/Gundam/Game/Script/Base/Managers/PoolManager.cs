@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Base.PoolSO;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -13,7 +14,7 @@ namespace Base.Manager.Test
         public int count;
         /*Enum타입이 아니라 SO로 쓴 이유는 총알, 몬스터 등 많은 오브젝트 풀 요소들을 관리하기 쉽게 하기 위해서
          * (Enum으로 하니까 하나의 Enum이 너무 길어짐, 스크립트로 관리하는게 좋을것 같음)*/
-        public PoolID dataSO;
+        public PoolID ID;
     }
 
     /// <summary> PoolData 한 종을 오브젝트 풀에 추가 / 사용 / 반환하는 클래스</summary>
@@ -21,6 +22,7 @@ namespace Base.Manager.Test
     {
         PoolData _data;
         private GameObject _parent;
+        private PooledObject _pooledObject;
         [SerializeField]Queue<GameObject> _pool;
 
         /// <summary>한 종류의 풀 생성</summary>
@@ -41,12 +43,16 @@ namespace Base.Manager.Test
             int i = 0;
             do
             {
-                GameObject newObj = GameObject.Instantiate(_data.dataSO.poolingObj, _parent.transform);
+                GameObject newObj = GameObject.Instantiate(_data.ID.poolingObj, _parent.transform);
                 //풀링된 오브젝트가 ReturnPool시 알아야할 key값을 넣어줌
-                if (newObj.TryGetComponent(out IObjectPooled obj))
+                if (newObj.TryGetComponent(out PooledObject obj))
                 {
-                    obj.SetReturnPoolKey(_data.dataSO);
-                } 
+                    obj.SetId(_data.ID);
+                }
+                else
+                {
+                    Debug.LogWarning($"{_data.ID}는 PooledObject 스크립트를 가지고 있지 않아 반환될 수 없습니다");
+                }
                 newObj.SetActive(false);
                 _pool.Enqueue(newObj);
             } while (++i < count);
@@ -62,7 +68,7 @@ namespace Base.Manager.Test
             {
                 AddPool(_data.count / 3);
                 _data.count += (_data.count / 3);
-                Debug.Log($"풀 추가 : 현재 {_data.dataSO}의 최대 개수 : {_data.count}");
+                Debug.Log($"풀 추가 : 현재 {_data.ID}의 최대 개수 : {_data.count}");
             }
 
             GameObject usingObj = _pool.Dequeue();
@@ -79,7 +85,7 @@ namespace Base.Manager.Test
             {
                 AddPool(_data.count / 3);
                 _data.count += (_data.count / 3);
-                Debug.Log($"풀 추가 : 현재 {_data.dataSO}의 최대 개수 : {_data.count}");
+                Debug.Log($"풀 추가 : 현재 {_data.ID}의 최대 개수 : {_data.count}");
             }
             GameObject usingObj = _pool.Dequeue();
             if (usingObj.TryGetComponent(out ITeamSelectable obj))
@@ -124,7 +130,7 @@ namespace Base.Manager.Test
         void AddDictionary(PoolData addData)
         {
             //키는 PoolData의 SO로 , 값은 PoolData로 지정하고 부모를 자기자신(오브젝트 풀)로 설정
-            poolDic.Add(addData.dataSO, new ObjectPool(addData, parent: gameObject));
+            poolDic.Add(addData.ID, new ObjectPool(addData, parent: gameObject));
         }
     }
 }

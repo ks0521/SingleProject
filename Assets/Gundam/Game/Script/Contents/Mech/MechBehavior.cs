@@ -42,7 +42,7 @@ namespace Base.Utilities
         }
         
         /// <summary> 플레이어와 NPC 공용, 장착중인 무기 공격을 실행</summary>
-        public void Attack(WeaponParts part, AimData aimData, MechStatus machStat)
+        public void Attack(WeaponParts part, AimData aimData, MechRuntimeStatus machStat)
         {
             if (!_canControl) return;
             part.Attack(aimData,machStat);

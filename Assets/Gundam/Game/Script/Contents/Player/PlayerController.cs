@@ -13,7 +13,7 @@ namespace Contents.Player
     {
         public WeaponParts curWeaponParts;
         public AimData aimData;
-        public MechStatus mechStat;
+        public MechRuntimeStatus MechRuntimeStat;
     }
     public class PlayerController : MonoBehaviour
     {
@@ -21,10 +21,10 @@ namespace Contents.Player
         [SerializeField] private Animator _animator;
         [SerializeField] private AnimationClip _hitClip;
         
-        [SerializeField] private WeaponParts part;
+        [SerializeField] private WeaponParts _curWeaponParts;
         [SerializeField] private ShotInfo _shotInfo;
         private AttackInvoker _attackInvoker;
-        private MechStat _mechStat;
+        private MechStatus _mechStatus;
         private PlayerAim _playerAim;
         private AimData _curAim;
         #region MoveValue
@@ -55,7 +55,7 @@ namespace Contents.Player
             _playerAim = GetComponent<PlayerAim>();
             _attackInvoker = GetComponent<AttackInvoker>();
             _behavior = GetComponent<MechBehavior>();
-            _mechStat = GetComponent<MechStat>();
+            _mechStatus = GetComponent<MechStatus>();
         }
 
         void Start()
@@ -106,9 +106,9 @@ namespace Contents.Player
             if (Input.GetMouseButtonDown(0))
             {
                 _curAim = _playerAim.GetAim();
-                Debug.Log($"{_mechStat.stat}");
+                Debug.Log($"{_mechStatus.RuntimeStatus}");
                 //현재 장착중인 무기부위와 조준 데이터를 가져옴
-                _attackInvoker.AttackInvoke(in _curAim,in part,in _mechStat.stat);
+                _attackInvoker.AttackInvoke(in _curAim,in _curWeaponParts,in _mechStatus.RuntimeStatus);
             }
             if (Input.GetKey(KeyCode.LeftControl))
             {

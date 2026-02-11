@@ -32,7 +32,7 @@ namespace Contents.Weapon
             }
         }
 
-        public void Attack(AimData data, MechStatus stat)
+        public void Attack(AimData data, MechRuntimeStatus stat)
         {
             if (weaponData.attackType == AttackType.Raycast)
             {

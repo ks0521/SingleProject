@@ -6,7 +6,7 @@ using Contents.Player;
 public class TestScript : MonoBehaviour
 {
     [SerializeField] private PlayerController player;
-    [SerializeField] private MechStat stat;
+    [SerializeField] private MechHealth health;
     [SerializeField] private PoolID id;
     [SerializeField] private GameObject obj;
     private void Update()
@@ -25,18 +25,12 @@ public class TestScript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            stat.Hit(10);
+            health.Hit(10);
         }
 
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            obj = PoolManager.poolDic[id].UsePool(transform.position, Quaternion.identity);
-            
-        }
-        
-        if (Input.GetKeyDown(KeyCode.F2))
-        {
-            PoolManager.poolDic[id].ReturnPool(obj);
+            MonsterSpawner.Instance.Spawn();
         }
     }
 }

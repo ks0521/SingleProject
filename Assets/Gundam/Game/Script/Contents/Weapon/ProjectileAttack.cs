@@ -1,6 +1,8 @@
 using System;
 using System.Threading;
 using Base.Manager.Test;
+using Base.PoolSO;
+using Base.Utilities;
 using Contents.Mech;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
@@ -53,7 +55,8 @@ namespace Contents.Weapon
         private Collider _myCollider;
         private Collider _ownerCollider;
         private CancellationTokenSource _token;
-
+        private IHittable _hitTarget;
+        private float _damageRespond;
         private void Awake()
         {
             _rb = GetComponent<Rigidbody>();
@@ -72,7 +75,7 @@ namespace Contents.Weapon
             TimeOut(_token.Token).Forget();
         }
 
-        public void Init(Collider owner, Vector3 dir, MechStatus stat)
+        public void Init(Collider owner, Vector3 dir, MechRuntimeStatus stat)
         {
             SetParent(owner);
             SetStat(dir, stat);
@@ -109,7 +112,7 @@ namespace Contents.Weapon
             Debug.Log((GameLayer)gameObject.layer);
         }
 
-        public void SetStat(Vector3 dir, MechStatus stat)
+        public void SetStat(Vector3 dir, MechRuntimeStatus stat)
         {
             _finalStat.Damage = _weaponData.damage + stat.increseDmg;
             _finalStat.FireRate = _weaponData.RPM;
@@ -128,15 +131,20 @@ namespace Contents.Weapon
             await UniTask.Delay(TimeSpan.FromSeconds(3f),
                 cancellationToken: token);
             Debug.Log("시간초과 ");
-            PoolManager.poolDic[_returnPoolKey].ReturnPool(gameObject);
+            GetComponent<PooledObject>()?.Return();
         }
 
         private void OnCollisionEnter(Collision other)
         {
             Debug.Log("충돌");
-            PoolManager.poolDic[_returnPoolKey].ReturnPool(gameObject);
+            if (other.gameObject.TryGetComponent(out _hitTarget))
+            {
+                _damageRespond = _hitTarget.Hit(_finalStat.Damage);
+                //owner에 인터페이스(getDamage)같은거 넣고 얼만큼 피해를 가했는지 보내주면 
+                //나중에 가한 피해량만큼 회복같은 기능을 구현할 수 있을듯함
+            }
+            GetComponent<PooledObject>()?.Return();
         }
-
         private void OnDisable()
         {
             _token.Cancel();

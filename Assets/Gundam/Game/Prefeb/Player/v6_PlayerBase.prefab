@@ -541,11 +541,12 @@ GameObject:
   - component: {fileID: 3526268785410492583}
   - component: {fileID: 1268089958569600185}
   - component: {fileID: 1004443370837457669}
-  - component: {fileID: 6001638614907539065}
-  - component: {fileID: 2402049661186393932}
   - component: {fileID: 3513227173998615271}
-  - component: {fileID: 3958269287174361031}
+  - component: {fileID: 895014245946893268}
   - component: {fileID: 6362323285185970781}
+  - component: {fileID: 3958269287174361031}
+  - component: {fileID: 2402049661186393932}
+  - component: {fileID: 6001638614907539065}
   m_Layer: 8
   m_Name: v6_PlayerBase
   m_TagString: Untagged
@@ -584,7 +585,7 @@ MonoBehaviour:
   _behavior: {fileID: 0}
   _animator: {fileID: 5729785111840436397}
   _hitClip: {fileID: 7400054, guid: 5c466b705cc61db41bb7081d084c0d49, type: 3}
-  part: {fileID: 4015720374506515360}
+  _curWeaponParts: {fileID: 0}
 --- !u!114 &1004443370837457669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -601,29 +602,63 @@ MonoBehaviour:
   weaponPart: {fileID: 4015720374506515360}
   defaultPoint: {fileID: 0}
   firePoint: {fileID: 0}
---- !u!136 &6001638614907539065
-CapsuleCollider:
+--- !u!114 &3513227173998615271
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4572791590238704576}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.7
-  m_Height: 2.2
-  m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5bbf12106668584597c79bea861794b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stat: {fileID: 0}
+--- !u!114 &895014245946893268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4572791590238704576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 576a878c6aa07184c96d0ca1c9563af9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RuntimeStatus:
+    increseDmg: 0
+    multipleDmg: 0
+    increseFireRate: 0
+    multipleFireRate: 0
+    mechTeam: 0
+--- !u!114 &6362323285185970781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4572791590238704576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9ca5768fce7f4b40ba435e2e17fc107, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitClip: {fileID: 0}
+--- !u!114 &3958269287174361031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4572791590238704576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d6ad09e52460f843b26ce7771a14f1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  behavior: {fileID: 0}
 --- !u!54 &2402049661186393932
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -651,50 +686,29 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &3513227173998615271
-MonoBehaviour:
+--- !u!136 &6001638614907539065
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4572791590238704576}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5bbf12106668584597c79bea861794b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stat:
-    increseDmg: 0
-    multipleDmg: 0
-    increseFireRate: 0
-    multipleFireRate: 0
-    mechTeam: 0
---- !u!114 &3958269287174361031
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4572791590238704576}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d6ad09e52460f843b26ce7771a14f1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  behavior: {fileID: 0}
---- !u!114 &6362323285185970781
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4572791590238704576}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9ca5768fce7f4b40ba435e2e17fc107, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hitClip: {fileID: 0}
+  serializedVersion: 2
+  m_Radius: 0.7
+  m_Height: 2.2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &4698457927498699250
 GameObject:
   m_ObjectHideFlags: 0

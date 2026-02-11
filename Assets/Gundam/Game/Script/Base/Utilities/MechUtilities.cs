@@ -14,7 +14,7 @@ namespace Contents.Mech
      }
     /// <summary> 각 기체의 추가 스탯</summary>
     [Serializable]
-    public struct MechStatus
+    public struct MechRuntimeStatus
     {
         public int increseDmg;
         public int multipleDmg;
