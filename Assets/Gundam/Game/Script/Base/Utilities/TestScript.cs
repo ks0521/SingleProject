@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Base.Manager.Test;
 using Contents.Mech;
 using UnityEngine;
@@ -9,6 +10,7 @@ public class TestScript : MonoBehaviour
     [SerializeField] private MechHealth health;
     [SerializeField] private PoolID id;
     [SerializeField] private GameObject obj;
+    [SerializeField] private List<WeaponSlot> slots;
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Tab))
@@ -32,5 +34,7 @@ public class TestScript : MonoBehaviour
         {
             MonsterSpawner.Instance.Spawn();
         }
+
+        
     }
 }

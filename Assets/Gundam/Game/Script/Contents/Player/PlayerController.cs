@@ -23,6 +23,7 @@ namespace Contents.Player
         
         [SerializeField] private WeaponParts _curWeaponParts;
         [SerializeField] private ShotInfo _shotInfo;
+        private PlayerWeaponManager _weaponManager;
         private AttackInvoker _attackInvoker;
         private MechStatus _mechStatus;
         private PlayerAim _playerAim;
@@ -56,6 +57,7 @@ namespace Contents.Player
             _attackInvoker = GetComponent<AttackInvoker>();
             _behavior = GetComponent<MechBehavior>();
             _mechStatus = GetComponent<MechStatus>();
+            _weaponManager = GetComponent<PlayerWeaponManager>();
         }
 
         void Start()
@@ -67,11 +69,16 @@ namespace Contents.Player
             _curMove = AniMove.Idle;
             _prevMove = _curMove;
             _canControl = true;
-            
+            _weaponManager.OnChangeWeaponPart += ChangeWeapon;
             Debug.Log($"boosterSpeed init = {_boosterSpeed}");
 
         }
 
+        void ChangeWeapon(WeaponParts weaponpart, int index)
+        {
+            Debug.Log($"{index} 번째 장비 장착 ");
+            _curWeaponParts = weaponpart;
+        }
         #region Hit
         public void HitStop()
         {
@@ -106,7 +113,6 @@ namespace Contents.Player
             if (Input.GetMouseButtonDown(0))
             {
                 _curAim = _playerAim.GetAim();
-                Debug.Log($"{_mechStatus.RuntimeStatus}");
                 //현재 장착중인 무기부위와 조준 데이터를 가져옴
                 _attackInvoker.AttackInvoke(in _curAim,in _curWeaponParts,in _mechStatus.RuntimeStatus);
             }

@@ -15,15 +15,16 @@ namespace Contents.Weapon
         public AttackType attackType;
 
         [Header("ProjectileType Only")] 
+        public PoolID ID;
         public Projectile projectileStat;
-        public PoolID projectileID;
         [Header("Raycast Only")] public Raycast raycastStat;
     }
     [Serializable]
     public struct Projectile
     {
         public float speed;
-        [Header("Explosion Type Only")]
+        public PoolID explosion;
+        [Header("Explosion Type Only")] 
         public float explosionRadius;
     }
     [Serializable]

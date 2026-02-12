@@ -45,11 +45,10 @@ namespace Contents.Weapon
     }
 
     /// <summary> 투사체의 이동을 담당하는 클래스</summary>
-    public class ProjectileAttack : MonoBehaviour, IObjectPooled
+    public class ProjectileAttack : MonoBehaviour
     {
         private Rigidbody _rb;
         [SerializeField] private WeaponData _weaponData;
-        [SerializeField] private PoolID _returnPoolKey;
         [SerializeField] private int _hitterLayer; //피해를 입힐 대상
         [SerializeField] private FinalStat _finalStat;
         private Collider _myCollider;
@@ -70,14 +69,14 @@ namespace Contents.Weapon
             {
                 Debug.LogWarning("WeaPonData is Null");
             }
-
+            _hitTarget = null;
             _token = new CancellationTokenSource();
             TimeOut(_token.Token).Forget();
         }
 
         public void Init(Collider owner, Vector3 dir, MechRuntimeStatus stat)
         {
-            SetParent(owner);
+            //SetParent(owner);
             SetStat(dir, stat);
             SetTeam((GameLayer)owner.gameObject.layer);
         }
@@ -109,7 +108,7 @@ namespace Contents.Weapon
                     Debug.LogWarning("중립오브젝트이거나 레이어 설정이 잘못되었습니다");
                     break;
             }
-            Debug.Log((GameLayer)gameObject.layer);
+            //Debug.Log((GameLayer)gameObject.layer);
         }
 
         public void SetStat(Vector3 dir, MechRuntimeStatus stat)
@@ -119,11 +118,6 @@ namespace Contents.Weapon
             _finalStat.Speed = _weaponData.projectileStat.speed + stat.increseFireRate;
             _finalStat.ExplosionRadius = _weaponData.projectileStat.explosionRadius;
             _rb.velocity = dir * _finalStat.Speed;
-        }
-
-        public void SetReturnPoolKey(PoolID id)
-        {
-            _returnPoolKey = id;
         }
 
         async UniTaskVoid TimeOut(CancellationToken token)
@@ -143,7 +137,24 @@ namespace Contents.Weapon
                 //owner에 인터페이스(getDamage)같은거 넣고 얼만큼 피해를 가했는지 보내주면 
                 //나중에 가한 피해량만큼 회복같은 기능을 구현할 수 있을듯함
             }
+            Finish(other);
             GetComponent<PooledObject>()?.Return();
+        }
+
+        private void Finish(Collision other = null)
+        {
+            //단일 공격이고 아무데도 피격되지 않았으면 그냥 풀로 돌아감
+            if (_weaponData.attackType == AttackType.Proj_DirectHit && other == null)
+            {
+                GetComponent<PooledObject>()?.Return();
+            }
+            //나머지(투사체 - 타임아웃 / 맞음 , 단일 - 맞음) 피격이펙트 출력
+            else
+            {
+                PoolManager.poolDic[_weaponData.projectileStat.explosion]
+                           .UsePool(transform.position, Quaternion.identity);
+                GetComponent<PooledObject>()?.Return();
+            }
         }
         private void OnDisable()
         {
