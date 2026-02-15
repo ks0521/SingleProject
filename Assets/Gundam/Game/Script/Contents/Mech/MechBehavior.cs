@@ -15,15 +15,13 @@ namespace Base.Utilities
     public class MechBehavior : MonoBehaviour
     {
         private Rigidbody _rb;
-        private Animator _animator;
-        [SerializeField] private AnimationClip hitClip;
-        private int _hitHash;
         private bool _canControl;
+        private AttackInvoker _attackInvoker;
         
         private void Awake()
         {
             _rb = GetComponent<Rigidbody>();
-            _animator = GetComponentInChildren<Animator>();
+            _attackInvoker = GetComponent<AttackInvoker>();
             _canControl = true;
         }
         /// <summary> 플레이어와 NPC 공용, 기체 이동 </summary>
@@ -42,10 +40,11 @@ namespace Base.Utilities
         }
         
         /// <summary> 플레이어와 NPC 공용, 장착중인 무기 공격을 실행</summary>
-        public void Attack(WeaponParts part, AimData aimData, MechRuntimeStatus machStat)
+        public void Attack(in AimData aimData,in WeaponParts part,in MechRuntimeStatus mechStat)
         {
             if (!_canControl) return;
-            part.Attack(aimData,machStat);
+            _attackInvoker.AttackInvoke(in aimData, in part, in mechStat);
+            part.Attack(aimData,mechStat);
         }
         public void HitStop(float duration)
         {

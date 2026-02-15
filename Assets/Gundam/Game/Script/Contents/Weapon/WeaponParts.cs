@@ -7,6 +7,7 @@ using Contents.Mech;
 using Contnts.Player;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Contents.Weapon
 {
@@ -15,7 +16,20 @@ namespace Contents.Weapon
     {
         private CancellationToken _token;
         [SerializeField] private WeaponData weaponData;
+
+        public Sprite weaponImg;
         private Collider _parentCollider;
+        private float entireCoolDown; //전체 쿨타임
+        private float curCoolDown; //현재 쿨타임
+
+        public float CoolDownRatio
+        {
+            get
+            {
+                if (CanShot) return 1;
+                return Mathf.Clamp01((entireCoolDown - curCoolDown) / entireCoolDown);
+            }
+        }
         public float FireDelay { get; private set; }
         public Transform FirePoint { get; private set; }
         public bool CanShot { get; private set; }
@@ -55,13 +69,19 @@ namespace Contents.Weapon
                 }
             }
 
-            AttackDelay(_token,FireDelay).Forget();
+            entireCoolDown = FireDelay;
+            AttackDelay(_token,entireCoolDown).Forget();
         }
 
         async UniTaskVoid AttackDelay(CancellationToken token,float duration)
         {
             CanShot = false;
-            await UniTask.Delay(TimeSpan.FromSeconds(duration), cancellationToken: token);
+            curCoolDown = duration;
+            while (curCoolDown > 0)
+            {
+                curCoolDown -= Time.deltaTime;
+                await UniTask.Yield(cancellationToken: token);
+            }
             CanShot = true;
         }
         void RaycastAttack()

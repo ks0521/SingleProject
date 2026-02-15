@@ -4,10 +4,28 @@ using System.Collections.Generic;
 using Contents.Mech;
 using UnityEngine;
 
+[CreateAssetMenu]
+public class BaseStatueSO : ScriptableObject
+{
+    public float walkSpeed;
+    public float runSpeed;
+    public float maxHp;
+}
+/// <summary> 각 기체의 추가 스탯</summary>
+[Serializable]
+public struct MechRuntimeStatus
+{
+    public int increseDmg;
+    public int multipleDmg;
+    public int increseFireRate;
+    public int multipleFireRate;
+    public float increseSpeed;
+    public GameLayer mechTeam;
+}
 public class MechStatus : MonoBehaviour
 {
     public MechRuntimeStatus RuntimeStatus;
-
+    public BaseStatueSO _baseStatue;
     private void Awake()
     {
         RuntimeStatus = new MechRuntimeStatus();

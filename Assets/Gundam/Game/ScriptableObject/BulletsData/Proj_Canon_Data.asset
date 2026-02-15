@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f65cccbcc3c72cd4dbe2a4de319f0965, type: 3}
   m_Name: Proj_Canon_Data
   m_EditorClassIdentifier: 
-  RPM: 600
+  RPM: 60
   damage: 10
   attackType: 1
+  ID: {fileID: 11400000, guid: 02715136df3f74940bffd26bb903348e, type: 2}
   projectileStat:
     speed: 10
+    explosion: {fileID: 11400000, guid: 63bee72fc9f5a3d4c9f2d79602d68911, type: 2}
     explosionRadius: 5
-  projectileID: {fileID: 11400000, guid: d0f7842c867271a4dbd7ad49c0f20f85, type: 2}
   raycastStat:
     range: 0
     canPierce: 0

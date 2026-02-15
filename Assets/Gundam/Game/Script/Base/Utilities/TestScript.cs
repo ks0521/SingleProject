@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Base.Manager.Test;
+using Base.UI.WeaponSlot;
 using Contents.Mech;
 using UnityEngine;
 using Contents.Player;

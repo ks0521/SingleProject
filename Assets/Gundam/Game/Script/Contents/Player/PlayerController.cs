@@ -18,14 +18,12 @@ namespace Contents.Player
     public class PlayerController : MonoBehaviour
     {
         [SerializeField]private MechBehavior _behavior;
-        [SerializeField] private Animator _animator;
-        [SerializeField] private AnimationClip _hitClip;
-        
         [SerializeField] private WeaponParts _curWeaponParts;
         [SerializeField] private ShotInfo _shotInfo;
+        private MechStatus _stat;
+        private MechAnimation _ani;
         private PlayerWeaponManager _weaponManager;
         private AttackInvoker _attackInvoker;
-        private MechStatus _mechStatus;
         private PlayerAim _playerAim;
         private AimData _curAim;
         #region MoveValue
@@ -41,23 +39,19 @@ namespace Contents.Player
         private Vector3 _jumpVector;
         private AniMove _curMove;
         private AniMove _prevMove;
-        private int _hitHash;
-        private int _speedHash;
         #endregion
         //나중에 조건부 스킬 추가(대쉬시 / 점프시 .... )
         public event Action<AniMove> OnMoveStateChanged;
 
         private void Awake()
         {
-            _animator = GetComponentInChildren<Animator>();
             _rb = GetComponent<Rigidbody>();
-            _hitHash =  Animator.StringToHash("Hit");
-            _speedHash =  Animator.StringToHash("Speed");
             _playerAim = GetComponent<PlayerAim>();
             _attackInvoker = GetComponent<AttackInvoker>();
             _behavior = GetComponent<MechBehavior>();
-            _mechStatus = GetComponent<MechStatus>();
             _weaponManager = GetComponent<PlayerWeaponManager>();
+            _stat = GetComponent<MechStatus>();
+            _ani = GetComponent<MechAnimation>();
         }
 
         void Start()
@@ -89,11 +83,8 @@ namespace Contents.Player
         public async UniTaskVoid HitStop(CancellationToken token,float duration )
         {
             _canControl = false;
-            _animator.speed = _hitClip.length / duration;
-            _animator.SetTrigger(_hitHash);
             _rb.velocity = Vector3.zero;
             await UniTask.Delay(TimeSpan.FromSeconds(duration), cancellationToken: token);
-            _animator.speed = 1;
             _canControl = true;
         }
         #endregion
@@ -114,7 +105,12 @@ namespace Contents.Player
             {
                 _curAim = _playerAim.GetAim();
                 //현재 장착중인 무기부위와 조준 데이터를 가져옴
-                _attackInvoker.AttackInvoke(in _curAim,in _curWeaponParts,in _mechStatus.RuntimeStatus);
+                _behavior.Attack(in _curAim,in _curWeaponParts,in _stat.RuntimeStatus);
+            }
+
+            if (Input.GetKeyDown(KeyCode.LeftControl))
+            {
+                _ani.Jump(true);
             }
             if (Input.GetKey(KeyCode.LeftControl))
             {
@@ -127,25 +123,25 @@ namespace Contents.Player
                 _jumpVector = _rb.velocity;
                 _jumpVector.y = 0;
                 _rb.velocity = _jumpVector;
+                _ani.Jump(false);
             }
 
             //정지시 idle로 애니메이션 변경
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
+                Debug.Log($"{_stat}{_stat._baseStatue}{_stat.RuntimeStatus}");
                 //부스터 게이지 판정해서 바꾸기
-                _speed = _boosterSpeed;
-                _curMove = AniMove.Booster;
+                _speed = _stat._baseStatue.runSpeed+_stat.RuntimeStatus.increseSpeed;
             }
             if (Input.GetKeyUp(KeyCode.LeftShift))
             {
-                _speed = _walkSpeed;
-                _curMove = AniMove.Idle;
+                _speed = _stat._baseStatue.walkSpeed+_stat.RuntimeStatus.increseSpeed;
             }
             
-            if (Mathf.Abs(_axisX) <= 0.5f && Mathf.Abs(_axisZ) <= 0.5f)  _curMove = AniMove.Idle;
-            else if(_curMove != AniMove.Booster)  _curMove = AniMove.Walk;
+            //if (Mathf.Abs(_axisX) <= 0.5f && Mathf.Abs(_axisZ) <= 0.5f)  _curMove = AniMove.Idle;
+            //else if(_curMove != AniMove.Booster)  _curMove = AniMove.Walk;
             //이동상태  변화시 모션변경
-            _animator.SetFloat(_speedHash, Mathf.Clamp((float)_curMove,0f,2f),0.1f,Time.deltaTime);
+            //_animator.SetFloat(_speedHash, Mathf.Clamp((float)_curMove,0f,2f),0.1f,Time.deltaTime);
             
             //상태변화에 따른 이벤트 트리거 발생용(ex. 부스터 사용시 / 일정시간 정지 후 이동시)
             if (_curMove != _prevMove)

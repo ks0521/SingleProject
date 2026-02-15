@@ -2,14 +2,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Contents.Weapon;
+using Contnts.Player;
 using UnityEngine;
 
 namespace Contents.Player
 {
     public class PlayerWeaponManager : MonoBehaviour
     {
-        [SerializeField] private List<WeaponParts> weaponPartsList;
-        [SerializeField] private WeaponParts _curWeaponPart;
+        public List<WeaponParts> weaponPartsList;
+        private WeaponParts _curWeaponPart;
+        
         //바꾼 장비(Controller + WeaponSlot UI)와 몇번 장비로 바꿨는지(WeaponSlot UI)
         public event Action<WeaponParts, int> OnChangeWeaponPart; 
         void Start()
@@ -45,6 +47,14 @@ namespace Contents.Player
                 {
                     _curWeaponPart = weaponPartsList[2];
                     OnChangeWeaponPart?.Invoke(_curWeaponPart, 2);
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                if (weaponPartsList[3] is not null && _curWeaponPart != weaponPartsList[3])
+                {
+                    _curWeaponPart = weaponPartsList[3];
+                    OnChangeWeaponPart?.Invoke(_curWeaponPart, 3);
                 }
             }
         }
