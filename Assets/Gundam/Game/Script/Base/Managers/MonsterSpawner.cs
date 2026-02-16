@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Base.Manager.Test;
+using Base.NPC;
 using Contents.Mech;
 using UnityEngine;
 
@@ -9,7 +10,8 @@ public class MonsterSpawner : MonoBehaviour
 {
     public static MonsterSpawner Instance;
     [SerializeField] private PoolID spawner;
-    private MechHealth mech;
+    private GameObject PooledNPC;
+    private List<NPC> mech;
     private Transform spawnSpot;
 
     private void Start()
@@ -21,7 +23,7 @@ public class MonsterSpawner : MonoBehaviour
 
     public void Spawn()
     {
-        PoolManager.poolDic[spawner].UsePool(spawnSpot.position, spawnSpot.rotation);
-        mech = GetComponent<MechHealth>();
+        PooledNPC = PoolManager.poolDic[spawner].UsePool(spawnSpot.position, spawnSpot.rotation);
+        PooledNPC.GetComponent<NPC>();
     }
 }

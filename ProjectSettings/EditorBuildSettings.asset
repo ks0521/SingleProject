@@ -5,7 +5,25 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/TestScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Gundam/Game/Scene/StartMenu.unity
+    guid: 0514ba24d0b1d6242b15d5ee2119cd81
+  - enabled: 1
+    path: Assets/Gundam/Game/Scene/WorldMap.unity
+    guid: 0dcfe26934c5c354e969edc05ac841fe
+  - enabled: 1
+    path: Assets/Gundam/Game/Scene/Battle.unity
+    guid: 8ceb1d52504747741b417d970ec6393d
+  - enabled: 1
+    path: Assets/Gundam/Game/Scene/Elite.unity
+    guid: 86f8528490fd8bb4f8546bddcefa4b13
+  - enabled: 1
+    path: Assets/Gundam/Game/Scene/Boss.unity
+    guid: 7e3a487603723cb46bba8965dc039c2e
+  - enabled: 1
+    path: Assets/Gundam/Game/Scene/Store.unity
+    guid: a7bdf88b003fa7c45afa54d5a5cc055f
+  - enabled: 1
+    path: Assets/Gundam/Game/Scene/Loading.unity
+    guid: 0d9ca7e3cf71e1d439a1789748614a52
   m_configObjects: {}
