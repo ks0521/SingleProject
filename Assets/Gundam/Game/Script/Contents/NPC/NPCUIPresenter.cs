@@ -14,7 +14,6 @@ public class NPCUIPresenter : MonoBehaviour
 
     void HpChanged(int hp, int maxHp)
     {
-        Debug.Log("HPChanged");
         hpBar.UpdateUI(hp,maxHp);
     }
 }

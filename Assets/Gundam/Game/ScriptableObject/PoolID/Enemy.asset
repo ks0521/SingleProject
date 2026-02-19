@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42cc9975ad6437e4e8575c76df70c0b4, type: 3}
-  m_Name: Player
-  m_EditorClassIdentifier: Assembly-CSharp::BaseStatueSO
-  walkSpeed: 7
-  runSpeed: 5
-  maxHp: 100
+  m_Script: {fileID: 11500000, guid: f2213008154c7fc4f9d20aa8363f3e27, type: 3}
+  m_Name: Enemy
+  m_EditorClassIdentifier: 
+  poolingObj: {fileID: 2825789160337383178, guid: 86f69d371779ad44b98bfec85abee7b5,
+    type: 3}

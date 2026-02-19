@@ -16,6 +16,7 @@ namespace Contents.Mech
         private MechBehavior _Behavior;
         public event Action<int, int> OnHpChanged;
         public event Action<float> OnHitStopped;
+        public event Action<MechHealth> OnDie;
         private bool isDead;
         private int maxHp = 100;
         private int hp = 100;
@@ -25,7 +26,7 @@ namespace Contents.Mech
             private set
             {
                 hp = value;
-                Debug.Log($"Now Hp {value}");
+                //Debug.Log($"Now Hp {value}");
                 if (hp <= 0 && !isDead) //사망판정 중복 방지용
                 {
                     Die();
@@ -55,6 +56,7 @@ namespace Contents.Mech
         {
             isDead = true; 
             Debug.Log($"{gameObject.name} Die");
+            OnDie?.Invoke(this);
             GetComponent<PooledObject>()?.Return();
         }
         /// <summary> 피격판정이 발생하는곳으로, 피해를 입고 피해경직 상태를 실행시킴</summary>

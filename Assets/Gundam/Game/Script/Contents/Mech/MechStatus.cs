@@ -4,13 +4,7 @@ using System.Collections.Generic;
 using Contents.Mech;
 using UnityEngine;
 
-[CreateAssetMenu]
-public class BaseStatueSO : ScriptableObject
-{
-    public float walkSpeed;
-    public float runSpeed;
-    public float maxHp;
-}
+
 /// <summary> 각 기체의 추가 스탯</summary>
 [Serializable]
 public struct MechRuntimeStatus
