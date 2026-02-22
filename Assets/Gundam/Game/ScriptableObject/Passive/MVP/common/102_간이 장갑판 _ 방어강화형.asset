@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e655395925e1c454f8771a3d8afc38cb, type: 3}
+  m_Name: "102_\uAC04\uC774 \uC7A5\uAC11\uD310 _ \uBC29\uC5B4\uAC15\uD654\uD615"
+  m_EditorClassIdentifier: 
+  id: 102
+  name: "\uAC04\uC774 \uC7A5\uAC11\uD310"
+  type: 1
+  rarity: 0
+  advantageText: "\uD53C\uD574 \uAC10\uC18C +10%"
+  disAdvantageText: "\uC774\uB3D9 \uC18D\uB3C4 -0.5"
+  lore: "\uC587\uC9C0\uB9CC \uB113\uAC8C \uB367\uB304 \uC7A5\uAC11\uD310. \n\uB454\uD574\uC9C0\uB294
+    \uAC74 \uC5B4\uCA54 \uC218 \uC5C6\uB2E4."
+  status:
+    increseDmg: 0
+    multipleDmg: 0
+    increseFireRate: 0
+    multipleFireRate: 0
+    increseSpeed: -0.5
+    increseDamageReduction: 0.1
+    multipleDamageReduction: 0
+    mechTeam: 0
+  isConditional: 0
+  activeHp: 0

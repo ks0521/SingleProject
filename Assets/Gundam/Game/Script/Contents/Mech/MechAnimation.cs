@@ -50,8 +50,8 @@ public class MechAnimation : MonoBehaviour
     {
         _speedVector = _rb.velocity;
         _speedVector.y = 0;
-        _walkSpeed = _mechStatus._baseStatue.walkSpeed + _mechStatus.RuntimeStatus.increseSpeed;
-        _runSpeed = _mechStatus._baseStatue.runSpeed + _mechStatus.RuntimeStatus.increseSpeed;
+        _walkSpeed = _mechStatus._baseStatue.walkSpeed + _mechStatus.RuntimeBonusStat.increseSpeed;
+        _runSpeed = _mechStatus._baseStatue.runSpeed + _mechStatus.RuntimeBonusStat.increseSpeed;
         _speed = _speedVector.magnitude;
         if (_speed <= _walkSpeed)
         {

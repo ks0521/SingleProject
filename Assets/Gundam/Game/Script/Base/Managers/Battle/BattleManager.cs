@@ -26,7 +26,7 @@ public class BattleManager : MonoBehaviour
     void BattleClear()
     {
         Debug.Log("Call BattleManager");
-        ScenesManager.Instance.canPopUpReward = true; //전투 보상창 띄우기 -> 나중에는 일반 / 엘리트 / 보스별로도 구분하게
+        ScenesManager.Instance.canPopUpReward = true; //전투 보상창 띄울수 있다는 플래그만 변경
         ScenesManager.Instance.LoadScene((int)Scenes.WorldMap,LoadType.BattleClear);
     }
 }

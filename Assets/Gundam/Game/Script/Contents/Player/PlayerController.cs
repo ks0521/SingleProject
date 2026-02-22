@@ -13,7 +13,7 @@ namespace Contents.Player
     {
         public WeaponParts curWeaponParts;
         public AimData aimData;
-        public MechRuntimeStatus MechRuntimeStat;
+        public BonusStat MechRuntimeStat;
     }
     public class PlayerController : MonoBehaviour
     {
@@ -105,7 +105,7 @@ namespace Contents.Player
             {
                 _curAim = _playerAim.GetAim();
                 //현재 장착중인 무기부위와 조준 데이터를 가져옴
-                _behavior.Attack(in _curAim,in _curWeaponParts,in _stat.RuntimeStatus);
+                _behavior.Attack(in _curAim,in _curWeaponParts,in _stat.RuntimeBonusStat);
             }
 
             if (Input.GetKeyDown(KeyCode.LeftControl))
@@ -129,13 +129,13 @@ namespace Contents.Player
             //정지시 idle로 애니메이션 변경
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
-                Debug.Log($"{_stat}{_stat._baseStatue}{_stat.RuntimeStatus}");
+                Debug.Log($"{_stat}{_stat._baseStatue}{_stat.RuntimeBonusStat}");
                 //부스터 게이지 판정해서 바꾸기
-                _speed = _stat._baseStatue.runSpeed+_stat.RuntimeStatus.increseSpeed;
+                _speed = _stat._baseStatue.runSpeed+_stat.RuntimeBonusStat.increseSpeed;
             }
             if (Input.GetKeyUp(KeyCode.LeftShift))
             {
-                _speed = _stat._baseStatue.walkSpeed+_stat.RuntimeStatus.increseSpeed;
+                _speed = _stat._baseStatue.walkSpeed+_stat.RuntimeBonusStat.increseSpeed;
             }
             
             //if (Mathf.Abs(_axisX) <= 0.5f && Mathf.Abs(_axisZ) <= 0.5f)  _curMove = AniMove.Idle;

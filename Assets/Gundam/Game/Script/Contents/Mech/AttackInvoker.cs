@@ -19,7 +19,7 @@ namespace Contents.Mech
         /// <param name="curWeaponParts">현재 사용중인 무기</param>
         /// <param name="mechRuntimeStat">기체의 추가 스탯</param>
         /// <returns>WeaponParts에 공격입력이 들어갔으면 true, 안들어갔으면 false</returns>
-        public bool AttackInvoke(in AimData aimData, in WeaponParts curWeaponParts, in MechRuntimeStatus mechRuntimeStat)
+        public bool AttackInvoke(in AimData aimData, in WeaponParts curWeaponParts, in BonusStat mechRuntimeStat)
         {
             if (!curWeaponParts.CanShot)
             {

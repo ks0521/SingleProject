@@ -74,7 +74,7 @@ namespace Contents.Weapon
             TimeOut(_token.Token).Forget();
         }
 
-        public void Init(Collider owner, Vector3 dir, MechRuntimeStatus stat)
+        public void Init(Collider owner, Vector3 dir, BonusStat stat)
         {
             //SetParent(owner);
             SetStat(dir, stat);
@@ -111,7 +111,7 @@ namespace Contents.Weapon
             //Debug.Log((GameLayer)gameObject.layer);
         }
 
-        public void SetStat(Vector3 dir, MechRuntimeStatus stat)
+        public void SetStat(Vector3 dir, BonusStat stat)
         {
             _finalStat.Damage = _weaponData.damage + stat.increseDmg;
             _finalStat.FireRate = _weaponData.RPM;

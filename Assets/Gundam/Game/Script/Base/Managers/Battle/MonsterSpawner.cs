@@ -55,13 +55,13 @@ public class MonsterSpawner : MonoBehaviour
 
     private void Awake()
     {
-        _allyList = new List<GameObject>();
-        _enemyList = new List<GameObject>();
         if (Instance != null)
         {
             Destroy(gameObject);
             return;
         }
+        _allyList = new List<GameObject>();
+        _enemyList = new List<GameObject>();
 
         Instance = this;
     }
