@@ -26,48 +26,53 @@ public class PassiveSkillManager : MonoBehaviour
         }
     }
 
-    public void MakeReward(Scenes clearScene)
-    {
-        List<PassiveSkillSO> pickedList = new();
-        PassiveSkillSO pickedSkill;
-        int count = 0;
-        foreach (var skill in presenters)
-        {
-            if (!skill.gameObject.activeSelf) continue; //비활성화된 스킬옵션칸은 활성화 X
-            do
-            {
-                pickedSkill = DrawSkill(clearScene);
-            } while (!pickedList.Contains(pickedSkill) && ++count < 200);
-            skill.SetSkill(pickedSkill);
-            pickedList.Add(pickedSkill);
-        }
-    }
     /// <summary> 선택한 스킬을 플레이어 패시브 리스트에 추가</summary>
     public void ChoiceSkill(PassiveSkillSO selectSkill)
     {
         PlayerStatusManager.Instance.GetSkill(selectSkill);
     }
-    /// <summary>클리어 난이도에 따른 변동확률로 보상스킬 뽑은 후 반환</summary>
-    /// <param name="clearScene">클리어한 전투 난이도</param>
-    PassiveSkillSO DrawSkill(Scenes clearScene)
+    
+    public void MakeReward(Scenes clearScene)
     {
-        //보상 스킬의 레어도
+        List<PassiveSkillSO> pickedList = new();
+        PassiveSkillSO pickedSkill;
+        int count = 0;
+        if (clearScene != Scenes.Battle && clearScene != Scenes.Elite && clearScene != Scenes.Boss)
+        {
+            Debug.LogWarning("전투 클리어 경로가 아닙니다. ");
+            return;
+        }
+
+        int[] rewardWeight = battleRewards;
         switch (clearScene)
         {
             case Scenes.Battle:
-                rarity = (SkillRarity)CalcWeight(battleRewards);
+                rewardWeight = battleRewards;
                 break;
             case Scenes.Elite:
-                rarity = (SkillRarity)CalcWeight(eliteRewards);
+                rewardWeight = eliteRewards;
                 break;
             case Scenes.Boss:
-                rarity = (SkillRarity)CalcWeight(bossRewards);
-                break;
-            default:
-                Debug.LogWarning("스킬 선택중 잘못된 씬 정보가 입력되었습니다");
+                rewardWeight = bossRewards;
                 break;
         }
-
+        foreach (var skill in presenters)
+        {
+            if (!skill.gameObject.activeSelf) continue; //비활성화된 스킬옵션칸은 활성화 X
+            do
+            {
+                pickedSkill = DrawSkill(rewardWeight);
+            } while (!pickedList.Contains(pickedSkill) && ++count < 200);
+            skill.SetSkill(pickedSkill);
+            pickedList.Add(pickedSkill);
+        }
+    }
+    /// <summary>클리어 난이도에 따른 변동확률로 보상스킬 뽑은 후 반환</summary>
+    /// <param name="clearScene">클리어한 전투 난이도</param>
+    PassiveSkillSO DrawSkill(int []rewardWeights)
+    {
+        rarity = (SkillRarity)CalcWeight(rewardWeights);
+        
         if (!skillDic.TryGetValue(rarity, out var list) || list == null || list.Count == 0)
         {
             Debug.LogWarning($"{rarity}의 스킬이 없거나 리스트가 비어있음, 모든 스킬중에서 선택");

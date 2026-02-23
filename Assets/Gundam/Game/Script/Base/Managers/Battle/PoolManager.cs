@@ -66,8 +66,8 @@ namespace Base.Manager.Test
         {
             if (_pool.Count <= 0)
             {
-                AddPool(_data.count / 3);
-                _data.count += (_data.count / 3);
+                AddPool(_data.count / 3 + 1);
+                _data.count += (_data.count / 3 + 1);
                 Debug.Log($"풀 추가 : 현재 {_data.ID}의 최대 개수 : {_data.count}");
             }
 

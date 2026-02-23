@@ -23,7 +23,6 @@ namespace Contents.Mech
         {
             if (!curWeaponParts.CanShot)
             {
-                Debug.Log("발사 쿨타임");
                 return false;
             }
             else

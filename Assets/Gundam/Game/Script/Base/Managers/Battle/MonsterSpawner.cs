@@ -45,8 +45,10 @@ public class MonsterSpawner : MonoBehaviour
     [SerializeField] private SpawnGroup EnemySpawnGroup;
     [SerializeField] private SpawnGroup ReinforceSpawnGroup;
     private GameObject PooledNPC;
-    private List<GameObject> _allyList;
-    private List<GameObject> _enemyList;
+    private List<GameObject> _allyList = new();
+    private List<GameObject> _enemyList = new();
+    public IReadOnlyList<GameObject> AllyList => _allyList;
+    public IReadOnlyList<GameObject> EnemyList => _enemyList;
     public event Action<int> OnAllyNpcRemain;
     public event Action<int> OnEnemyNpcRemain;
     public event Action OnAllEnemiesBroken;

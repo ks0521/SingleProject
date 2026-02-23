@@ -101,7 +101,7 @@ namespace Contents.Player
             if (!_canControl) return;
             _axisX = Input.GetAxisRaw("Horizontal");
             _axisZ = Input.GetAxisRaw("Vertical");
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButton(0))
             {
                 _curAim = _playerAim.GetAim();
                 //현재 장착중인 무기부위와 조준 데이터를 가져옴

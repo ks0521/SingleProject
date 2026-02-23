@@ -28,6 +28,7 @@ public class SkillPresenter : MonoBehaviour
     public void SetSkill(PassiveSkillSO skill)
     {
         Button btn = GetComponent<Button>();
+        btn.onClick.RemoveAllListeners();
         btn.onClick.AddListener(()=>skillManager.ChoiceSkill(skill));
         btn.onClick.AddListener(skillManager.TurnOff);
         skillName.text = skill.name;

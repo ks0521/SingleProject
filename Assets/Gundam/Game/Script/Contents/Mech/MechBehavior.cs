@@ -1,11 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
 using System.Threading;
 using Contents.Mech;
 using Contents.Weapon;
 using Contnts.Player;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Base.Utilities
@@ -17,6 +19,9 @@ namespace Base.Utilities
         private Rigidbody _rb;
         private bool _canControl;
         private AttackInvoker _attackInvoker;
+
+        private Transform _target;
+        private float _turnSpeedDegPerSec = 360f;
         
         private void Awake()
         {
@@ -24,6 +29,35 @@ namespace Base.Utilities
             _attackInvoker = GetComponent<AttackInvoker>();
             _canControl = true;
         }
+
+        public void SetLookTarget(Transform target, float turnSpeedDegPerSec)
+        {
+            _target = target;
+            _turnSpeedDegPerSec = turnSpeedDegPerSec;
+        }
+    
+        public void ClearLookTarget()
+        {
+            _target = null;
+        }
+
+        private void FixedUpdate()
+        {
+            if (!_canControl) return;
+            if(_target == null) return;
+
+            Vector3 to = _target.position - transform.position;
+            to.y = 0f;
+
+            if (to.sqrMagnitude < 0.001f) return; //타겟과의 거리가 가까울때 예외처리
+
+            Quaternion targetRot = Quaternion.LookRotation(to.normalized, Vector3.up);
+            Quaternion newRot =
+                Quaternion.RotateTowards(_rb.rotation, targetRot,
+                    _turnSpeedDegPerSec * Time.fixedDeltaTime); //회전속도를 미리 지정한 회전각 / 초로 제한
+            _rb.MoveRotation(newRot);
+        }
+
         /// <summary> 플레이어와 NPC 공용, 기체 이동 </summary>
         /// <param name="axisX">X축 이동여부</param>
         /// <param name="axisZ">Z축 이동여부</param>
@@ -37,6 +71,7 @@ namespace Base.Utilities
         public void Rotate(Transform targetPos)
         {
             if (!_canControl) return;
+            _rb.DOLookAt(targetPos.position, 0.1f);
         }
         
         /// <summary> 플레이어와 NPC 공용, 장착중인 무기 공격을 실행</summary>
@@ -44,7 +79,7 @@ namespace Base.Utilities
         {
             if (!_canControl) return;
             _attackInvoker.AttackInvoke(in aimData, in part, in mechStat);
-            part.Attack(aimData,mechStat);
+            //part.Attack(aimData,mechStat);
         }
         public void HitStop(float duration)
         {
