@@ -15,7 +15,7 @@ namespace Contents.Weapon
     public class Explosion : MonoBehaviour
     {
         private PooledObject _pooledObject;
-
+        [SerializeField] private ExplosionType explosion;
         private void Awake()
         {
             _pooledObject = GetComponentInParent<PooledObject>();
@@ -23,7 +23,12 @@ namespace Contents.Weapon
 
         private void OnEnable()
         {
-            Return(this.GetCancellationTokenOnDestroy()).Forget();
+            if(explosion == ExplosionType.Decorate)
+                Return(this.GetCancellationTokenOnDestroy()).Forget();
+            else
+            {
+                //범위피해
+            }
         }
 
         async UniTaskVoid Return(CancellationToken token)

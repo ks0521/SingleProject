@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Base.Utilities;
 using Contents.Mech;
@@ -20,7 +21,7 @@ namespace Contents.NPC
         [SerializeField] private WeaponParts curWeapon;
         
         public Transform target; // mvp용
-        public LayerMask obstacleMask = 1<<(int)GameLayer.Default; 
+        public LayerMask obstacleMask ; 
 
         private State _state = State.Seek;
 
@@ -29,8 +30,8 @@ namespace Contents.NPC
         private float _strafeTimer;
         private int _strafeSign = 1; //1 : 오른쪽, -1 : 왼쪽
         //적이 가까이에 있으면 회전속도가 빠르고 멀리있으면 느려짐(플레이어 회피 구현용)
-        [SerializeField] private float turnSpeedNearDeg = 360f; //타겟과 가까울 때 최대 회전속도
-        [SerializeField] private float turnSpeedFarDeg = 90f; //타겟과 멀 때 최소 회전속도
+        [SerializeField] private float turnSpeedNearDeg = 390f; //타겟과 가까울 때 최대 회전속도
+        [SerializeField] private float turnSpeedFarDeg = 110f; //타겟과 멀 때 최소 회전속도
         [SerializeField] private float turnNearDistance = 2f; //회전속도가 최대가 되는 최단거리
         [SerializeField] private float turnFarDistance = 12f; //회전속도가 최소가 되는 최장거리
         [SerializeField] private float attackTurnMultiflier = 1.0f;
@@ -42,6 +43,7 @@ namespace Contents.NPC
 
         private int _allyLayer;
         private int _enemyLayer;
+        private Color lineColor;
         private void Awake() 
         {
             _behavior = GetComponent<MechBehavior>();
@@ -53,6 +55,8 @@ namespace Contents.NPC
 
             //모든 오브젝트 동시 갱신 스파이크방지
             _targetRefreshTimer = Random.Range(0, _targetRefreshInterval); 
+            
+            obstacleMask = 1 << (int)GameLayer.Default;
         }
 
         private void Update()
@@ -61,7 +65,7 @@ namespace Contents.NPC
 
             _decisionTimer -= Time.deltaTime;
             _stateTimer -= Time.deltaTime;
-            
+            RefreshTargetTick();
             Act();
             if (_decisionTimer <= 0f)
             {
@@ -80,8 +84,12 @@ namespace Contents.NPC
 
             if (!isValidTarget(target))
             {
-                
+                target = FindNearestTarget(forceSwitch: true);
+                return;
             }
+
+            Transform closerTarget = FindNearestTarget(forceSwitch: false);
+            if (closerTarget != null) target = closerTarget;
         }
 
         private Transform FindNearestTarget(bool forceSwitch)
@@ -153,12 +161,25 @@ namespace Contents.NPC
             //피격중이면 멈춤
             //if(isStunned) {changeState(State.Stunned); return;}
             //적이 자신의 안전거리 안으로 들어오면 도주
-            if (dist < param.minSafeRange){ ChangeState(State.Retreat); return; }
+            if (dist < param.minSafeRange)
+            {
+                Debug.Log("State Change : Retreat");
+                ChangeState(State.Retreat); return;
+            }
             //적이 시야에 들어오지 않으면 재배치
-            if (!hasLos){ ChangeState(State.Reposition); return;}
+            if (!hasLos)
+            {
+                Debug.Log("State Change : Reposition");
+                ChangeState(State.Reposition); return;
+            }
             //적이 공격거리 바깥에 있으면 접근
-            if(dist > param.attackRange){ ChangeState(State.Approach); return; }
+            if (dist > param.attackRange)
+            {
+                Debug.Log("State Change : Approach");
+                ChangeState(State.Approach); return;
+            }
             //공격거리 안이고 시야확보되면 공격
+            Debug.Log("State Change : Attack");
             ChangeState(State.Attack);
         }
         void Act()
@@ -180,26 +201,23 @@ namespace Contents.NPC
                     }
                     break;
                 case State.Approach:
-                    Debug.Log("StateChange : Approach");
                     //타겟에게 이동
                     Move(TowardTargetDir());
                     UpdateLookTracking();
                     break;
                 case State.Retreat:
-                    Debug.Log("State Change : Retreat");
                     //타겟에게서 도주
                     Move(AwayFromTargetDir());
                     UpdateLookTracking();
                     break;
                 case State.Reposition:
-                    Debug.Log("State Change : Reposition");
                     //옆으로 돌기
                     Move(GetStrafeOrbitDir());
                     UpdateLookTracking();
                 break;
                 case State.Attack:
-                    Debug.Log("State Change : Attack");
                     TryFire();
+                    Move(GetStrafeOrbitDir() * 0.2f);
                     UpdateLookTracking();
                     break;
                 case State.Stunned:
@@ -260,9 +278,16 @@ namespace Contents.NPC
             Vector3 dir = (dest - origin);
             float dist = dir.magnitude;
             if (dist < 0.001f) return true;
+            lineColor = (gameObject.layer == (int)GameLayer.Ally) ? Color.blue : Color.red;
+            Debug.DrawRay(origin, dir.normalized * dist, lineColor, 0.1f);
+            
 
             if (Physics.Raycast(origin, dir.normalized, dist, obstacleMask))
+            {
                 return false;
+            }
+            Debug.Log("NO HIT");
+
             return true;
         }
         void ChangeState(State next)
@@ -278,8 +303,12 @@ namespace Contents.NPC
         
         void Move(Vector3 dir)
         {
-            _behavior.Move(dir.x,dir.z,_mechstatus._baseStatue.walkSpeed);
+            Vector3 localdir = transform.InverseTransformDirection(dir);
+            localdir.y = 0;
+            localdir.Normalize();
+            _behavior.Move(localdir.x,localdir.z,_mechstatus._baseStatue.walkSpeed);
         }
+        
         void StopMove()
         {
             _behavior.Move(0,0,0);
@@ -302,7 +331,8 @@ namespace Contents.NPC
         }
         void TryFire()
         {
-            //_behavior.Attack(GetAim(),curWeapon,_mechstatus.RuntimeBonusStat);
+            if (!target.gameObject.activeInHierarchy || target == null) return;
+            _behavior.Attack(GetAim(),curWeapon,_mechstatus.RuntimeBonusStat);
         }
         
         AimData GetAim()
@@ -310,5 +340,7 @@ namespace Contents.NPC
             Vector3 _dir = (target.position - curWeapon.FirePoint.position).normalized;
             return new AimData(_dir, target.position);
         }
+
+ 
     }
 }

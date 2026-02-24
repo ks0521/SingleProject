@@ -14,15 +14,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e540f8f058103be41b9093d6c0745792, type: 3}
       propertyPath: m_LocalScale.x
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e540f8f058103be41b9093d6c0745792, type: 3}
       propertyPath: m_LocalScale.y
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e540f8f058103be41b9093d6c0745792, type: 3}
       propertyPath: m_LocalScale.z
-      value: 3
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e540f8f058103be41b9093d6c0745792, type: 3}
       propertyPath: m_LocalPosition.x
@@ -131,7 +131,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _weaponData: {fileID: 11400000, guid: a47f540ce946a1243a997237d16727d3, type: 2}
-  _returnPoolKey: {fileID: 0}
   _hitterLayer: 0
 --- !u!65 &4860906381649652242
 BoxCollider:
@@ -166,3 +165,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1008f0b282d97c84da5e2e6f526da75c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _id: {fileID: 0}

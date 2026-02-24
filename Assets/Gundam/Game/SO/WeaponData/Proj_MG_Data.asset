@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RPM: 300
   damage: 10
+  ammo: 0
   attackType: 0
   ID: {fileID: 11400000, guid: d0f7842c867271a4dbd7ad49c0f20f85, type: 2}
   projectileStat:
-    speed: 20
+    speed: 30
     explosion: {fileID: 11400000, guid: 410bcc1b9cc218a4a815c6409809939d, type: 2}
     explosionRadius: 0
   raycastStat:

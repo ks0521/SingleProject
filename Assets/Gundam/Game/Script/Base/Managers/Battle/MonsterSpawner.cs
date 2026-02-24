@@ -70,11 +70,12 @@ public class MonsterSpawner : MonoBehaviour
 
     public void StartSpawn(in StageSpawnData data)
     {
+        GameObject player = GameObject.Find("Player");
+        if(player != null) _allyList.Add(player);
         for (int i = 0; i < data.allyCount; i++) Spawn(AllySpawnGroup, NpcType.Ally);
         for (int i = 0; i < data.enemyCount; i++) Spawn(EnemySpawnGroup, NpcType.Enemy);
         for (int i = 0; i < data.eliteCount; i++) Spawn(EnemySpawnGroup, NpcType.Elite);
         for (int i = 0; i < data.bossCount; i++) Spawn(EnemySpawnGroup, NpcType.Boss);
-
         Debug.Log($"{_allyList.Count},{_enemyList.Count}");
         OnSpawnFinished?.Invoke(_allyList.Count, _enemyList.Count);
     }
