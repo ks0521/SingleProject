@@ -1411,7 +1411,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -1423,7 +1423,23 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.19166666
+        functionName: AnimEvent_Hit
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: c3a25dc9e2301b243ac1f62ea54d6376,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.95000005
+        functionName: AnimEvent_AdvanceCombo
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: c3a25dc9e2301b243ac1f62ea54d6376,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -1440,7 +1456,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -1452,7 +1468,23 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.20277774
+        functionName: AnimEvent_Hit
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: c3a25dc9e2301b243ac1f62ea54d6376,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.9472223
+        functionName: AnimEvent_AdvanceCombo
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: c3a25dc9e2301b243ac1f62ea54d6376,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -1469,7 +1501,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -1481,7 +1513,23 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.21388888
+        functionName: AnimEvent_Hit
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: c3a25dc9e2301b243ac1f62ea54d6376,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.95833343
+        functionName: AnimEvent_AdvanceCombo
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: c3a25dc9e2301b243ac1f62ea54d6376,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

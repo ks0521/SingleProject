@@ -1,12 +1,7 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Base.PoolSO;
 using Base.Utilities;
-using Contents.Player;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Contents.Mech
 {
@@ -17,21 +12,21 @@ namespace Contents.Mech
         public event Action<int, int> OnHpChanged;
         public event Action<float> OnHitStopped;
         public event Action<MechHealth> OnDie;
-        private bool isDead;
-        private int maxHp = 100;
-        private int hp = 100;
+        private bool _isDead;
+        private int _maxHp;
+        private int _hp = 100;
         public int HP
         {
-            get => hp;
+            get => _hp;
             private set
             {
-                hp = value;
+                _hp = value;
                 //Debug.Log($"Now Hp {value}");
-                if (hp <= 0 && !isDead) //사망판정 중복 방지용
+                if (_hp <= 0 && !_isDead) //사망판정 중복 방지용
                 {
                     Die();
                 }
-                OnHpChanged?.Invoke(HP,maxHp);
+                OnHpChanged?.Invoke(HP,_maxHp);
             }
         }
 
@@ -39,22 +34,28 @@ namespace Contents.Mech
         {
             _Behavior = GetComponent<MechBehavior>();
             _stat = GetComponent<MechStatus>();
+            if (_stat is null)
+            {
+                Debug.Log("MechHealth : 초기 스탯이 입력되지 않았습니다. ");
+            }
         }
 
         private void OnEnable()
         {
-            hp = maxHp;
-            isDead = false;
+            _maxHp = _stat._baseStatue.maxHp;
+            _hp = _maxHp;
+            Debug.Log($"{_hp}{_maxHp}{HP}");
+            _isDead = false;
         }
 
         private void Start()
         {
-            OnHpChanged?.Invoke(HP,maxHp);
+            OnHpChanged?.Invoke(HP,_maxHp);
         }
 
         public void Die()
         {
-            isDead = true; 
+            _isDead = true; 
             Debug.Log($"{gameObject.name} Die");
             OnDie?.Invoke(this);
             GetComponent<PooledObject>()?.Return();

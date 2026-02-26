@@ -13,7 +13,6 @@ namespace Contents.Mech
     /// Attack요청을 보냄</summary>
     public class AttackInvoker : MonoBehaviour
     {
-        [SerializeField] private MechBehavior behavior;
         /// <summary>기체의 Controller에서 공격 가능한지 여부 확인</summary>
         /// <param name="aimData">에임 정보(타겟의 위치와 발사 방향)</param>
         /// <param name="curWeaponParts">현재 사용중인 무기</param>
@@ -21,15 +20,12 @@ namespace Contents.Mech
         /// <returns>WeaponParts에 공격입력이 들어갔으면 true, 안들어갔으면 false</returns>
         public bool AttackInvoke(in AimData aimData, in WeaponParts curWeaponParts, in BonusStat mechRuntimeStat)
         {
-            if (!curWeaponParts.CanShot)
-            {
-                return false;
-            }
-            else
-            {
-                curWeaponParts.Attack(aimData, mechRuntimeStat);
-                return true;
-            }
+            Debug.Log($"{curWeaponParts.IsReloading}{curWeaponParts.IsDelay}");
+            if (curWeaponParts.IsReloading || curWeaponParts.IsDelay) return false;
+            
+            
+            curWeaponParts.Attack(aimData, mechRuntimeStat);
+            return true;
         }
     }
 }

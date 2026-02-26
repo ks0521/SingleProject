@@ -46,7 +46,7 @@ public static class CreatePassiveSkills
 
             var so = ScriptableObject.CreateInstance<PassiveSkillSO>();
             so.id = def.id;
-            so.name = def.name;
+            so.skillName = def.name;
             so.type = def.type;
             so.rarity = def.rarity;
             so.advantageText = def.advantageText;

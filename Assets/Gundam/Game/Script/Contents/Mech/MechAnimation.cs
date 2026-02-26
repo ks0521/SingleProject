@@ -11,8 +11,8 @@ public class MechAnimation : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
     [SerializeField] private AnimationClip _hitClip;
-    private MechHealth _mechHealth;
-    private MechStatus _mechStatus;
+    private MechHealth _health;
+    private MechStatus _status;
     private PlayerController _controller;
     private Rigidbody _rb;
     private int _hitMultiPlier;
@@ -27,8 +27,8 @@ public class MechAnimation : MonoBehaviour
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
-        _mechHealth = GetComponent<MechHealth>();
-        _mechStatus = GetComponent<MechStatus>();
+        _health = GetComponent<MechHealth>();
+        _status = GetComponent<MechStatus>();
         _hitHash =  Animator.StringToHash("Hit");
         _hitMultiPlier = Animator.StringToHash("HitMultiplier");
         _speedHash =  Animator.StringToHash("Speed");
@@ -37,11 +37,12 @@ public class MechAnimation : MonoBehaviour
 
     void Start()
     {
-        _mechHealth.OnHitStopped += HitStopAnimation;
+        _health.OnHitStopped += HitStopAnimation;
     }
 
     void HitStopAnimation(float duration)
     {
+        if (_status.SuperArmor) return; //경직면역이면 피격되어도 움직임
         _animator.SetFloat(_hitMultiPlier, _hitClip.length / duration);
         _animator.SetTrigger(_hitHash);
     }
@@ -50,8 +51,8 @@ public class MechAnimation : MonoBehaviour
     {
         _speedVector = _rb.velocity;
         _speedVector.y = 0;
-        _walkSpeed = _mechStatus._baseStatue.walkSpeed + _mechStatus.RuntimeBonusStat.increseSpeed;
-        _runSpeed = _mechStatus._baseStatue.runSpeed + _mechStatus.RuntimeBonusStat.increseSpeed;
+        _walkSpeed = _status._baseStatue.walkSpeed + _status.RuntimeBonusStat.increseSpeed;
+        _runSpeed = _status._baseStatue.runSpeed + _status.RuntimeBonusStat.increseSpeed;
         _speed = _speedVector.magnitude;
         if (_speed <= _walkSpeed)
         {

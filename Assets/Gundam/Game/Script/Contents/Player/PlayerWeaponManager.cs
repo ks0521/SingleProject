@@ -19,7 +19,7 @@ namespace Contents.Player
             _curWeaponPart = weaponPartsList[0];
             OnChangeWeaponPart?.Invoke(_curWeaponPart,0);
         }
-
+        
         // Update is called once per frame
         void Update()
         {

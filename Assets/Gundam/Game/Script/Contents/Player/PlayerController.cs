@@ -20,6 +20,7 @@ namespace Contents.Player
         [SerializeField]private MechBehavior _behavior;
         [SerializeField] private WeaponParts _curWeaponParts;
         [SerializeField] private ShotInfo _shotInfo;
+        [SerializeField] private MeleeComboAttack meleeComboAttack;
         private MechStatus _stat;
         private MechAnimation _ani;
         private PlayerWeaponManager _weaponManager;
@@ -52,6 +53,12 @@ namespace Contents.Player
             _weaponManager = GetComponent<PlayerWeaponManager>();
             _stat = GetComponent<MechStatus>();
             _ani = GetComponent<MechAnimation>();
+            meleeComboAttack = GetComponentInChildren<MeleeComboAttack>();
+        }
+
+        private void OnEnable()
+        {
+            _weaponManager.OnChangeWeaponPart += ChangeWeapon;
         }
 
         void Start()
@@ -63,7 +70,6 @@ namespace Contents.Player
             _curMove = AniMove.Idle;
             _prevMove = _curMove;
             _canControl = true;
-            _weaponManager.OnChangeWeaponPart += ChangeWeapon;
             Debug.Log($"boosterSpeed init = {_boosterSpeed}");
 
         }
@@ -92,7 +98,7 @@ namespace Contents.Player
         #region Move
         private void FixedUpdate()
         {
-            if (!_canControl) return;
+            if (!_canControl || meleeComboAttack.IsPlaying) return; //피격중이거나 공격중이면 이동안함
             _behavior.Move(_axisX, _axisZ, _speed);
         }
         

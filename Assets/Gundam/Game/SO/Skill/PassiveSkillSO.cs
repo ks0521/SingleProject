@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public enum SkillType
 {
@@ -19,7 +20,7 @@ public enum SkillRarity
 public class PassiveSkillSO : ScriptableObject
 {
     public int id; // 스킬 고유 id
-    public string name; //스킬 이름
+    public string skillName; //스킬 이름
     public SkillType type; // 스킬 종류(공격/방어/유틸리티)
     public SkillRarity rarity;
     [TextArea(2, 4)]public string advantageText; // 스킬 장점

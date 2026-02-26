@@ -19,8 +19,8 @@ namespace Base.UI.WeaponSlot
         private RectTransform rt;
         private int _order; //자신이 몇번째 슬롯인지
         private bool isActive;
-        private bool prevReload;
-        private bool curReload;
+        private bool prevReloading;
+        private bool curReloading;
         [SerializeField] private Image fill;
         [SerializeField] private Image frame;
         [SerializeField] private Image weaponImg;
@@ -52,9 +52,6 @@ namespace Base.UI.WeaponSlot
         private Color32 ReloadedFrame;
         private Color32 ReloadedWeapon;
         #endregion
-        private void Awake()
-        {
-        }
         // MVP 구현 후 리팩토링(mvp / 이벤트 허브 등.. ) 방식 생각해 볼 것
         private void OnEnable()
         {
@@ -70,7 +67,7 @@ namespace Base.UI.WeaponSlot
                 gameObject.SetActive(false);
             }
             weaponManager.OnChangeWeaponPart += ChangeWeapon;
-            SetColor(isReloaded:true); //시작시에는 모든 무기가 장전된 채로 시작
+            SetColor(isReloading:false); //시작시에는 모든 무기가 장전된 채로 시작
             SetColorTemplet(false);
         }
 
@@ -93,20 +90,20 @@ namespace Base.UI.WeaponSlot
                 return;
             }
             
-            curReload = _curWeaponParts.CanShot;
-            if (curReload != prevReload)
+            curReloading = _curWeaponParts.IsReloading;
+            if (curReloading != prevReloading)
             {
-                if (curReload) //이번 프레임에서 장전됨
+                if (curReloading) //이번 프레임에서 장전됨
                 {
-                    SetColor(isReloaded: true);
+                    SetColor(isReloading: true);
                 }
                 else //이번 프레임에서 발사됨
                 {
-                    SetColor(isReloaded: false);
+                    SetColor(isReloading: false);
                 }
             }
             SetFill();
-            prevReload = curReload;
+            prevReloading = curReloading;
         }
 
         /// <summary> 플레이어가 입력한 무기 번호를 이벤트로 받아서 자신이면 활성화, 여기서 parts는 안씀</summary>
@@ -128,7 +125,6 @@ namespace Base.UI.WeaponSlot
 
         private void ActiveSlot()
         {
-            Debug.Log("움직임");
             rt.DOAnchorPosY(startPos.y + 50, 0.1f);
             isActive = true;
         }
@@ -137,11 +133,21 @@ namespace Base.UI.WeaponSlot
             rt.DOAnchorPosY(startPos.y, 0.1f);
             isActive = false;
         }
-        void SetFill() => fill.fillAmount = _curWeaponParts.CoolDownRatio;
-        /// <summary> 장전 여부에 따른 무기 슬롯의 색상을 변경</summary>
-        void SetColor(bool isReloaded)
+        void SetFill()
         {
-            if (isReloaded) //장전완료된 상태
+            if (_curWeaponParts.IsReloading)
+            {
+                fill.fillAmount = _curWeaponParts.ReloadingRatio;
+            }
+            else
+            {
+                fill.fillAmount = _curWeaponParts.AmmoRatio;
+            }
+        } 
+        /// <summary> 장전 여부에 따른 무기 슬롯의 색상을 변경</summary>
+        void SetColor(bool isReloading)
+        {
+            if (!isReloading) //장전완료된 상태
             {
                 fill.color = ReloadedFill;
                 frame.color = ReloadedFrame;
@@ -170,7 +176,7 @@ namespace Base.UI.WeaponSlot
                 ReloadedFrame = InActiveReloadedFrameColor;
                 ReloadedFill = InActiveReloadedFrameColor;
             }
-            SetColor(curReload);
+            SetColor(curReloading);
         }
 
         

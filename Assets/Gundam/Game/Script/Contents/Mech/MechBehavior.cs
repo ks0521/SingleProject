@@ -19,14 +19,16 @@ namespace Base.Utilities
         private Rigidbody _rb;
         private bool _canControl;
         private AttackInvoker _attackInvoker;
-
+        private MechStatus _status;
         private Transform _target;
         private float _turnSpeedDegPerSec = 360f;
-        
+
+        private bool superArmor;
         private void Awake()
         {
             _rb = GetComponent<Rigidbody>();
             _attackInvoker = GetComponent<AttackInvoker>();
+            _status = GetComponent<MechStatus>();
             _canControl = true;
         }
 
@@ -78,11 +80,13 @@ namespace Base.Utilities
         public void Attack(in AimData aimData,in WeaponParts part,in BonusStat mechStat)
         {
             if (!_canControl) return;
+            Debug.Log("Attack Invoke");
             _attackInvoker.AttackInvoke(in aimData, in part, in mechStat);
             //part.Attack(aimData,mechStat);
         }
         public void HitStop(float duration)
         {
+            if (_status.SuperArmor) return; //경직면역상태면 피격상관없이 작동
             HitStop(this.GetCancellationTokenOnDestroy(), duration).Forget();
         }
         async UniTaskVoid HitStop(CancellationToken token,float duration )

@@ -90,7 +90,7 @@ namespace SlimUI.ModernMenu{
 			if(extrasMenu) extrasMenu.SetActive(false);
 			firstMenu.SetActive(true);
 			mainMenu.SetActive(true);
-
+			Debug.Log(themeIndex); //콘솔 미사용 오류 제거용
 			SetThemeColors();
 		}
 		/// <summary>

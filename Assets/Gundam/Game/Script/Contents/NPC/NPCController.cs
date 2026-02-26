@@ -163,23 +163,23 @@ namespace Contents.NPC
             //적이 자신의 안전거리 안으로 들어오면 도주
             if (dist < param.minSafeRange)
             {
-                Debug.Log("State Change : Retreat");
+                //Debug.Log("State Change : Retreat");
                 ChangeState(State.Retreat); return;
             }
             //적이 시야에 들어오지 않으면 재배치
             if (!hasLos)
             {
-                Debug.Log("State Change : Reposition");
+                //Debug.Log("State Change : Reposition");
                 ChangeState(State.Reposition); return;
             }
             //적이 공격거리 바깥에 있으면 접근
             if (dist > param.attackRange)
             {
-                Debug.Log("State Change : Approach");
+                //Debug.Log("State Change : Approach");
                 ChangeState(State.Approach); return;
             }
             //공격거리 안이고 시야확보되면 공격
-            Debug.Log("State Change : Attack");
+            //Debug.Log("State Change : Attack");
             ChangeState(State.Attack);
         }
         void Act()
@@ -187,7 +187,7 @@ namespace Contents.NPC
             switch (_state)
             {
                 case State.Seek:
-                    Debug.Log("상태변화 : seek");
+                    //Debug.Log("상태변화 : seek");
                     //타겟이 있으면 접근
                     if (target != null)
                     {
@@ -286,7 +286,6 @@ namespace Contents.NPC
             {
                 return false;
             }
-            Debug.Log("NO HIT");
 
             return true;
         }
@@ -327,20 +326,18 @@ namespace Contents.NPC
             float t = (turnNearDistance <= turnFarDistance) 
                 ? 1f : Mathf.InverseLerp(turnNearDistance, turnFarDistance, dist);
             float turnDeg = Mathf.Lerp(turnSpeedNearDeg, turnSpeedFarDeg, t);
-            _behavior.SetLookTarget(target,turnDeg);
+            _behavior.SetLookTarget(target,turnDeg * attackTurnMultiflier);
         }
         void TryFire()
         {
             if (!target.gameObject.activeInHierarchy || target == null) return;
+            Debug.Log("TryFire");
             _behavior.Attack(GetAim(),curWeapon,_mechstatus.RuntimeBonusStat);
         }
-        
         AimData GetAim()
         {
             Vector3 _dir = (target.position - curWeapon.FirePoint.position).normalized;
             return new AimData(_dir, target.position);
         }
-
- 
     }
 }

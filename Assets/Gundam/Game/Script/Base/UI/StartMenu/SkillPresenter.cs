@@ -31,7 +31,7 @@ public class SkillPresenter : MonoBehaviour
         btn.onClick.RemoveAllListeners();
         btn.onClick.AddListener(()=>skillManager.ChoiceSkill(skill));
         btn.onClick.AddListener(skillManager.TurnOff);
-        skillName.text = skill.name;
+        skillName.text = skill.skillName;
         rarity.text = "[" + skill.rarity.ToString() + "]";
         advantage.text = skill.advantageText;
         disAdvantage.text = skill.disAdvantageText;

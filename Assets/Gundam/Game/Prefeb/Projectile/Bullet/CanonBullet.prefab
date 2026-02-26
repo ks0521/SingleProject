@@ -93,6 +93,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _weaponData: {fileID: 11400000, guid: c6272f9d5ea3b88459602ce9dbd47cb6, type: 2}
   _hitterLayer: 0
+  _finalStat:
+    Damage: 0
+    Speed: 0
+    AdditionalExplosionRadius: 0
+    _myTeam: 0
 --- !u!114 &57744875614371417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -105,6 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1008f0b282d97c84da5e2e6f526da75c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _id: {fileID: 0}
 --- !u!54 &3902508117951781503
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -114,13 +114,13 @@ namespace Contnts.Player
             // 이전 프레임에선 적이 있었지만 현재 프레임에서 없어진 경우 크로스헤어 이펙트 비활성화
             if (!isEnemyAimed && wasEnemyAimed)
             {
-                Debug.Log($"레이캐스트 벗어남 {_hit.collider}");
+                //Debug.Log($"레이캐스트 벗어남 {_hit.collider}");
                 OnTargetUnSensored?.Invoke();
             }
             // 이전 프레임에선 적이 없었지만 현재 프레임에서 생긴 경우 크로스헤어 이펙트 활성화
             else if (isEnemyAimed && !wasEnemyAimed)
             {
-                Debug.Log($"레이캐스트 진입 {_hit.collider}");
+                //Debug.Log($"레이캐스트 진입 {_hit.collider}");
                 OnTargetSensored?.Invoke(_hit);
             }
         }
