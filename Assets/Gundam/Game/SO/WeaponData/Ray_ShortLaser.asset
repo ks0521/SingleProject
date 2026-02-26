@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackType: 2
   damage: 15
-  RPM: 120
-  ammo: 0
-  reloadingTime: 0
+  RPM: 60
+  ammo: 15
+  reloadingTime: 3
   attackRadius: 0.1
   ID: {fileID: 0}
   projectileStat:

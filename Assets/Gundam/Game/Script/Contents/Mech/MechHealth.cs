@@ -15,7 +15,7 @@ namespace Contents.Mech
         private bool _isDead;
         private int _maxHp;
         private int _hp = 100;
-        public int HP
+        public int Hp
         {
             get => _hp;
             private set
@@ -26,7 +26,7 @@ namespace Contents.Mech
                 {
                     Die();
                 }
-                OnHpChanged?.Invoke(HP,_maxHp);
+                OnHpChanged?.Invoke(Hp,_maxHp);
             }
         }
 
@@ -44,13 +44,13 @@ namespace Contents.Mech
         {
             _maxHp = _stat._baseStatue.maxHp;
             _hp = _maxHp;
-            Debug.Log($"{_hp}{_maxHp}{HP}");
+            Debug.Log($"{_hp}{_maxHp}{Hp}");
             _isDead = false;
         }
 
         private void Start()
         {
-            OnHpChanged?.Invoke(HP,_maxHp);
+            OnHpChanged?.Invoke(Hp,_maxHp);
         }
 
         public void Die()
@@ -63,7 +63,7 @@ namespace Contents.Mech
         /// <summary> 피격판정이 발생하는곳으로, 피해를 입고 피해경직 상태를 실행시킴</summary>
         public float Hit(float damage)
         {
-            HP -= (int)damage;
+            Hp -= (int)damage;
             _Behavior?.HitStop(0.15f);
             OnHitStopped?.Invoke(0.15f);
             return 0;

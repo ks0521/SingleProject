@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2213008154c7fc4f9d20aa8363f3e27, type: 3}
   m_Name: Ally
   m_EditorClassIdentifier: 
-  poolingObj: {fileID: 9080596438677796722, guid: 6764f95dae068d7479994fcbb859fc5c,
+  poolingObj: {fileID: 7007329910859055853, guid: 528d3a18f4f3a6543bbcf7180ba0eebf,
     type: 3}
