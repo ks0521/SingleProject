@@ -10,10 +10,25 @@ namespace Contents.Player
     public class PlayerWeaponManager : MonoBehaviour
     {
         public List<WeaponParts> weaponPartsList;
+        private List<WeaponData> weaponSettings;
         private WeaponParts _curWeaponPart;
         
         //바꾼 장비(Controller + WeaponSlot UI)와 몇번 장비로 바꿨는지(WeaponSlot UI)
-        public event Action<WeaponParts, int> OnChangeWeaponPart; 
+        public event Action<WeaponParts, int> OnChangeWeaponPart;
+
+        private void Awake()
+        {
+            weaponSettings = PlayerInfoManager.Instance.GetPlayerWeaponSettings();
+            for (int i = 0; i < weaponSettings.Count; i++)
+            {
+                
+            }
+        }
+
+        void LinkWeaponParts(WeaponData data)
+        {
+            
+        }
         void Start()
         {
             _curWeaponPart = weaponPartsList[0];

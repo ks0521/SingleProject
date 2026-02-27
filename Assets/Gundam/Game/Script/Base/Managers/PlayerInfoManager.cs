@@ -15,7 +15,7 @@ public class PlayerInfoManager : MonoBehaviour
     private MechType _type;
     public MechType Type => _type;
     private List<PassiveSkillSO> _gainedSkill;
-    private List<WeaponParts> weapons;
+    private List<WeaponData> weapons;
     private int playerHp;
     private int playerBreakdown; // 손상도
     public int Gold { get; private set; }
@@ -27,12 +27,15 @@ public class PlayerInfoManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
         Instance = this;
         DontDestroyOnLoad(gameObject);
         _gainedSkill = new List<PassiveSkillSO>();
     }
 
-    public void SelectType(MechType type)
+    public List<WeaponData> GetPlayerWeaponSettings() { return weapons; }
+
+public void SelectType(MechType type)
     {
         _type = type;
         Debug.Log($"플레이어 기체 타입 선택 : {_type}");
