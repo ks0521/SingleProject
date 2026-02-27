@@ -64,6 +64,10 @@ namespace SlimUI.ModernMenu{
         public GameObject lineCombat;
         [Tooltip("Highlight Image for when GENERAL Sub-Tab is selected in KEY BINDINGS")]
         public GameObject lineGeneral;
+        [Tooltip("Setting Screens")]
+        public GameObject SettingPanel;
+        [Tooltip("MechType Select Screen")] 
+        public GameObject TypeSelectPanel;
 
         [Header("LOADING SCREEN")]
 		[Tooltip("If this is true, the loaded scene won't load until receiving user input")]
@@ -161,6 +165,18 @@ namespace SlimUI.ModernMenu{
 		//게임 시작 창으로 이동
 		public void Position1(){
 			CameraObject.SetFloat("Animate",0);
+		}
+		/// <summary> 환경설정 창 끄기(기체타입 선택창 오픈용)</summary>
+		public void DisableSettingCanvas()
+		{
+			SettingPanel.SetActive(false);
+			TypeSelectPanel.SetActive(true);
+		}
+		/// <summary> 타입선택 창 끄기</summary>
+		public void DisableTypeSelectCanvas()
+		{
+			SettingPanel.SetActive(true);
+			TypeSelectPanel.SetActive(false);
 		}
 		/// <summary> 환경설정 패널 다 끄기</summary>
 		void DisablePanels(){

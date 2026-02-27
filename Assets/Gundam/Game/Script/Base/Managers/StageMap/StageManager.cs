@@ -30,6 +30,11 @@ public class StageManager : MonoBehaviour
         PrevScene = CurScene = Scenes.WorldMap;
     }
 
+    public void NewGame()
+    {
+        SetStage(0);
+        //기타 초기화
+    }
     public void SetStage(int stage)
     {
         Stage = stage;
@@ -49,6 +54,7 @@ public class StageManager : MonoBehaviour
 
     public void SpawnAlly()
     {
+        
     }
 
     public void SpwanEnemy()

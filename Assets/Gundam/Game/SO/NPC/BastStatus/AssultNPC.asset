@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 42cc9975ad6437e4e8575c76df70c0b4, type: 3}
-  m_Name: NPC
+  m_Name: AssultNPC
   m_EditorClassIdentifier: Assembly-CSharp::BaseStatueSO
-  walkSpeed: 3
-  runSpeed: 5
+  walkSpeed: 4
+  runSpeed: 7
   maxHp: 300

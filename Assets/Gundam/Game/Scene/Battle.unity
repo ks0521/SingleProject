@@ -1865,6 +1865,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 423207456}
   m_CullTransparentMesh: 1
+--- !u!114 &428798525 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4570806554152520749, guid: cae822860263b474ca8bef1639e297b1,
+    type: 3}
+  m_PrefabInstance: {fileID: 3057303239526810985}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afc998f4501033345929daaa2795caf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &431806117
 GameObject:
   m_ObjectHideFlags: 0
@@ -8767,7 +8779,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -60.00049, y: 40}
+  m_AnchoredPosition: {x: -60.000427, y: 40}
   m_SizeDelta: {x: 800, y: 350}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2132134200
@@ -9006,6 +9018,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 1784107491899790223, guid: cae822860263b474ca8bef1639e297b1,
+        type: 3}
+      propertyPath: weaponPartsList.Array.data[0]
+      value: 
+      objectReference: {fileID: 428798525}
     - target: {fileID: 2517863100240089334, guid: cae822860263b474ca8bef1639e297b1,
         type: 3}
       propertyPath: m_Layer
@@ -9094,17 +9111,17 @@ PrefabInstance:
     - target: {fileID: 4759844915875550814, guid: cae822860263b474ca8bef1639e297b1,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.97
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4759844915875550814, guid: cae822860263b474ca8bef1639e297b1,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.1
+      value: 0.103
       objectReference: {fileID: 0}
     - target: {fileID: 4759844915875550814, guid: cae822860263b474ca8bef1639e297b1,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.63
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4759844915875550814, guid: cae822860263b474ca8bef1639e297b1,
         type: 3}

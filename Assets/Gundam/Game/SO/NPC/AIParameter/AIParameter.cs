@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace SO.NPC
 {
-    public enum MechType { Short,Mid,Long }
+    public enum MechType { Assult,Tactical,FirePower }
 
     [CreateAssetMenu]
     public class AIParameter : ScriptableObject

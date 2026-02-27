@@ -22,7 +22,7 @@ namespace Base.Utilities
         private MechStatus _status;
         private Transform _target;
         private float _turnSpeedDegPerSec = 360f;
-
+        private Vector3 _jumpVector;
         private bool superArmor;
         private void Awake()
         {
@@ -30,6 +30,11 @@ namespace Base.Utilities
             _attackInvoker = GetComponent<AttackInvoker>();
             _status = GetComponent<MechStatus>();
             _canControl = true;
+        }
+
+        private void OnEnable()
+        {
+            GetComponent<MechHealth>().OnHitStopped += HitStop;
         }
 
         public void SetLookTarget(Transform target, float turnSpeedDegPerSec)
@@ -69,6 +74,14 @@ namespace Base.Utilities
             if (!_canControl) return;
             _rb.CustomMove(axisX,axisZ,speed);
         }
+        /// <summary> 점프중</summary>
+        /// <param name="power"> 상승벡터</param>
+        public void JetPackOn(float power)
+        {
+            _jumpVector = _rb.velocity;
+            _jumpVector.y = 2;
+            _rb.velocity = _jumpVector;
+        }
         /// <summary> NPC 기체만 이용, 기체를 회전시킴</summary>
         public void Rotate(Transform targetPos)
         {
@@ -84,6 +97,9 @@ namespace Base.Utilities
             _attackInvoker.AttackInvoke(in aimData, in part, in mechStat);
             //part.Attack(aimData,mechStat);
         }
+        /// <summary> 피격 경직을 구현하는 메서드,
+        /// MechHealth의 OnHitStop을 구독하고 있음</summary>
+        /// <param name="duration">경직시간</param>
         public void HitStop(float duration)
         {
             if (_status.SuperArmor) return; //경직면역상태면 피격상관없이 작동

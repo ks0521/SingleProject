@@ -20,7 +20,6 @@ namespace Contents.Mech
         /// <returns>WeaponParts에 공격입력이 들어갔으면 true, 안들어갔으면 false</returns>
         public bool AttackInvoke(in AimData aimData, in WeaponParts curWeaponParts, in BonusStat mechRuntimeStat)
         {
-            Debug.Log($"{curWeaponParts.IsReloading}{curWeaponParts.IsDelay}");
             if (curWeaponParts.IsReloading || curWeaponParts.IsDelay) return false;
             
             

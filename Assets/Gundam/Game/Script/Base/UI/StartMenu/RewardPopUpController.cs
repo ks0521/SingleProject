@@ -26,13 +26,13 @@ public class RewardPopUpController : MonoBehaviour
         switch (StageManager.Instance.PrevScene)
         {
             case Scenes.Battle:
-                PlayerStatusManager.Instance.GetGold(Random.Range(150 + stageBonus,170 + stageBonus));
+                PlayerInfoManager.Instance.GetGold(Random.Range(150 + stageBonus,170 + stageBonus));
                 break;
             case Scenes.Elite:
-                PlayerStatusManager.Instance.GetGold(Random.Range(250 + stageBonus,300 + stageBonus));
+                PlayerInfoManager.Instance.GetGold(Random.Range(250 + stageBonus,300 + stageBonus));
                 break;
             case Scenes.Boss: 
-                PlayerStatusManager.Instance.GetGold(Random.Range(400 + stageBonus,500 + stageBonus));
+                PlayerInfoManager.Instance.GetGold(Random.Range(400 + stageBonus,500 + stageBonus));
                 break;
         }
     }

@@ -1,16 +1,21 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Contents.Weapon;
+using SO.NPC;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 /// <summary> 플레이어의 보유 패시브, 골드, 체력, 손상도 관리
 /// 전투 시작시 여기서 Hp와 손상도를 받아와 초기 세팅
-/// 전투 종료시 Hp와 손상도를 여기(PlayerStatusManager)에 갱신</summary>
-public class PlayerStatusManager : MonoBehaviour
+/// 전투 종료시 Hp와 손상도를 여기(PlayerInfoManager)에 갱신</summary>
+public class PlayerInfoManager : MonoBehaviour
 {
-    public static PlayerStatusManager Instance;
+    public static PlayerInfoManager Instance;
+    private MechType _type;
+    public MechType Type => _type;
     private List<PassiveSkillSO> _gainedSkill;
+    private List<WeaponParts> weapons;
     private int playerHp;
     private int playerBreakdown; // 손상도
     public int Gold { get; private set; }
@@ -25,6 +30,12 @@ public class PlayerStatusManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
         _gainedSkill = new List<PassiveSkillSO>();
+    }
+
+    public void SelectType(MechType type)
+    {
+        _type = type;
+        Debug.Log($"플레이어 기체 타입 선택 : {_type}");
     }
     /// <summary> 새로 획득한 스킬을 보유중인 스킬 리스트에 추가</summary>
     /// <param name="newSkill">획득한 스킬</param>

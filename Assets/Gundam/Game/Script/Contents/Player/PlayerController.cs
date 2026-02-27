@@ -9,18 +9,12 @@ using Cysharp.Threading.Tasks;
 
 namespace Contents.Player
 {
-    public struct ShotInfo
-    {
-        public WeaponParts curWeaponParts;
-        public AimData aimData;
-        public BonusStat MechRuntimeStat;
-    }
+
     public class PlayerController : MonoBehaviour
     {
-        [SerializeField]private MechBehavior _behavior;
         [SerializeField] private WeaponParts _curWeaponParts;
-        [SerializeField] private ShotInfo _shotInfo;
         [SerializeField] private MeleeComboAttack meleeComboAttack;
+        private MechBehavior _behavior;
         private MechStatus _stat;
         private MechAnimation _ani;
         private PlayerWeaponManager _weaponManager;
@@ -32,11 +26,9 @@ namespace Contents.Player
         private float _axisX;
         private float _axisZ;
         private bool _canControl; //경직 여부
-        private float _hitStopDuration; //경직 시간
         private float _walkSpeed; //걷기 스피드
         private float _boosterSpeed; //부스터 스피드
         private float _speed; //현재 스피드
-        private float _animationSpeed; //애니메이션에 적용될 스피드(0~1)
         private Vector3 _jumpVector;
         private AniMove _curMove;
         private AniMove _prevMove;
@@ -63,15 +55,12 @@ namespace Contents.Player
 
         void Start()
         {
-            _walkSpeed = 7;
-            _speed = _walkSpeed;
-            _boosterSpeed = 5;
-            _hitStopDuration = 0.12f;
+            _speed = _stat._baseStatue.walkSpeed;
+            _boosterSpeed = _stat._baseStatue.runSpeed;
             _curMove = AniMove.Idle;
             _prevMove = _curMove;
             _canControl = true;
             Debug.Log($"boosterSpeed init = {_boosterSpeed}");
-
         }
 
         void ChangeWeapon(WeaponParts weaponpart, int index)
@@ -79,23 +68,7 @@ namespace Contents.Player
             Debug.Log($"{index} 번째 장비 장착 ");
             _curWeaponParts = weaponpart;
         }
-        #region Hit
-        public void HitStop()
-        {
-            HitStop(this.GetCancellationTokenOnDestroy(), _hitStopDuration).Forget();
-            Debug.Log("Hit");
-        }
 
-        public async UniTaskVoid HitStop(CancellationToken token,float duration )
-        {
-            _canControl = false;
-            _rb.velocity = Vector3.zero;
-            await UniTask.Delay(TimeSpan.FromSeconds(duration), cancellationToken: token);
-            _canControl = true;
-        }
-        #endregion
-
-        #region Move
         private void FixedUpdate()
         {
             if (!_canControl || meleeComboAttack.IsPlaying) return; //피격중이거나 공격중이면 이동안함
@@ -116,22 +89,17 @@ namespace Contents.Player
 
             if (Input.GetKeyDown(KeyCode.LeftControl))
             {
-                _ani.Jump(true);
+                //_ani.Jump(true);
             }
             if (Input.GetKey(KeyCode.LeftControl))
             {
-                _jumpVector = _rb.velocity;
-                _jumpVector.y = 2;
-                _rb.velocity = _jumpVector;
+                _behavior.JetPackOn(2);
             }
             if (Input.GetKeyUp(KeyCode.LeftControl))
             {
-                _jumpVector = _rb.velocity;
-                _jumpVector.y = 0;
-                _rb.velocity = _jumpVector;
-                _ani.Jump(false);
+                //_ani.Jump(false);
             }
-
+            
             //정지시 idle로 애니메이션 변경
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
@@ -143,12 +111,6 @@ namespace Contents.Player
             {
                 _speed = _stat._baseStatue.walkSpeed+_stat.RuntimeBonusStat.increseSpeed;
             }
-            
-            //if (Mathf.Abs(_axisX) <= 0.5f && Mathf.Abs(_axisZ) <= 0.5f)  _curMove = AniMove.Idle;
-            //else if(_curMove != AniMove.Booster)  _curMove = AniMove.Walk;
-            //이동상태  변화시 모션변경
-            //_animator.SetFloat(_speedHash, Mathf.Clamp((float)_curMove,0f,2f),0.1f,Time.deltaTime);
-            
             //상태변화에 따른 이벤트 트리거 발생용(ex. 부스터 사용시 / 일정시간 정지 후 이동시)
             if (_curMove != _prevMove)
             {
@@ -156,7 +118,6 @@ namespace Contents.Player
                 _prevMove = _curMove;
             }
         }
-        #endregion
     }
 
 }
