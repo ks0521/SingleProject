@@ -1550,6 +1550,7 @@ GameObject:
   - component: {fileID: 6645249291487593802}
   - component: {fileID: 7309766321794728286}
   - component: {fileID: 1567919988819432879}
+  - component: {fileID: -2868701284071814809}
   m_Layer: 8
   m_Name: V4_Ally
   m_TagString: Player
@@ -1636,7 +1637,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 576a878c6aa07184c96d0ca1c9563af9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RuntimeBonusStat:
+  runtimeBonusStat:
     increseDmg: 0
     multipleDmg: 0
     increseFireRate: 0
@@ -1649,8 +1650,7 @@ MonoBehaviour:
     increseDamageReduction: 0
     multipleDamageReduction: 0
     multipleAttackRadius: 0
-  _baseStatue: {fileID: 11400000, guid: d896419c3076bb24a8617b868918a691, type: 2}
-  _WeaponManager: {fileID: 0}
+  archeType: {fileID: 0}
   mechSkills: []
 --- !u!114 &1161158941422192777
 MonoBehaviour:
@@ -1753,6 +1753,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: {fileID: 0}
+--- !u!114 &-2868701284071814809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7007329910859055853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12b914eaa03ddf14aacc8f66635ac4c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stat: {fileID: 0}
+  candidateWeaponList: []
+  usableWeaponParts: []
+  curWeapons: {fileID: 0}
 --- !u!1 &7612039665640740090
 GameObject:
   m_ObjectHideFlags: 0

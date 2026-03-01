@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Contents.Weapon;
-using SO.NPC;
+using SO.Weapon;
+using SO.Mech;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -12,8 +12,8 @@ using UnityEngine.Serialization;
 public class PlayerInfoManager : MonoBehaviour
 {
     public static PlayerInfoManager Instance;
-    private MechType _type;
-    public MechType Type => _type;
+    private MechRangeType rangeType;
+    public MechRangeType RangeType => rangeType;
     private List<PassiveSkillSO> _gainedSkill;
     private List<WeaponData> weapons;
     private int playerHp;
@@ -35,10 +35,10 @@ public class PlayerInfoManager : MonoBehaviour
 
     public List<WeaponData> GetPlayerWeaponSettings() { return weapons; }
 
-public void SelectType(MechType type)
+public void SelectType(MechRangeType rangeType)
     {
-        _type = type;
-        Debug.Log($"플레이어 기체 타입 선택 : {_type}");
+        this.rangeType = rangeType;
+        Debug.Log($"플레이어 기체 타입 선택 : {this.rangeType}");
     }
     /// <summary> 새로 획득한 스킬을 보유중인 스킬 리스트에 추가</summary>
     /// <param name="newSkill">획득한 스킬</param>

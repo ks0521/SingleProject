@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Contents.Player;
-using Contents.Weapon;
+using SO.Player;
+using SO.Weapon;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -25,7 +25,7 @@ namespace Contnts.Player
         [SerializeField] private WeaponParts weaponPart; //장착중인 무기 부위(필요없으면 삭제할 예정)
         [SerializeField] private Transform defaultPoint; //무기 미장착시 임시포인트(메인카메라)
         [SerializeField] private Transform firePoint; //무기 발사부위
-        private PlayerWeaponManager _weaponManager;
+        private MechWeaponInventory weaponInventory;
         private int _hittableLayer; //적군(Enemy) + 오브젝트(Defulat) 레이어
         
         private Vector3 _targetPos;
@@ -42,7 +42,7 @@ namespace Contnts.Player
 
         private void Awake()
         {
-            _weaponManager = GetComponent<PlayerWeaponManager>();
+            weaponInventory = GetComponent<MechWeaponInventory>();
             _hittableLayer = 1 << (int)GameLayer.Default | 1 << (int)GameLayer.Enemy;
             defaultPoint = Camera.main.transform;
             firePoint = weaponPart?.FirePoint;
@@ -54,7 +54,7 @@ namespace Contnts.Player
 
         private void OnEnable()
         {
-            _weaponManager.OnChangeWeaponPart += UpdateWeapon;
+            weaponInventory.OnChangeWeaponPart += UpdateWeapon;
         }
 
         private void Update()

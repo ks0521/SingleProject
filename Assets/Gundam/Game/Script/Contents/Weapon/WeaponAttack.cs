@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using Contents.Mech;
+using SO.Mech;
 using UnityEngine;
 
-namespace Contents.Weapon
+namespace SO.Weapon
 {
     public abstract class WeaponAttack : MonoBehaviour
     {

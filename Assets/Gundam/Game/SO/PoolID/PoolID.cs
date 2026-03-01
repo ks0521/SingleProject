@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Contents/Pool ID")]
 public class PoolID : ScriptableObject
 {
     public GameObject poolingObj;

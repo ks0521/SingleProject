@@ -1,22 +1,21 @@
 using System;
 using System.Collections.Generic;
 using Base.Utilities;
-using Contents.Mech;
-using Contents.Weapon;
 using Contnts.Player;
-using SO.NPC;
+using SO.Mech;
+using SO.Weapon;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Contents.NPC
+namespace SO.NPC
 {
     public enum State{Seek, Approach, Attack, Retreat, Reposition, Stunned}
     /// <summary> NPC의 전투 AI구현부</summary>
     public class NPCController : MonoBehaviour
     {
         private MechBehavior _behavior;
-        private AttackInvoker _attackInvoker;
         private MechStatus _mechstatus;
+        private MechWeaponInventory _weaponInventory;
         public AIParameter param;
         [SerializeField] private WeaponParts curWeapon;
         
@@ -47,9 +46,9 @@ namespace Contents.NPC
         private void Awake() 
         {
             _behavior = GetComponent<MechBehavior>();
-            _attackInvoker = GetComponent<AttackInvoker>();
             _mechstatus = GetComponent<MechStatus>();
-
+            _weaponInventory = GetComponent<MechWeaponInventory>();
+            _weaponInventory.OnChangeWeaponPart += ChangeWeapon;
             _allyLayer = (int)GameLayer.Ally;
             _enemyLayer = (int)GameLayer.Enemy;
 
@@ -59,6 +58,18 @@ namespace Contents.NPC
             obstacleMask = 1 << (int)GameLayer.Default;
         }
 
+        private void OnEnable()
+        {
+            //풀링되었을 때는 따로 초기값 설정 안함
+            if (_mechstatus.archeType == null) return; 
+            param = _mechstatus.archeType.parameter;
+            //현재는 첫번째 무기 고정 사용으로 무기변경은 onenable 한번만
+        }
+
+        void ChangeWeapon(WeaponParts weaponpart, int index)
+        {
+            curWeapon = weaponpart;
+        }
         private void Update()
         {
             if (param == null) return;
@@ -305,7 +316,7 @@ namespace Contents.NPC
             Vector3 localdir = transform.InverseTransformDirection(dir);
             localdir.y = 0;
             localdir.Normalize();
-            _behavior.Move(localdir.x,localdir.z,_mechstatus._baseStatue.walkSpeed);
+            _behavior.Move(localdir.x,localdir.z,_mechstatus.archeType.mechBaseStatus.walkSpeed);
         }
         
         void StopMove()
@@ -331,11 +342,17 @@ namespace Contents.NPC
         void TryFire()
         {
             if (!target.gameObject.activeInHierarchy || target == null) return;
-            Debug.Log("TryFire");
-            _behavior.Attack(GetAim(),curWeapon,_mechstatus.RuntimeBonusStat);
+            //Debug.Log("TryFire");
+            _weaponInventory.Attack(GetAim());
+            //_behavior.Attack(GetAim(),curWeapon,_mechstatus.runtimeBonusStat);
         }
         AimData GetAim()
         {
+            if (target == null)
+            {
+                Debug.LogWarning("Target is Null");
+                return default;
+            }
             Vector3 _dir = (target.position - curWeapon.FirePoint.position).normalized;
             return new AimData(_dir, target.position);
         }

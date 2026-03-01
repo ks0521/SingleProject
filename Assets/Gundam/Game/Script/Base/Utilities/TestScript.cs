@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using Base.Manager.Test;
 using Base.UI.WeaponSlot;
-using Contents.Mech;
+using SO.Mech;
 using UnityEngine;
-using Contents.Player;
+using SO.Player;
 
 public class TestScript : MonoBehaviour
 {

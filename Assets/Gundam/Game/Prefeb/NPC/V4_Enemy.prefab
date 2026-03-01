@@ -1100,6 +1100,7 @@ GameObject:
   - component: {fileID: 6915148749751760723}
   - component: {fileID: 6729451051334036532}
   - component: {fileID: -3784176583311340805}
+  - component: {fileID: 8973682717660206262}
   m_Layer: 11
   m_Name: V4_Enemy
   m_TagString: Player
@@ -1186,7 +1187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 576a878c6aa07184c96d0ca1c9563af9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RuntimeBonusStat:
+  runtimeBonusStat:
     increseDmg: 0
     multipleDmg: 0
     increseFireRate: 0
@@ -1199,8 +1200,7 @@ MonoBehaviour:
     increseDamageReduction: 0
     multipleDamageReduction: 0
     multipleAttackRadius: 0
-  _baseStatue: {fileID: 11400000, guid: d896419c3076bb24a8617b868918a691, type: 2}
-  _WeaponManager: {fileID: 0}
+  archeType: {fileID: 0}
   mechSkills: []
 --- !u!114 &6189612811606395179
 MonoBehaviour:
@@ -1303,6 +1303,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _id: {fileID: 0}
+--- !u!114 &8973682717660206262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5452278475105967236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12b914eaa03ddf14aacc8f66635ac4c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stat: {fileID: 0}
+  candidateWeaponList: []
+  usableWeaponParts: []
+  curWeapons: {fileID: 0}
 --- !u!1 &5715286009698978412
 GameObject:
   m_ObjectHideFlags: 0

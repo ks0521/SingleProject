@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Contents.Mech;
+using SO.Mech;
 using UnityEngine;
 
 public class UIPresenter : MonoBehaviour

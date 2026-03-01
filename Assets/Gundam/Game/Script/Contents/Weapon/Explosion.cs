@@ -2,12 +2,12 @@ using System;
 using System.Threading;
 using Base.PoolSO;
 using Base.Utilities;
-using Contents.Player;
 using Cysharp.Threading.Tasks;
+using SO.Player;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Contents.Weapon
+namespace SO.Weapon
 {
     public enum ExplosionType
     {

@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Contents.Player;
-using Contents.Weapon;
+using SO.Player;
+using SO.Weapon;
 using UnityEngine;
 using DG.Tweening;
 using TMPro;
@@ -14,7 +14,8 @@ namespace Base.UI.WeaponSlot
     public class WeaponSlot : MonoBehaviour
     {
         [SerializeField] private Vector2 startPos;
-        [SerializeField] private PlayerWeaponManager weaponManager;
+        [SerializeField] private PlayerWeaponController weaponController;
+        [SerializeField] private MechWeaponInventory weaponInventory;
         private WeaponParts _curWeaponParts;
         private RectTransform rt;
         private int _order; //자신이 몇번째 슬롯인지
@@ -53,33 +54,33 @@ namespace Base.UI.WeaponSlot
         private Color32 ReloadedWeapon;
         #endregion
         // MVP 구현 후 리팩토링(mvp / 이벤트 허브 등.. ) 방식 생각해 볼 것
-        private void OnEnable()
+        private void Awake()
         {
             startPos = GetComponent<RectTransform>().anchoredPosition;
             rt = GetComponent<RectTransform>();
+            weaponInventory = GameObject.FindWithTag("Player").GetComponent<MechWeaponInventory>();
+            weaponInventory.OnChangeWeaponPart += ChangeWeapon;
             _order = transform.GetSiblingIndex();
             number.text = Convert.ToString(_order+1);
-            
-            weaponManager = GameObject.FindWithTag("Player").GetComponent<PlayerWeaponManager>();
-            if (weaponManager.weaponPartsList.Count < _order
-                || weaponManager.weaponPartsList[_order] == null)
-            {
-                gameObject.SetActive(false);
-            }
-            weaponManager.OnChangeWeaponPart += ChangeWeapon;
-            SetColor(isReloading:false); //시작시에는 모든 무기가 장전된 채로 시작
-            SetColorTemplet(false);
         }
 
         private void Start()
         {
-            _curWeaponParts = weaponManager.weaponPartsList[_order];
+            //현재 자기 무기슬롯 번호보다 무기리스트가 적거나 자기순서의 무기파츠가 없을때 스스로 비활성화
+            if (weaponInventory.Count <= _order || weaponInventory.Get(_order) == null)
+            {
+                gameObject.SetActive(false);
+                return;
+            }
+            _curWeaponParts = weaponInventory.WeaponParts[_order];
             weaponImg.sprite = _curWeaponParts.weaponImg;
-            
             //아래 3가지 색상은 무기 사용/미사용여부 관계없이 공통
             ReloadingFrame = ReloadingFrameColor; 
             ReloadingFill = ReloadingFillColor;
             ReloadedWeapon = WeaponColor;
+            SetColor(isReloading:false); //시작시에는 모든 무기가 장전된 채로 시작
+            SetColorTemplet(false);
+            if(_order == 0) weaponInventory.Refresh(); //슬롯 다 refresh하지 않게 1개만 대표로
         }
 
         private void FixedUpdate()
@@ -109,6 +110,7 @@ namespace Base.UI.WeaponSlot
         /// <summary> 플레이어가 입력한 무기 번호를 이벤트로 받아서 자신이면 활성화, 여기서 parts는 안씀</summary>
         public void ChangeWeapon(WeaponParts part, int order)
         {
+            Debug.Log("ChangeWeapon");
             if (order == _order)
             {
                 if (isActive) return; //이미 사용중인 무기에 활성화신호 보내면 작업하지 않음

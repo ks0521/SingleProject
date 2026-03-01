@@ -3,7 +3,7 @@ using Base.PoolSO;
 using Base.Utilities;
 using UnityEngine;
 
-namespace Contents.Mech
+namespace SO.Mech
 {
     public class MechHealth : MonoBehaviour, IHittable
     {
@@ -41,10 +41,9 @@ namespace Contents.Mech
         }
 
         private void OnEnable()
-        {
-            _maxHp = _stat._baseStatue.maxHp;
+        {   
+            _maxHp = (_stat.archeType is null) ? 100 : _stat.archeType.mechBaseStatus.maxHp;
             _hp = _maxHp;
-            Debug.Log($"{_hp}{_maxHp}{Hp}");
             _isDead = false;
         }
 

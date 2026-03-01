@@ -77,7 +77,23 @@ namespace Base.Manager.Test
             usingObj.SetActive(true);
             return usingObj;
         }
+        /// <summary> 활성화 여부를 선택할 수 있음</summary>
+        /// <param name="isActive">오브젝트를 줄때 활성화된 상태 조절가능</param>
+        public GameObject UsePool(Vector3 pos, Quaternion rot,bool isActive)
+        {
+            if (_pool.Count <= 0)
+            {
+                AddPool(_data.count / 3 + 1);
+                _data.count += (_data.count / 3 + 1);
+                Debug.Log($"풀 추가 : 현재 {_data.ID}의 최대 개수 : {_data.count}");
+            }
 
+            GameObject usingObj = _pool.Dequeue();
+            usingObj.transform.position = pos;
+            usingObj.transform.rotation = rot;
+            usingObj.SetActive(isActive);
+            return usingObj;
+        }
         /// <summary> 사용이 끝난 오브젝트를 풀에 반환하는 함수</summary>
         /// <param name="returnedObj">반환할 오브젝트</param>
         public void ReturnPool(GameObject returnedObj)

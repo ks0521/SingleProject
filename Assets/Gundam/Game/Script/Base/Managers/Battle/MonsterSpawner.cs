@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using Base.Manager.Test;
 using Base.NPC;
-using Contents.Mech;
+using SO.Mech;
 using UnityEngine;
+using Random = System.Random;
 
 public enum NpcType
 {
@@ -36,7 +37,7 @@ public struct StageSpawnData
 public class MonsterSpawner : MonoBehaviour
 {
     public static MonsterSpawner Instance;
-
+    [SerializeField] private List<MechArcheTypeSO> _NpcArcheType;
     [SerializeField] private PoolID Enemy;
     [SerializeField] private PoolID Ally;
     [SerializeField] private PoolID Elite;
@@ -52,7 +53,6 @@ public class MonsterSpawner : MonoBehaviour
     public event Action<int> OnAllyNpcRemain;
     public event Action<int> OnEnemyNpcRemain;
     public event Action OnAllEnemiesBroken;
-
     public event Action<int, int> OnSpawnFinished; //아군 및 적 생성완료
 
     private void Awake()
@@ -88,11 +88,15 @@ public class MonsterSpawner : MonoBehaviour
             Debug.LogWarning("스폰지점 없음");
             return;
         }
-
+        int archetype = UnityEngine.Random.Range(0, 3);
         if (type == NpcType.Ally)
         {
-            PooledNPC = PoolManager.poolDic[Ally].UsePool(spawnPoint.transform.position, spawnPoint.transform.rotation);
+            PooledNPC = PoolManager.poolDic[Ally].UsePool(spawnPoint.transform.position, spawnPoint.transform.rotation,false);
+            PooledNPC.GetComponent<MechStatus>().archeType =
+                _NpcArcheType[archetype];
             _allyList.Add(PooledNPC);
+            PooledNPC.SetActive(true);
+            Debug.Log($"{PooledNPC}타입 {(MechRangeType)archetype} 생성");
             OnAllyNpcRemain?.Invoke(_allyList.Count);
             DieHooking(PooledNPC);
         }
@@ -102,22 +106,25 @@ public class MonsterSpawner : MonoBehaviour
             {
                 case NpcType.Enemy:
                     PooledNPC = PoolManager.poolDic[Enemy]
-                                           .UsePool(spawnPoint.transform.position, spawnPoint.transform.rotation);
+                                           .UsePool(spawnPoint.transform.position, spawnPoint.transform.rotation,false);
                     break;
                 case NpcType.Elite:
                     PooledNPC = PoolManager.poolDic[Elite]
-                                           .UsePool(spawnPoint.transform.position, spawnPoint.transform.rotation);
+                                           .UsePool(spawnPoint.transform.position, spawnPoint.transform.rotation,false);
                     break;
                 case NpcType.Boss:
                     PooledNPC = PoolManager.poolDic[Boss]
-                                           .UsePool(spawnPoint.transform.position, spawnPoint.transform.rotation);
+                                           .UsePool(spawnPoint.transform.position, spawnPoint.transform.rotation,false);
                     break;
                 default:
                     break;
             }
-
+            PooledNPC.GetComponent<MechStatus>().archeType =
+                _NpcArcheType[archetype];
+            PooledNPC.SetActive(true);
             _enemyList.Add(PooledNPC);
             OnEnemyNpcRemain?.Invoke(_enemyList.Count);
+            Debug.Log($"{PooledNPC}타입 {(MechRangeType)archetype} 생성");
             DieHooking(PooledNPC);
         }
     }

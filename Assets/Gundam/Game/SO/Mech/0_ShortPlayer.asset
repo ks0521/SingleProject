@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14eb7173a03aa8b42a3635044c135e1a, type: 3}
+  m_Name: 0_ShortPlayer
+  m_EditorClassIdentifier: 
+  rangeType: 0
+  playable: 1
+  mechBaseStatus: {fileID: 11400000, guid: 0e56e961ea1dc2449b033ab47aa833fc, type: 2}
+  weaponLoadOut: {fileID: 11400000, guid: 5a6ae28822c5a0145a9a68004adfa368, type: 2}
+  parameter: {fileID: 0}

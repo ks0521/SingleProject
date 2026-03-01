@@ -4,7 +4,7 @@ using Base.Managers;
 using UnityEngine;
 
 /// <summary> 각 노드의 정보를 담는 SO </summary>
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Contents/Node")]
 public class NodeSO : ScriptableObject
 {
     public Scenes LoadSceneType; //해당 노드 선택시 이동하는 맵

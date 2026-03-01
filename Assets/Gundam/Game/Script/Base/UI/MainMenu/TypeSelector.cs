@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using SO.NPC;
+using SO.Mech;
 using TMPro;
 using UnityEngine;
 
@@ -18,14 +18,14 @@ public class TypeSelector : MonoBehaviour
     [SerializeField] private MechTypeInfo tactical;
     [SerializeField] private MechTypeInfo firePower;
 
-    public void SelectAssult() { ContextChange(assult); PlayerInfoManager.Instance.SelectType(MechType.Assult);}
-    public void SelectTactical() { ContextChange(tactical); PlayerInfoManager.Instance.SelectType(MechType.Tactical);}
-    public void SelectFirePower() { ContextChange(firePower); PlayerInfoManager.Instance.SelectType(MechType.FirePower);}
+    public void SelectAssult() { ContextChange(assult); PlayerInfoManager.Instance.SelectType(MechRangeType.Short);}
+    public void SelectTactical() { ContextChange(tactical); PlayerInfoManager.Instance.SelectType(MechRangeType.Middle);}
+    public void SelectFirePower() { ContextChange(firePower); PlayerInfoManager.Instance.SelectType(MechRangeType.Long);}
 
     private void OnEnable()
     {
         ContextChange(assult); //창 활성화시 기본선택은 강습형
-        PlayerInfoManager.Instance.SelectType(MechType.Assult);
+        PlayerInfoManager.Instance.SelectType(MechRangeType.Short);
     }
 
     void ContextChange(MechTypeInfo typeInfo)

@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
 using System.Threading;
-using Contents.Mech;
-using Contents.Weapon;
+using SO.Mech;
+using SO.Weapon;
 using Contnts.Player;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
@@ -93,7 +93,7 @@ namespace Base.Utilities
         public void Attack(in AimData aimData,in WeaponParts part,in BonusStat mechStat)
         {
             if (!_canControl) return;
-            Debug.Log("Attack Invoke");
+            //Debug.Log("Attack Invoke");
             _attackInvoker.AttackInvoke(in aimData, in part, in mechStat);
             //part.Attack(aimData,mechStat);
         }

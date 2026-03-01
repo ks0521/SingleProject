@@ -1,8 +1,8 @@
 using System;
 using System.Threading;
 using Base.Utilities;
-using Contents.Player;
-using Contents.Weapon;
+using SO.Player;
+using SO.Weapon;
 using Contnts.Player;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -14,7 +14,7 @@ public class MeleeComboAttack : MonoBehaviour
     private Animator _animator;
     private MechStatus _status;
     private PlayerAttackFeedback _attackFeedback;
-    private PlayerWeaponManager _weaponManager;
+    private MechWeaponInventory weaponInventory;
     //공격범위
     [SerializeField] private Vector3 halfExtents = new Vector3(1.2f, 1.0f, 1.2f);
     //대쉬중 적 탐지 범위(도주 고려해서 범위 더 작게)
@@ -41,7 +41,7 @@ public class MeleeComboAttack : MonoBehaviour
         _animator = GetComponent<Animator>();
         _rb = GetComponentInParent<Rigidbody>();
         _status = GetComponentInParent<MechStatus>();
-        _weaponManager = GetComponentInParent<PlayerWeaponManager>();
+        weaponInventory = GetComponentInParent<MechWeaponInventory>();
         _attackFeedback = GetComponentInParent<PlayerAttackFeedback>();
         targetMask = (gameObject.layer == (int)GameLayer.Ally) 
             ? 1 << (int)GameLayer.Enemy : 1 << (int)GameLayer.Ally;
@@ -49,8 +49,8 @@ public class MeleeComboAttack : MonoBehaviour
 
     private void OnEnable()
     {
-        if (_weaponManager is null) return;
-        _weaponManager.OnChangeWeaponPart += ForceEnd; //무기 바뀌면 강제멈춤
+        if (weaponInventory is null) return;
+        weaponInventory.OnChangeWeaponPart += ForceEnd; //무기 바뀌면 강제멈춤
     }
     /// <summary> 첫번째 공격 시작 </summary>
     /// <param name="stat"> 공격 시작시점 스탯</param>
@@ -78,7 +78,6 @@ public class MeleeComboAttack : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             _queueNext = true;
-            Debug.Log("QueueNext");
         }
     }
     /// <summary> Animator에 넣는 메서드로, 범위내 적 피해입힘 </summary>
@@ -147,7 +146,7 @@ public class MeleeComboAttack : MonoBehaviour
             while (Time.time < endTime)
             {
                 token.ThrowIfCancellationRequested();
-                _rb.CustomMove(0f, 1f, _status._baseStatue.runSpeed);
+                _rb.CustomMove(0f, 1f, _status.archeType.mechBaseStatus.runSpeed);
                 _rot = meleeAttackPoint.transform.rotation;
                 _center = meleeAttackPoint.transform.position;
                 //공격범위에 적이 들어오면 대쉬 종료
@@ -165,7 +164,7 @@ public class MeleeComboAttack : MonoBehaviour
         }
         finally //끝나면 정지하고 1타 애니메이션 실행
         {
-            _rb.CustomMove(0f, 0f, _status._baseStatue.walkSpeed);
+            _rb.CustomMove(0f, 0f, _status.archeType.mechBaseStatus.walkSpeed);
         }
     }
     void ForceStopDash()

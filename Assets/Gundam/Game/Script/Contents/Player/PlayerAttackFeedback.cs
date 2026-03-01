@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Contents.Player
+namespace SO.Player
 {
     /// <summary> 타격성공시 피드백 받기위한 인터페이스</summary>
     public interface IAttackFeedbackReceiver

@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Contents.Mech;
-using Contents.Player;
-using Contents.Weapon;
+using SO.Player;
+using SO.Weapon;
+using SO.Mech;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -44,25 +44,25 @@ public struct BonusStat
 }
 public class MechStatus : MonoBehaviour
 {
-    public BonusStat RuntimeBonusStat;
-    public BaseStatueSO _baseStatue;
+    public BonusStat runtimeBonusStat;
+    public MechArcheTypeSO archeType;
     public List<PassiveSkillSO> mechSkills;
     public bool SuperArmor { get; private set; } //경직면역여부
     private void Awake()
     {
-        RuntimeBonusStat = new BonusStat();
+        runtimeBonusStat = new BonusStat();
         foreach (var skill in mechSkills)
         {
             if (!skill.isConditional)
             {
-                RuntimeBonusStat += skill.status;
+                runtimeBonusStat += skill.status;
             }
         }
         WeaponParts[] weapons = GetComponentsInChildren<WeaponParts>();
         //초기 상시형 패시브 적용
         foreach (var weapon in weapons)
         {
-            weapon.Init(RuntimeBonusStat);
+            weapon.Init(runtimeBonusStat);
         }
     }
     

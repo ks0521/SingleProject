@@ -2,12 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Base.Utilities;
-using Contents.Player;
-using Contents.Weapon;
+using SO.Player;
 using Contnts.Player;
+using SO.Weapon;
 using UnityEngine;
 
-namespace Contents.Mech
+namespace SO.Mech
 {
     /// <summary> 무기발사 조건(발사 딜레이 / 차지 / 탄알 잔량 등..)을 확인하고 가능하면 MechBehavior에
     /// Attack요청을 보냄</summary>

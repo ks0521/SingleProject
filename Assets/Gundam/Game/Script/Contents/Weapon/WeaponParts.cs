@@ -2,13 +2,13 @@ using System;
 using System.Threading;
 using Base.Manager.Test;
 using Base.Utilities;
-using Contents.Player;
 using Contnts.Player;
 using Cysharp.Threading.Tasks;
+using SO.Player;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Contents.Weapon
+namespace SO.Weapon
 {
     /// <summary> 실제 공격시점에 적용되는 최종 정보</summary>
     [Serializable]
@@ -27,7 +27,8 @@ namespace Contents.Weapon
     {
 #region Variable
         [Header("Components")]
-        [SerializeField] private WeaponData weaponData; //생성되는 무기의 정보
+        [SerializeField]private WeaponData weaponData; //생성되는 무기의 정보
+        public WeaponData WeaponData => weaponData;
         [SerializeField]private FinalStat _finalStat; //공격간 사용되는 최종 스탯
         public Sprite weaponImg; // 무기 이미지
         private PlayerAttackFeedback _attackFeedback; //플레이어 피해 피드백 컴포넌트
@@ -65,7 +66,6 @@ namespace Contents.Weapon
             }
         }
 
-
         private void Awake()
         {
             _token = this.GetCancellationTokenOnDestroy();
@@ -93,7 +93,6 @@ namespace Contents.Weapon
             StatusUpdate(stat);
             curAmmo = _finalStat.Ammo;
             IsReloading = IsDelay = false;
-            Debug.Log($"{weaponData.name} Init Complete");
         }
         /// <summary> 무기 스펙 업데이트</summary>
         /// <param name="stat"> 사용할 정보</param>

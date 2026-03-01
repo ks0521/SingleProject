@@ -3,11 +3,11 @@ using System.Threading;
 using Base.Manager.Test;
 using Base.PoolSO;
 using Base.Utilities;
-using Contents.Mech;
-using Contents.Player;
+using SO.Mech;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using Cysharp.Threading.Tasks.Triggers;
+using SO.Player;
 using UnityEditor.Rendering;
 using UnityEngine.Serialization;
 
@@ -25,7 +25,7 @@ public enum GameLayer
     EnemyAttack = 12 // 적의 공격 투사체 + 레이캐스트
 }
 
-namespace Contents.Weapon
+namespace SO.Weapon
 {
     
 

@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
-using Contents.Player;
+using SO.Player;
 using Contnts.Player;
 using Cysharp.Threading.Tasks;
 using UnityEngine;

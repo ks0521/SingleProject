@@ -2,8 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
-using Contents.Mech;
-using Contents.Player;
+using SO.Mech;
+using SO.Player;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -51,8 +51,8 @@ public class MechAnimation : MonoBehaviour
     {
         _speedVector = _rb.velocity;
         _speedVector.y = 0;
-        _walkSpeed = _status._baseStatue.walkSpeed + _status.RuntimeBonusStat.increseSpeed;
-        _runSpeed = _status._baseStatue.runSpeed + _status.RuntimeBonusStat.increseSpeed;
+        _walkSpeed = _status.archeType.mechBaseStatus.walkSpeed + _status.runtimeBonusStat.increseSpeed;
+        _runSpeed = _status.archeType.mechBaseStatus.runSpeed + _status.runtimeBonusStat.increseSpeed;
         _speed = _speedVector.magnitude;
         _ray = new Ray(transform.position, Vector3.down * 0.1f);
         
