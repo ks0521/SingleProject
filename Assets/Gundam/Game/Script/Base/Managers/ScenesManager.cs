@@ -16,11 +16,9 @@ namespace Base.Managers
         MainMenu = 0,
         WorldMap = 1,
         Battle = 2,
-        Elite=3,
-        Boss=4,
-        Store = 5,
-        Loading = 6,
-        Length = 7
+        Store = 3,
+        ClearScene = 4,
+        Length = 5
     }
 
     public enum LoadType
@@ -32,15 +30,6 @@ namespace Base.Managers
     public class ScenesManager : MonoBehaviour
     {
         public static ScenesManager Instance;
-        [Header("LOADING SCREEN")]
-        [Tooltip("If this is true, the loaded scene won't load until receiving user input")]
-        public bool waitForInput = true;
-        public GameObject loadingMenu;
-        [Tooltip("The loading bar Slider UI element in the Loading Screen")]
-        public Slider loadingBar;
-        public TMP_Text loadPromptText;
-        public KeyCode userPromptKey;
-        
         private bool _isLoading;
         public bool canPopUpReward;
         private CanvasGroup _clearHUD;
@@ -55,6 +44,12 @@ namespace Base.Managers
             DontDestroyOnLoad(gameObject);
         }
 
+        public void GameClear()
+        {
+            Time.timeScale = 1;
+            Cursor.lockState = CursorLockMode.None;
+            SceneManager.LoadScene((int)Scenes.ClearScene);
+        }
         /// <summary> 씬 이동</summary>
         /// <param name="scene"> 이동할 씬 번호</param>
         public void LoadScene(int scene){
@@ -69,6 +64,11 @@ namespace Base.Managers
                 return;
             }
             StageManager.Instance.EnterStage((Scenes)scene);
+            if (StageManager.Instance.Stage > 6)
+            {
+                GameClear();
+                return;
+            }
             if (loadType == LoadType.Default)
             {
                 SceneManager.LoadScene(scene);
@@ -107,7 +107,6 @@ namespace Base.Managers
             cg.alpha = from;
             var tween = cg.DOFade(to, duration).
                            SetUpdate(true).SetLink(cg.gameObject);
-            
             await tween.AsyncWaitForCompletion();
         }
     }

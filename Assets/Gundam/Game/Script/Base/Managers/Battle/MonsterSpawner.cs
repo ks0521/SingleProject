@@ -109,7 +109,7 @@ public class MonsterSpawner : MonoBehaviour
             PooledNPC = PoolManager.poolDic[Ally]
                 .UsePool(spawnPoint.transform.position, spawnPoint.transform.rotation, false);
             _allyList.Add(PooledNPC);
-            PooledNPC.GetComponent<MechStatus>().Init(StageManager.Instance.AllyBonusStat);
+            PooledNPC.GetComponent<MechStatus>().Init(StageManager.Instance.AllyBonusStat, _NpcArcheType[archetype]);
             OnAllyNpcRemain?.Invoke(_allyList.Count);
         }
         else //적군 생성
@@ -117,10 +117,9 @@ public class MonsterSpawner : MonoBehaviour
             PooledNPC = PoolManager.poolDic[Enemy]
                 .UsePool(spawnPoint.transform.position, spawnPoint.transform.rotation, false);
             _enemyList.Add(PooledNPC);
-            PooledNPC.GetComponent<MechStatus>().Init(StageManager.Instance.EnemyBonusStat);
+            PooledNPC.GetComponent<MechStatus>().Init(StageManager.Instance.EnemyBonusStat, _NpcArcheType[archetype]);
             OnEnemyNpcRemain?.Invoke(_enemyList.Count);
         }
-        PooledNPC.GetComponent<MechStatus>().archeType = _NpcArcheType[archetype];
         PooledNPC.GetComponent<MechWeaponInventory>().Init(_NpcArcheType[archetype].weaponLoadOut.weapons);
         PooledNPC.SetActive(true);
         Debug.Log($"{PooledNPC}타입 {(MechRangeType)archetype} 생성");
@@ -132,7 +131,7 @@ public class MonsterSpawner : MonoBehaviour
         var spawnPoint = playerSpawnPoints.UseSpot();
         GameObject pooledPlayer = PoolManager.poolDic[Player]
             .UsePool(spawnPoint.transform.position, spawnPoint.transform.rotation, false);
-        pooledPlayer.GetComponent<MechStatus>().Init(playerInfo.GetStatus());
+        pooledPlayer.GetComponent<MechStatus>().Init(playerInfo.GetStatus(), playerInfo.ArcheTypeSo);
         pooledPlayer.GetComponent<MechHealth>().Init(playerInfo.PlayerHp, playerInfo.PlayerMaxHp);
         pooledPlayer.GetComponent<MechWeaponInventory>().Init(playerInfo.GetPlayerWeaponSettings());
         pooledPlayer.GetComponent<PlayerAim>().Init();

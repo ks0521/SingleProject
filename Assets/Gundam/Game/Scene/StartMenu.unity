@@ -3068,6 +3068,20 @@ MonoBehaviour:
   archeTypeSo: {fileID: 0}
   _gainedSkill: []
   weapons: []
+  runtimeStat:
+    increaseDmg: 0
+    multipleDmg: 0
+    increaseFireRate: 0
+    multipleFireRate: 0
+    multipleRange: 0
+    increaseAmmo: 0
+    multipleAmmo: 0
+    multipleReload: 0
+    increaseSpeed: 0
+    increaseDamageReduction: 0
+    multipleDamageReduction: 0
+    multipleAttackRadius: 0
+    increaseHp: 0
   playerHp: 0
   playerMaxHp: 0
 --- !u!4 &1981220716

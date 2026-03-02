@@ -30,7 +30,6 @@ public class MechWeaponInventory : MonoBehaviour
         _stat = GetComponent<MechStatus>();
         candidateWeaponList = candidate;
         if (_stat.archeType == null) return;
-        Debug.Log("Inven Init");
         candidateWeaponList = _stat.archeType.weaponLoadOut.weapons;
         LinkingWeaponParts();
     }

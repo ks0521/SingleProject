@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 856a7541ffdb02242a66c710c33decd0, type: 3}
   m_Name: Store
   m_EditorClassIdentifier: 
-  LoadSceneType: 5
+  LoadSceneType: 3
   NodeType: STORE
   PrimaryInfo: 
   SecondaryInfo: 

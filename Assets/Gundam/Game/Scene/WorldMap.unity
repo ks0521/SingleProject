@@ -7070,8 +7070,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c387e6374740e7845bba25b86b4c4078, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  archeTypeSo: {fileID: 0}
-  _gainedSkill: []
+  archeTypeSo: {fileID: 11400000, guid: 6fe05340d69958f4c9dfddc8363b9763, type: 2}
+  _gainedSkill:
+  - {fileID: 11400000, guid: 87e44674c7341b443a42027a3e597a43, type: 2}
+  - {fileID: 11400000, guid: 3d6ed07bda9dad9479c5f5d3057f8e75, type: 2}
+  - {fileID: 11400000, guid: b1c9c79aa4883e642b10e382bf8eef45, type: 2}
+  - {fileID: 11400000, guid: 431def32bbf91c54dbb29d5a0d2494dd, type: 2}
   weapons: []
   runtimeStat:
     increaseDmg: 0
@@ -7087,8 +7091,9 @@ MonoBehaviour:
     multipleDamageReduction: 0
     multipleAttackRadius: 0
     increaseHp: 0
-  playerHp: 0
-  playerMaxHp: 0
+  playerHp: 350
+  playerMaxHp: 500
+  <Gold>k__BackingField: 1200
 --- !u!4 &1231631354
 Transform:
   m_ObjectHideFlags: 0

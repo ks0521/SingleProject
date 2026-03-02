@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Base.Managers;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 /// <summary> 직전 방 타입에 따른 보상 제공</summary>
@@ -28,17 +29,12 @@ public class RewardPopUpController : MonoBehaviour
             case Scenes.Battle:
                 PlayerInfoManager.Instance.GetGold(Random.Range(150 + stageBonus,170 + stageBonus));
                 break;
-            case Scenes.Elite:
-                PlayerInfoManager.Instance.GetGold(Random.Range(250 + stageBonus,300 + stageBonus));
-                break;
-            case Scenes.Boss: 
-                PlayerInfoManager.Instance.GetGold(Random.Range(400 + stageBonus,500 + stageBonus));
-                break;
         }
     }
 
     public void GetClearSkill()
     {
+        if (SceneManager.GetActiveScene().buildIndex != (int)Scenes.WorldMap) return;
         RewardPopUp.SetActive(true);
         skillManager.MakeReward(StageManager.Instance.PrevScene);
     }

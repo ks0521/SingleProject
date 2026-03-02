@@ -239,12 +239,14 @@ namespace SO.NPC
 
         Vector3 TowardTargetDir()
         {
+            if (target == null) return default;
             Vector3 dir = (target.position - transform.position);
             dir.y = 0f;
             return dir.normalized;
         }
         Vector3 AwayFromTargetDir()
         {
+            if (target == null) return default;
             Vector3 dir = (transform.position - target.position);
             dir.y = 0f;
             return dir.normalized;
@@ -252,6 +254,8 @@ namespace SO.NPC
 
         Vector3 GetStrafeOrbitDir()
         {
+            if (target == null) return default;
+
             ChangeStrafeDirection(force : false);
 
             Vector3 toTarget = (target.position - transform.position);
@@ -284,6 +288,8 @@ namespace SO.NPC
         }
         bool HasLineOfSight(Transform target)
         {
+            if (target == null) return false;
+
             Vector3 origin = transform.position + Vector3.up * 0.5f;
             Vector3 dest = target.position + Vector3.up * 0.5f;
             Vector3 dir = (dest - origin);

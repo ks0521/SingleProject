@@ -1,10 +1,7 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using SO.Weapon;
 using SO.Mech;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 /// <summary> 플레이어의 보유 패시브, 골드, 체력, 손상도 관리
 /// 전투 시작시 여기서 Hp와 손상도를 받아와 초기 세팅
@@ -14,9 +11,10 @@ public class PlayerInfoManager : MonoBehaviour
     public static PlayerInfoManager Instance;
 
     [SerializeField] private MechArcheTypeSO archeTypeSo;
-
+    public MechArcheTypeSO ArcheTypeSo => archeTypeSo;
     //public MechRangeType RangeType => rangeType;
     [SerializeField] private List<PassiveSkillSO> _gainedSkill;
+    public IReadOnlyList<PassiveSkillSO> GainedSkills => _gainedSkill;
     [SerializeField] private List<WeaponData> weapons; //현재 장착중인 무기
     [SerializeField] private BonusStat runtimeStat = new();
     [SerializeField] private int playerHp;
@@ -24,8 +22,14 @@ public class PlayerInfoManager : MonoBehaviour
     public int PlayerHp => playerHp;
     public int PlayerMaxHp => playerMaxHp;
     private int playerBreakdown; // 손상도
-    public int Gold { get; private set; }
+    [field:SerializeField]public int Gold { get; private set; }
 
+    public void Clear()
+    {
+        _gainedSkill.Clear();
+        runtimeStat = new BonusStat();
+        Gold = 0;
+    }
     private void Awake()
     {
         if (Instance != null)

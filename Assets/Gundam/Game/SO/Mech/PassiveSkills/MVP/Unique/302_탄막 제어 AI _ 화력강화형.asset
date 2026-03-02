@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: "302_\uD0C4\uB9C9 \uC81C\uC5B4 AI _ \uD654\uB825\uAC15\uD654\uD615"
   m_EditorClassIdentifier: 
   id: 302
-  name: "\uD0C4\uB9C9 \uC81C\uC5B4 AI"
+  skillName: "\uD0C4\uB9C9 \uC81C\uC5B4 AI"
   type: 0
   rarity: 2
   advantageText: "\uC5F0\uC0AC +40%"
@@ -21,13 +21,18 @@ MonoBehaviour:
   lore: "\uC870\uC900\uACFC \uBC1C\uC0AC \uB8E8\uD2F4\uC774 \uACF5\uACA9\uC5D0\uB9CC
     \uC9D1\uCC29\uD55C\uB2E4."
   status:
-    increseDmg: 0
+    increaseDmg: 0
     multipleDmg: 0
-    increseFireRate: 0
+    increaseFireRate: 0
     multipleFireRate: 0.4
-    increseSpeed: -1
-    increseDamageReduction: 0
+    multipleRange: 0
+    increaseAmmo: 0
+    multipleAmmo: 0
+    multipleReload: 0
+    increaseSpeed: 0
+    increaseDamageReduction: 0
     multipleDamageReduction: 0
-    mechTeam: 0
+    multipleAttackRadius: 0
+    increaseHp: 0
   isConditional: 0
   activeHp: 0

@@ -37,7 +37,7 @@ public class PassiveSkillManager : MonoBehaviour
         List<PassiveSkillSO> pickedList = new();
         PassiveSkillSO pickedSkill;
         int count = 0;
-        if (clearScene != Scenes.Battle && clearScene != Scenes.Elite && clearScene != Scenes.Boss)
+        if (clearScene != Scenes.Battle)
         {
             Debug.LogWarning("전투 클리어 경로가 아닙니다. ");
             return;
@@ -48,12 +48,6 @@ public class PassiveSkillManager : MonoBehaviour
         {
             case Scenes.Battle:
                 rewardWeight = battleRewards;
-                break;
-            case Scenes.Elite:
-                rewardWeight = eliteRewards;
-                break;
-            case Scenes.Boss:
-                rewardWeight = bossRewards;
                 break;
         }
         foreach (var skill in presenters)
@@ -76,7 +70,7 @@ public class PassiveSkillManager : MonoBehaviour
         if (!skillDic.TryGetValue(rarity, out var list) || list == null || list.Count == 0)
         {
             Debug.LogWarning($"{rarity}의 스킬이 없거나 리스트가 비어있음, 모든 스킬중에서 선택");
-            DrawSkillAllSkillpool();
+            return DrawSkillAllSkillpool();
         }
         int idx = UnityEngine.Random.Range(0, list.Count);
         return list[idx];
@@ -93,6 +87,10 @@ public class PassiveSkillManager : MonoBehaviour
 
         int idx = UnityEngine.Random.Range(0, allSkillList.Count);
         return allSkillList[idx];
+    }
+    public PassiveSkillSO DrawOneSkill(int[] rewardWeights)
+    {
+        return DrawSkill(rewardWeights);
     }
     public void TurnOff()
     {

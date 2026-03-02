@@ -59,9 +59,10 @@ public class MechStatus : MonoBehaviour
             weapon.Init(runtimeBonusStat);
         }
     }
-    public void Init(BonusStat startStat)
+    public void Init(BonusStat startStat, MechArcheTypeSO archeTypeSo)
     {
         runtimeBonusStat = startStat;
+        archeType = archeTypeSo;
     }
     public void SuperArmorStatus(bool value)
     {

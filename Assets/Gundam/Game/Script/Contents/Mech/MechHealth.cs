@@ -53,6 +53,7 @@ namespace SO.Mech
             _isDead = false;
         }
 
+        public void Refresh() => OnHpChanged?.Invoke(_hp, _maxHp);
         private void Start()
         {
             OnHpChanged?.Invoke(Hp,_maxHp);

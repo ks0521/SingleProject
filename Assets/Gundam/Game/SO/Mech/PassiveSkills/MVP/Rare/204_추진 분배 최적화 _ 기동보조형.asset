@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: "204_\uCD94\uC9C4 \uBD84\uBC30 \uCD5C\uC801\uD654 _ \uAE30\uB3D9\uBCF4\uC870\uD615"
   m_EditorClassIdentifier: 
   id: 204
-  name: "\uCD94\uC9C4 \uBD84\uBC30 \uCD5C\uC801\uD654"
+  skillName: "\uCD94\uC9C4 \uBD84\uBC30 \uCD5C\uC801\uD654"
   type: 2
   rarity: 1
   advantageText: "\uC774\uB3D9 \uC18D\uB3C4 +2.0"
@@ -21,13 +21,18 @@ MonoBehaviour:
   lore: "\uBD80\uC2A4\uD130 \uACC4\uD1B5\uC5D0 \uC6B0\uC120\uAD8C\uC744 \uC900\uB2E4.
     \n\uBB34\uC7A5\uC740 \uC870\uAE08 \uC591\uBCF4\uD588\uB2E4."
   status:
-    increseDmg: 0
+    increaseDmg: 0
     multipleDmg: 0
-    increseFireRate: 0
+    increaseFireRate: 0
     multipleFireRate: -0.1
-    increseSpeed: 2
-    increseDamageReduction: 0
+    multipleRange: 0
+    increaseAmmo: 0
+    multipleAmmo: 0
+    multipleReload: 0
+    increaseSpeed: 0
+    increaseDamageReduction: 0
     multipleDamageReduction: 0
-    mechTeam: 0
+    multipleAttackRadius: 0
+    increaseHp: 0
   isConditional: 0
   activeHp: 0
