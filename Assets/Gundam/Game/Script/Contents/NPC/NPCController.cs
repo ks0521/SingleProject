@@ -353,7 +353,8 @@ namespace SO.NPC
                 Debug.LogWarning("Target is Null");
                 return default;
             }
-            Vector3 _dir = (target.position - curWeapon.FirePoint.position).normalized;
+            //target의 좌표가 y = 0이라서 몸통으로 조준하게 변경
+            Vector3 _dir = (target.position + Vector3.up - curWeapon.FirePoint.position).normalized;
             return new AimData(_dir, target.position);
         }
     }

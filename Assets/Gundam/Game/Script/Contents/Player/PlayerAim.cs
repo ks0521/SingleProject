@@ -42,21 +42,32 @@ namespace Contnts.Player
 
         private void Awake()
         {
-            weaponInventory = GetComponent<MechWeaponInventory>();
             _hittableLayer = 1 << (int)GameLayer.Default | 1 << (int)GameLayer.Enemy;
+        }
+
+        private void OnEnable()
+        {
+            Debug.Log("playeraim enable");
             defaultPoint = Camera.main.transform;
             firePoint = weaponPart?.FirePoint;
             if (firePoint == null)
             {
                 firePoint = defaultPoint;
             }
-        }
-
-        private void OnEnable()
-        {
             weaponInventory.OnChangeWeaponPart += UpdateWeapon;
         }
 
+        public void Init()
+        {
+            weaponInventory = GetComponent<MechWeaponInventory>();
+            weaponPart = weaponInventory.curWeapons;
+            defaultPoint = gameObject.transform;
+            firePoint = weaponPart?.FirePoint;
+            if (firePoint == null)
+            {
+                firePoint = defaultPoint;
+            }
+        }
         private void Update()
         {
             SetAim();

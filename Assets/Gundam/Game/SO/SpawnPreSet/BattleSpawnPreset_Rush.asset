@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9a10a99dad1dc2448b6eab8c6715e7a, type: 3}
+  m_Name: BattleSpawnPreset_Rush
+  m_EditorClassIdentifier: 
+  presetName: "\uC77C\uC810 \uB3CC\uD30C"
+  description: "\uC804\uC220 \uBE0C\uB9AC\uD551\n\uADFC\uC811 \uB3CC\uACA9 \uC720\uB2DB
+    \uC911\uC2EC\uC758 \uAC15\uC2B5 \uD3B8\uC131.\n\uCD08\uBC18 \uC555\uBC15 \uAC15\uB3C4\uAC00
+    \uB192\uC73C\uBA70, \uC804\uC120 \uBD95\uAD34 \uC704\uD5D8\uC774 \uD06C\uB2E4.\n\uAC70\uB9AC
+    \uC720\uC9C0 \uBC0F \uC9D1\uC911 \uD654\uB825 \uC6B4\uC6A9\uC774 \uD544\uC218."
+  ally:
+    shortRange: 2
+    midRange: 1
+    longRange: 0
+  enemy:
+    shortRange: 3
+    midRange: 1
+    longRange: 0
+  hasElite: 0
+  eliteEnemy:
+    shortRange: 0
+    midRange: 0
+    longRange: 0

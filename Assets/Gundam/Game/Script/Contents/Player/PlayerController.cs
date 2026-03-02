@@ -68,11 +68,11 @@ namespace SO.Player
             {
                 Debug.Log($"{_stat}{_stat.archeType.mechBaseStatus}{_stat.runtimeBonusStat}");
                 //부스터 게이지 판정해서 바꾸기
-                _speed = _stat.archeType.mechBaseStatus.runSpeed+_stat.runtimeBonusStat.increseSpeed;
+                _speed = _stat.archeType.mechBaseStatus.runSpeed+_stat.runtimeBonusStat.increaseSpeed;
             }
             if (Input.GetKeyUp(KeyCode.LeftShift))
             {
-                _speed = _stat.archeType.mechBaseStatus.walkSpeed+_stat.runtimeBonusStat.increseSpeed;
+                _speed = _stat.archeType.mechBaseStatus.walkSpeed+_stat.runtimeBonusStat.increaseSpeed;
             }
             //상태변화에 따른 이벤트 트리거 발생용(ex. 부스터 사용시 / 일정시간 정지 후 이동시)
             if (_curMove != _prevMove)

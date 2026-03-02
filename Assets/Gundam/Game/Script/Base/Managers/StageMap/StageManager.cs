@@ -13,9 +13,13 @@ public class StageManager : MonoBehaviour
     public Scenes CurScene { get; private set; }
 
     private PassiveSkillManager rewardPopUp;
+    public BattleSpawnPresetSO battlePreset;
     [SerializeField] private List<NPC> enemyList;
     [SerializeField] private List<NPC> allyList;
-    
+    [SerializeField] private BonusStat enemyBonusStat = new();
+    public BonusStat EnemyBonusStat => enemyBonusStat;
+    [SerializeField] private BonusStat allyBonusStat = new();
+    public BonusStat AllyBonusStat => allyBonusStat;
 
     private void Awake()
     {
@@ -50,14 +54,19 @@ public class StageManager : MonoBehaviour
         Debug.Log($"씬 이동: {PrevScene} -> {CurScene}, 현재 스테이지 {Stage}");
     }
 
-    public void StageProgress() => Stage++;
-
-    public void SpawnAlly()
+    public void StageProgress()
     {
-        
+        if (++Stage > 6)
+        {
+            Debug.Log("클리어");
+        }
+    } 
+    /// <summary>현재 스테이지의 비용 성장계수</summary>
+    /// <returns></returns>
+    public float Growth()
+    {
+        double growth = 1 + 0.18 * (Stage-1) + 0.06 * (Mathf.Pow(Stage-1, 2));
+        return (float)growth;
     }
 
-    public void SpwanEnemy()
-    {
-    }
 }

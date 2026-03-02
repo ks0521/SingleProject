@@ -11,14 +11,29 @@ using UnityEngine.Serialization;
 
 public class CrosshairController : MonoBehaviour
 {
+    [SerializeField] private HUDManager hudManager;
     [SerializeField] private PlayerAim sensor;
     [SerializeField] private PlayerAttackFeedback attackFeedback;
     [SerializeField] private GameObject targetLockFrame;
     [SerializeField] private GameObject hitMarker;
     [SerializeField] private CrosshairSO crosshairSo;
     private CancellationTokenSource _hitCts;
-    private void Start()
+
+    private void Awake()
     {
+        hudManager = GetComponentInParent<HUDManager>();
+    }
+
+    private void OnEnable()
+    {
+        hudManager.OnPlayerActived += Init;
+    }
+
+    void Init()
+    {
+        GameObject player = GameObject.FindWithTag("Player");
+        sensor = player.GetComponent<PlayerAim>();
+        attackFeedback = player.GetComponent<PlayerAttackFeedback>();
         sensor.OnTargetSensored += TargetLocked;
         sensor.OnTargetUnSensored += TargetUnLocked;
         attackFeedback.PlayerAttackSuccess += TargetHit;
@@ -37,15 +52,6 @@ public class CrosshairController : MonoBehaviour
     {
         hitMarker.SetActive(true);
         await UniTask.Delay(TimeSpan.FromSeconds(0.3), cancellationToken: token);
-        /*try
-        {
-            await UniTask.Delay(TimeSpan.FromSeconds(0.3), cancellationToken: token);
-
-        }
-        catch (OperationCanceledException)
-        {
-            return;
-        }*/
         hitMarker.SetActive(false);
     }
     private void TargetLocked(RaycastHit target)

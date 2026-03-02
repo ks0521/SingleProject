@@ -12,33 +12,35 @@ using UnityEngine.Serialization;
 [Serializable]
 public struct BonusStat
 {
-    public float increseDmg; //데미지 증가
+    public float increaseDmg; //데미지 증가
     public float multipleDmg; //데미지 배율 증가
-    public float increseFireRate; // 연사속도 증가
+    public float increaseFireRate; // 연사속도 증가
     public float multipleFireRate; // 연사 배율 증가
     public float multipleRange; //raycast 무기 사거리
-    public float increseAmmo; //탄창 증가
+    public float increaseAmmo; //탄창 증가
     public float multipleAmmo; //탄창 배율 증가
     public float multipleReload; //재장전 시간 배율 감소
-    public float increseSpeed; // 속도 증가
-    public float increseDamageReduction; //피해 감소
+    public float increaseSpeed; // 속도 증가
+    public float increaseDamageReduction; //피해 감소
     public float multipleDamageReduction; //피해 감소 배율
     public float multipleAttackRadius; //공격 범위(폭발 반경 / 빔 굵기)
+    public float increaseHp; //추가 HP
     public static BonusStat operator +(BonusStat a, BonusStat b)
     {
         return new BonusStat
         {
-            increseDmg = a.increseDmg + b.increseDmg,
+            increaseDmg = a.increaseDmg + b.increaseDmg,
             multipleDmg = a.multipleDmg + b.multipleDmg,
-            increseFireRate = a.increseFireRate + b.increseFireRate,
+            increaseFireRate = a.increaseFireRate + b.increaseFireRate,
             multipleFireRate = a.multipleFireRate + b.multipleFireRate,
-            increseSpeed = a.increseSpeed + b.increseSpeed,
-            increseDamageReduction = a.increseDamageReduction + b.increseDamageReduction,
+            increaseSpeed = a.increaseSpeed + b.increaseSpeed,
+            increaseDamageReduction = a.increaseDamageReduction + b.increaseDamageReduction,
             multipleDamageReduction = a.multipleDamageReduction + b.multipleDamageReduction,
             multipleAttackRadius = a.multipleAttackRadius + b.multipleAttackRadius,
-            increseAmmo = a.increseAmmo + b.increseAmmo,
+            increaseAmmo = a.increaseAmmo + b.increaseAmmo,
             multipleAmmo = a.multipleAmmo + b.multipleAmmo,
-            multipleReload = a.multipleReload + b.multipleReload
+            multipleReload = a.multipleReload + b.multipleReload,
+            increaseHp = a.increaseHp + b.increaseHp,
         };
     }
 }
@@ -50,14 +52,6 @@ public class MechStatus : MonoBehaviour
     public bool SuperArmor { get; private set; } //경직면역여부
     private void Awake()
     {
-        runtimeBonusStat = new BonusStat();
-        foreach (var skill in mechSkills)
-        {
-            if (!skill.isConditional)
-            {
-                runtimeBonusStat += skill.status;
-            }
-        }
         WeaponParts[] weapons = GetComponentsInChildren<WeaponParts>();
         //초기 상시형 패시브 적용
         foreach (var weapon in weapons)
@@ -65,19 +59,12 @@ public class MechStatus : MonoBehaviour
             weapon.Init(runtimeBonusStat);
         }
     }
-    
+    public void Init(BonusStat startStat)
+    {
+        runtimeBonusStat = startStat;
+    }
     public void SuperArmorStatus(bool value)
     {
         SuperArmor = value;
-    }
-    /// <summary> 데미지 수치변경</summary>
-    public void DamageChange(int value)
-    {
-        
-    }
-    /// <summary> 데미지 배율 변경</summary>
-    public void DamageChange(float multiplier)
-    {
-        
     }
 }

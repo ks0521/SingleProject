@@ -33,8 +33,9 @@ public class TestScript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            MonsterSpawner.Instance.StartSpawn(new StageSpawnData(1,1,0,0,0));
+            
         }
+ 
 
         
     }

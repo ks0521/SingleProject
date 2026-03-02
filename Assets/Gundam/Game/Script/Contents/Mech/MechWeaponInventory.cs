@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Base.Utilities;
 using Contnts.Player;
-using SO.Mech;
 using SO.Weapon;
 using UnityEngine;
 
@@ -23,20 +22,19 @@ public class MechWeaponInventory : MonoBehaviour
 
     private void Awake()
     {
-        _stat = GetComponent<MechStatus>();
         _behavior = GetComponent<MechBehavior>();
     }
 
-    private void OnEnable()
+    public void Init(List<WeaponData> candidate)
     {
-        if (_stat.archeType == null)
-        {
-            Debug.LogWarning("MechWeaponInventory : ArcheType 없음");
-            return;
-        }
+        _stat = GetComponent<MechStatus>();
+        candidateWeaponList = candidate;
+        if (_stat.archeType == null) return;
+        Debug.Log("Inven Init");
         candidateWeaponList = _stat.archeType.weaponLoadOut.weapons;
         LinkingWeaponParts();
     }
+    
     /// <summary> 기체의 아키타입에 있는 사용가능 무기(WeaponData)를 실제 기체의 WeaponParts와 연결 </summary>
     void LinkingWeaponParts()
     {

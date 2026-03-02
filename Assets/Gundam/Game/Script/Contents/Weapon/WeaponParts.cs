@@ -110,10 +110,10 @@ namespace SO.Weapon
                     _finalStat.Range = weaponData.projectileStat.lifetime * (1 + stat.multipleRange);
                     break;
             }
-            _finalStat.Damage = (weaponData.damage + stat.increseDmg) * (1 + stat.multipleDmg);
-            _finalStat.RPM = weaponData.RPM * (1 + stat.increseFireRate);
+            _finalStat.Damage = (weaponData.damage + stat.increaseDmg) * (1 + stat.multipleDmg);
+            _finalStat.RPM = weaponData.RPM * (1 + stat.increaseFireRate);
             _finalStat.Interval = (_finalStat.RPM>0)?60f / _finalStat.RPM : 0.5f; //RPM이 0일때 인터벌 0.5초로 고정
-            _finalStat.Ammo = (int)((weaponData.ammo + stat.increseAmmo) * (1 + stat.multipleAmmo));
+            _finalStat.Ammo = (int)((weaponData.ammo + stat.increaseAmmo) * (1 + stat.multipleAmmo));
             _finalStat.AttackRadius = weaponData.attackRadius * (1 + stat.multipleAttackRadius);
             _finalStat.ReloadingTime = weaponData.reloadingTime * (1 - stat.multipleReload);
         }

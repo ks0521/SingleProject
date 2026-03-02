@@ -100,7 +100,7 @@ public static class CreatePassiveSkills
                 advantageText="데미지 +10%",
                 disAdvantageText="피해 감소 -5%",
                 lore="정비병이 남는 부품으로 만든 탄두. 강해지긴 했는데… 좀 잘 부서진다.",
-                status=new BonusStat{ multipleDmg=+0.10f, increseDamageReduction=-0.05f }
+                status=new BonusStat{ multipleDmg=+0.10f, increaseDamageReduction=-0.05f }
             },
             new Def{
                 id=102,
@@ -110,7 +110,7 @@ public static class CreatePassiveSkills
                 advantageText="피해 감소 +10%",
                 disAdvantageText="이동 속도 -0.5",
                 lore="얇지만 넓게 덧댄 장갑판. 둔해지는 건 어쩔 수 없다.",
-                status=new BonusStat{ increseDamageReduction=+0.10f, increseSpeed=-0.5f }
+                status=new BonusStat{ increaseDamageReduction=+0.10f, increaseSpeed=-0.5f }
             },
             new Def{
                 id=103,
@@ -120,7 +120,7 @@ public static class CreatePassiveSkills
                 advantageText="피해 감소 +6%",
                 disAdvantageText="연사 -5%",
                 lore="진동을 잡아주는 대신 구동 반응이 살짝 느려진다.",
-                status=new BonusStat{ increseDamageReduction=+0.06f, multipleFireRate=-0.05f }
+                status=new BonusStat{ increaseDamageReduction=+0.06f, multipleFireRate=-0.05f }
             },
             new Def{
                 id=104,
@@ -130,7 +130,7 @@ public static class CreatePassiveSkills
                 advantageText="이동 속도 +1.0",
                 disAdvantageText="데미지 -5%",
                 lore="관절이 부드러워진다. 대신 출력 배분이 조금 줄었다.",
-                status=new BonusStat{ increseSpeed=+1.0f, multipleDmg=-0.05f }
+                status=new BonusStat{ increaseSpeed=+1.0f, multipleDmg=-0.05f }
             },
 
             // ---------------- Rare (4) ----------------
@@ -142,7 +142,7 @@ public static class CreatePassiveSkills
                 advantageText="데미지 +25%",
                 disAdvantageText="피해 감소 -8%",
                 lore="순간 출력이 폭발한다. 기체가 버티는 건 별개의 문제다.",
-                status=new BonusStat{ multipleDmg=+0.25f, increseDamageReduction=-0.08f }
+                status=new BonusStat{ multipleDmg=+0.25f, increaseDamageReduction=-0.08f }
             },
             new Def{
                 id=202,
@@ -162,7 +162,7 @@ public static class CreatePassiveSkills
                 advantageText="피해 감소 +18%",
                 disAdvantageText="이동 속도 -0.8",
                 lore="표면이 단단해질수록, 발걸음은 무거워진다.",
-                status=new BonusStat{ increseDamageReduction=+0.18f, increseSpeed=-0.8f }
+                status=new BonusStat{ increaseDamageReduction=+0.18f, increaseSpeed=-0.8f }
             },
             new Def{
                 id=204,
@@ -172,7 +172,7 @@ public static class CreatePassiveSkills
                 advantageText="이동 속도 +2.0",
                 disAdvantageText="연사 -10%",
                 lore="부스터 계통에 우선권을 준다. 무장은 조금 양보했다.",
-                status=new BonusStat{ increseSpeed=+2.0f, multipleFireRate=-0.10f }
+                status=new BonusStat{ increaseSpeed=+2.0f, multipleFireRate=-0.10f }
             },
 
             // ---------------- Unique (4) ----------------
@@ -184,7 +184,7 @@ public static class CreatePassiveSkills
                 advantageText="데미지 +45%",
                 disAdvantageText="피해 감소 -15%",
                 lore="기체 수명과 교환한 순간 화력. 살아남으면 그걸로 됐다.",
-                status=new BonusStat{ multipleDmg=+0.45f, increseDamageReduction=-0.15f }
+                status=new BonusStat{ multipleDmg=+0.45f, increaseDamageReduction=-0.15f }
             },
             new Def{
                 id=302,
@@ -194,7 +194,7 @@ public static class CreatePassiveSkills
                 advantageText="연사 +40%",
                 disAdvantageText="이동 속도 -1.0",
                 lore="조준과 발사 루틴이 공격에만 집착한다.",
-                status=new BonusStat{ multipleFireRate=+0.40f, increseSpeed=-1.0f }
+                status=new BonusStat{ multipleFireRate=+0.40f, increaseSpeed=-1.0f }
             },
             new Def{
                 id=303,
@@ -204,7 +204,7 @@ public static class CreatePassiveSkills
                 advantageText="피해 감소 +35%",
                 disAdvantageText="이동 속도 -1.5",
                 lore="움직이는 벙커. 느리지만, 잘 죽지 않는다.",
-                status=new BonusStat{ increseDamageReduction=+0.35f, increseSpeed=-1.5f }
+                status=new BonusStat{ increaseDamageReduction=+0.35f, increaseSpeed=-1.5f }
             },
             new Def{
                 id=304,
@@ -214,7 +214,7 @@ public static class CreatePassiveSkills
                 advantageText="이동 속도 +3.5",
                 disAdvantageText="데미지 -15%",
                 lore="맞기 전에 사라지는 게 최선의 방어라는 주의.",
-                status=new BonusStat{ increseSpeed=+3.5f, multipleDmg=-0.15f }
+                status=new BonusStat{ increaseSpeed=+3.5f, multipleDmg=-0.15f }
             },
         };
     }

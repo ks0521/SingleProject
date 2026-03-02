@@ -13,8 +13,9 @@ namespace SO.Mech
         public event Action<float> OnHitStopped;
         public event Action<MechHealth> OnDie;
         private bool _isDead;
-        private int _maxHp;
-        private int _hp = 100;
+        [SerializeField]private int _maxHp;
+        public int MaxHp => _maxHp;
+        [SerializeField]private int _hp;
         public int Hp
         {
             get => _hp;
@@ -30,6 +31,11 @@ namespace SO.Mech
             }
         }
 
+        public void Init(int hp, int maxHp)
+        {
+            _hp = hp;
+            _maxHp = maxHp;
+        }
         private void Awake()
         {
             _Behavior = GetComponent<MechBehavior>();

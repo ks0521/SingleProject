@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Base.Managers;
 using Cysharp.Threading.Tasks;
+using SO.Mech;
 using UnityEngine;
 
 public class BattleManager : MonoBehaviour
@@ -20,6 +18,7 @@ public class BattleManager : MonoBehaviour
     {
         Instance = this;
         _curTime = 0;
+        
     }
 
     private void FixedUpdate()
@@ -28,6 +27,7 @@ public class BattleManager : MonoBehaviour
         if (_curTime >= 1f)
         {
             OnTimerChecked?.Invoke(); //1초마다 타이머 이벤트 뿌림
+            _curTime = 0;
         }
     }
 
@@ -43,7 +43,10 @@ public class BattleManager : MonoBehaviour
 
     void BattleClear()
     {
+        MechHealth health = GameObject.FindWithTag("Player").GetComponent<MechHealth>();
         Debug.Log("Call BattleManager");
+        PlayerInfoManager.Instance.SetHp(health.Hp, health.MaxHp);
+        Debug.Log($"전투 후 남은 체력 : {health.Hp} / {health.MaxHp}");
         ScenesManager.Instance.canPopUpReward = true; //전투 보상창 띄울수 있다는 플래그만 변경
         ScenesManager.Instance.LoadScene((int)Scenes.WorldMap,LoadType.BattleClear);
     }

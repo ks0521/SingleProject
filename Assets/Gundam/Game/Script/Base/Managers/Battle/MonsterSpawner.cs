@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Base.Manager.Test;
 using Base.NPC;
+using Contnts.Player;
 using SO.Mech;
 using UnityEngine;
 using Random = System.Random;
@@ -15,41 +16,26 @@ public enum NpcType
     Boss
 }
 
-public struct StageSpawnData
-{
-    public int allyCount;
-    public int enemyCount;
-    public int eliteCount;
-    public int bossCount;
-
-    public int curStage;
-
-    public StageSpawnData(int ally, int enemy, int elite, int boss, int stage)
-    {
-        allyCount = ally;
-        enemyCount = enemy;
-        eliteCount = elite;
-        bossCount = boss;
-        curStage = stage;
-    }
-}
-
 public class MonsterSpawner : MonoBehaviour
 {
     public static MonsterSpawner Instance;
     [SerializeField] private List<MechArcheTypeSO> _NpcArcheType;
+    [SerializeField] private PoolID Player;
     [SerializeField] private PoolID Enemy;
     [SerializeField] private PoolID Ally;
     [SerializeField] private PoolID Elite;
     [SerializeField] private PoolID Boss;
-    [SerializeField] private SpawnGroup AllySpawnGroup;
-    [SerializeField] private SpawnGroup EnemySpawnGroup;
-    [SerializeField] private SpawnGroup ReinforceSpawnGroup;
+    [SerializeField] private SpawnGroup playerSpawnPoints;
+    [SerializeField] private SpawnGroup allySpawnPoints;
+    [SerializeField] private SpawnGroup enemySpawnPoints;
+    [SerializeField] private SpawnGroup reinforceSpawnPoints;
+    [SerializeField] private HUDManager hudManager;
     private GameObject PooledNPC;
     private List<GameObject> _allyList = new();
     private List<GameObject> _enemyList = new();
     public IReadOnlyList<GameObject> AllyList => _allyList;
     public IReadOnlyList<GameObject> EnemyList => _enemyList;
+    public PlayerInfoManager playerInfo => PlayerInfoManager.Instance;
     public event Action<int> OnAllyNpcRemain;
     public event Action<int> OnEnemyNpcRemain;
     public event Action OnAllEnemiesBroken;
@@ -62,25 +48,42 @@ public class MonsterSpawner : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
         _allyList = new List<GameObject>();
         _enemyList = new List<GameObject>();
 
         Instance = this;
     }
 
-    public void StartSpawn(in StageSpawnData data)
+    private void OnEnable()
     {
-        GameObject player = GameObject.Find("Player");
-        if(player != null && !_allyList.Contains(player)) _allyList.Add(player);
-        for (int i = 0; i < data.allyCount; i++) Spawn(AllySpawnGroup, NpcType.Ally);
-        for (int i = 0; i < data.enemyCount; i++) Spawn(EnemySpawnGroup, NpcType.Enemy);
-        for (int i = 0; i < data.eliteCount; i++) Spawn(EnemySpawnGroup, NpcType.Elite);
-        for (int i = 0; i < data.bossCount; i++) Spawn(EnemySpawnGroup, NpcType.Boss);
+        StartSpawn(StageManager.Instance.battlePreset);
+    }
+
+    public void StartSpawn(in BattleSpawnPresetSO preset)
+    {
+        PlayerSpawn();
+        // 적 스폰
+        SpawnRangeGroup(enemySpawnPoints, isEnemy: true, preset.enemy);
+        // 아군 스폰 (원하면)
+        SpawnRangeGroup(allySpawnPoints, isEnemy: false, preset.ally);
+        // 엘리트 (옵션)
         Debug.Log($"{_allyList.Count},{_enemyList.Count}");
         OnSpawnFinished?.Invoke(_allyList.Count, _enemyList.Count);
     }
 
-    public void Spawn(SpawnGroup group, NpcType type)
+    private void SpawnRangeGroup(SpawnGroup group, bool isEnemy, RangeCount count)
+    {
+        for (int i = 0; i < count.shortRange; i++)
+            Spawn(group, isEnemy, MechRangeType.Short);
+        for (int i = 0; i < count.midRange; i++)
+            Spawn(group, isEnemy, MechRangeType.Middle);
+        for (int i = 0; i < count.longRange; i++)
+            Spawn(group, isEnemy, MechRangeType.Long);
+    }
+
+
+    public void Spawn(SpawnGroup group, bool isEnemy, MechRangeType range)
     {
         var spawnPoint = group.UseSpot();
         if (spawnPoint == null)
@@ -88,45 +91,54 @@ public class MonsterSpawner : MonoBehaviour
             Debug.LogWarning("스폰지점 없음");
             return;
         }
-        int archetype = UnityEngine.Random.Range(0, 3);
-        if (type == NpcType.Ally)
+        int archetype = 0;
+        switch (range) 
         {
-            PooledNPC = PoolManager.poolDic[Ally].UsePool(spawnPoint.transform.position, spawnPoint.transform.rotation,false);
-            PooledNPC.GetComponent<MechStatus>().archeType =
-                _NpcArcheType[archetype];
+            case MechRangeType.Short:
+                archetype = (int)MechRangeType.Short;
+                break;
+            case MechRangeType.Middle:
+                archetype = (int)MechRangeType.Middle;
+                break;
+            case MechRangeType.Long:
+                archetype = (int)MechRangeType.Long;
+                break;
+        }
+        if (!isEnemy) //아군 생성
+        {
+            PooledNPC = PoolManager.poolDic[Ally]
+                .UsePool(spawnPoint.transform.position, spawnPoint.transform.rotation, false);
             _allyList.Add(PooledNPC);
-            PooledNPC.SetActive(true);
-            Debug.Log($"{PooledNPC}타입 {(MechRangeType)archetype} 생성");
+            PooledNPC.GetComponent<MechStatus>().Init(StageManager.Instance.AllyBonusStat);
             OnAllyNpcRemain?.Invoke(_allyList.Count);
-            DieHooking(PooledNPC);
         }
-        else
+        else //적군 생성
         {
-            switch (type)
-            {
-                case NpcType.Enemy:
-                    PooledNPC = PoolManager.poolDic[Enemy]
-                                           .UsePool(spawnPoint.transform.position, spawnPoint.transform.rotation,false);
-                    break;
-                case NpcType.Elite:
-                    PooledNPC = PoolManager.poolDic[Elite]
-                                           .UsePool(spawnPoint.transform.position, spawnPoint.transform.rotation,false);
-                    break;
-                case NpcType.Boss:
-                    PooledNPC = PoolManager.poolDic[Boss]
-                                           .UsePool(spawnPoint.transform.position, spawnPoint.transform.rotation,false);
-                    break;
-                default:
-                    break;
-            }
-            PooledNPC.GetComponent<MechStatus>().archeType =
-                _NpcArcheType[archetype];
-            PooledNPC.SetActive(true);
+            PooledNPC = PoolManager.poolDic[Enemy]
+                .UsePool(spawnPoint.transform.position, spawnPoint.transform.rotation, false);
             _enemyList.Add(PooledNPC);
+            PooledNPC.GetComponent<MechStatus>().Init(StageManager.Instance.EnemyBonusStat);
             OnEnemyNpcRemain?.Invoke(_enemyList.Count);
-            Debug.Log($"{PooledNPC}타입 {(MechRangeType)archetype} 생성");
-            DieHooking(PooledNPC);
         }
+        PooledNPC.GetComponent<MechStatus>().archeType = _NpcArcheType[archetype];
+        PooledNPC.GetComponent<MechWeaponInventory>().Init(_NpcArcheType[archetype].weaponLoadOut.weapons);
+        PooledNPC.SetActive(true);
+        Debug.Log($"{PooledNPC}타입 {(MechRangeType)archetype} 생성");
+        DieHooking(PooledNPC);
+    }
+
+    public void PlayerSpawn()
+    {
+        var spawnPoint = playerSpawnPoints.UseSpot();
+        GameObject pooledPlayer = PoolManager.poolDic[Player]
+            .UsePool(spawnPoint.transform.position, spawnPoint.transform.rotation, false);
+        pooledPlayer.GetComponent<MechStatus>().Init(playerInfo.GetStatus());
+        pooledPlayer.GetComponent<MechHealth>().Init(playerInfo.PlayerHp, playerInfo.PlayerMaxHp);
+        pooledPlayer.GetComponent<MechWeaponInventory>().Init(playerInfo.GetPlayerWeaponSettings());
+        pooledPlayer.GetComponent<PlayerAim>().Init();
+        pooledPlayer.SetActive(true);
+        _allyList.Add(pooledPlayer);
+        hudManager.PlayerActivated();
     }
 
     void DieHooking(GameObject mech)

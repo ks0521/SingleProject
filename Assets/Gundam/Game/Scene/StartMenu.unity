@@ -1685,9 +1685,12 @@ MonoBehaviour:
   typeContext: {fileID: 1158199153}
   weaponsHead: {fileID: 529435023}
   weapons: {fileID: 738394798}
-  assult: {fileID: 11400000, guid: 255a44a205de5ad4caafdbdde3060003, type: 2}
-  tactical: {fileID: 11400000, guid: a420cc0f07f1db94ebd33644648a555b, type: 2}
-  firePower: {fileID: 11400000, guid: 04d3624def7633a448021a0e65cc263d, type: 2}
+  assultInfo: {fileID: 11400000, guid: 255a44a205de5ad4caafdbdde3060003, type: 2}
+  skermisherInfo: {fileID: 11400000, guid: 04d3624def7633a448021a0e65cc263d, type: 2}
+  artilleryInfo: {fileID: 11400000, guid: a420cc0f07f1db94ebd33644648a555b, type: 2}
+  assult: {fileID: 11400000, guid: 27769ba7699dbf6478300c2bc852ca51, type: 2}
+  skermisher: {fileID: 11400000, guid: 6fe05340d69958f4c9dfddc8363b9763, type: 2}
+  artillery: {fileID: 11400000, guid: 81449b42c6745fe45b88ba96a84d4275, type: 2}
 --- !u!114 &930658001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3062,6 +3065,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c387e6374740e7845bba25b86b4c4078, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  archeTypeSo: {fileID: 0}
+  _gainedSkill: []
+  weapons: []
+  playerHp: 0
+  playerMaxHp: 0
 --- !u!4 &1981220716
 Transform:
   m_ObjectHideFlags: 0
@@ -3238,17 +3246,17 @@ PrefabInstance:
     - target: {fileID: 518583438341071053, guid: 1b3b6f0b4a6422949894f2179c01d80e,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 518583438341071053, guid: 1b3b6f0b4a6422949894f2179c01d80e,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 518583438341071053, guid: 1b3b6f0b4a6422949894f2179c01d80e,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2060917422416803145, guid: 1b3b6f0b4a6422949894f2179c01d80e,
         type: 3}
@@ -3328,7 +3336,7 @@ PrefabInstance:
     - target: {fileID: 4237883575243646660, guid: 1b3b6f0b4a6422949894f2179c01d80e,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4480803239636615384, guid: 1b3b6f0b4a6422949894f2179c01d80e,
         type: 3}
@@ -3454,12 +3462,12 @@ PrefabInstance:
     - target: {fileID: 6184037301916736142, guid: 1b3b6f0b4a6422949894f2179c01d80e,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6184037301916736142, guid: 1b3b6f0b4a6422949894f2179c01d80e,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6712403269824681702, guid: 1b3b6f0b4a6422949894f2179c01d80e,
         type: 3}
@@ -3678,70 +3686,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 0}
     - targetCorrespondingSourceObject: {fileID: 8761886255973186800, guid: 1b3b6f0b4a6422949894f2179c01d80e,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 1055745020546857605, guid: 1b3b6f0b4a6422949894f2179c01d80e,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 8779720863397778077, guid: 1b3b6f0b4a6422949894f2179c01d80e,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 5641498003408845390, guid: 1b3b6f0b4a6422949894f2179c01d80e,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 3920300557549777547, guid: 1b3b6f0b4a6422949894f2179c01d80e,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 4893526336085365042, guid: 1b3b6f0b4a6422949894f2179c01d80e,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 2400004080841569121, guid: 1b3b6f0b4a6422949894f2179c01d80e,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 4398406554439120941, guid: 1b3b6f0b4a6422949894f2179c01d80e,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 8828297083695217527, guid: 1b3b6f0b4a6422949894f2179c01d80e,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 1414569868215267162, guid: 1b3b6f0b4a6422949894f2179c01d80e,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 415205519588092091, guid: 1b3b6f0b4a6422949894f2179c01d80e,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 8327793655078163911, guid: 1b3b6f0b4a6422949894f2179c01d80e,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 8241464364623283083, guid: 1b3b6f0b4a6422949894f2179c01d80e,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 8903129463742289799, guid: 1b3b6f0b4a6422949894f2179c01d80e,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 7251958787711238461, guid: 1b3b6f0b4a6422949894f2179c01d80e,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 5384358550053603435, guid: 1b3b6f0b4a6422949894f2179c01d80e,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 1420217621145162268, guid: 1b3b6f0b4a6422949894f2179c01d80e,
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 0}

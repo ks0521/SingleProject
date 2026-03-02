@@ -13,6 +13,7 @@ namespace Base.UI.WeaponSlot
 {
     public class WeaponSlot : MonoBehaviour
     {
+        [SerializeField] private HUDManager hudManager;
         [SerializeField] private Vector2 startPos;
         [SerializeField] private PlayerWeaponController weaponController;
         [SerializeField] private MechWeaponInventory weaponInventory;
@@ -58,29 +59,38 @@ namespace Base.UI.WeaponSlot
         {
             startPos = GetComponent<RectTransform>().anchoredPosition;
             rt = GetComponent<RectTransform>();
-            weaponInventory = GameObject.FindWithTag("Player").GetComponent<MechWeaponInventory>();
-            weaponInventory.OnChangeWeaponPart += ChangeWeapon;
+            hudManager = GetComponentInParent<HUDManager>();
             _order = transform.GetSiblingIndex();
             number.text = Convert.ToString(_order+1);
         }
 
-        private void Start()
+        private void OnEnable()
         {
+            hudManager.OnPlayerActived += Init;
+        }
+
+        void Init()
+        {
+            weaponInventory = GameObject.FindWithTag("Player").GetComponent<MechWeaponInventory>();
+            weaponInventory.OnChangeWeaponPart += ChangeWeapon;
             //현재 자기 무기슬롯 번호보다 무기리스트가 적거나 자기순서의 무기파츠가 없을때 스스로 비활성화
             if (weaponInventory.Count <= _order || weaponInventory.Get(_order) == null)
             {
                 gameObject.SetActive(false);
                 return;
             }
+            if(_order == 0) weaponInventory.Refresh(); //슬롯 다 refresh하지 않게 1개만 대표로
             _curWeaponParts = weaponInventory.WeaponParts[_order];
             weaponImg.sprite = _curWeaponParts.weaponImg;
+        }
+        private void Start()
+        {
             //아래 3가지 색상은 무기 사용/미사용여부 관계없이 공통
             ReloadingFrame = ReloadingFrameColor; 
             ReloadingFill = ReloadingFillColor;
             ReloadedWeapon = WeaponColor;
             SetColor(isReloading:false); //시작시에는 모든 무기가 장전된 채로 시작
             SetColorTemplet(false);
-            if(_order == 0) weaponInventory.Refresh(); //슬롯 다 refresh하지 않게 1개만 대표로
         }
 
         private void FixedUpdate()

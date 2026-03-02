@@ -51,8 +51,8 @@ public class MechAnimation : MonoBehaviour
     {
         _speedVector = _rb.velocity;
         _speedVector.y = 0;
-        _walkSpeed = _status.archeType.mechBaseStatus.walkSpeed + _status.runtimeBonusStat.increseSpeed;
-        _runSpeed = _status.archeType.mechBaseStatus.runSpeed + _status.runtimeBonusStat.increseSpeed;
+        _walkSpeed = _status.archeType.mechBaseStatus.walkSpeed + _status.runtimeBonusStat.increaseSpeed;
+        _runSpeed = _status.archeType.mechBaseStatus.runSpeed + _status.runtimeBonusStat.increaseSpeed;
         _speed = _speedVector.magnitude;
         _ray = new Ray(transform.position, Vector3.down * 0.1f);
         

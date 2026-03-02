@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14eb7173a03aa8b42a3635044c135e1a, type: 3}
   m_Name: 2_LongPlayer
   m_EditorClassIdentifier: 
-  rangeType: 0
+  rangeType: 2
   playable: 1
   mechBaseStatus: {fileID: 11400000, guid: f11cdb92ebcc00c4aa562d4504439e44, type: 2}
   weaponLoadOut: {fileID: 11400000, guid: dc721d19424db3f4287f66333d72d9ac, type: 2}

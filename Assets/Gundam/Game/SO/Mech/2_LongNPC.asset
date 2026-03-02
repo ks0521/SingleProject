@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14eb7173a03aa8b42a3635044c135e1a, type: 3}
   m_Name: 2_LongNPC
   m_EditorClassIdentifier: 
-  rangeType: 0
+  rangeType: 2
   playable: 0
   mechBaseStatus: {fileID: 11400000, guid: 08147aaac2fcf45438e410657e867aad, type: 2}
   weaponLoadOut: {fileID: 11400000, guid: aa5d44776b6ccfc42a10b6b701b108f1, type: 2}

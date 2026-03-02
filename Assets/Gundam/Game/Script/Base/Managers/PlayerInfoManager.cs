@@ -12,11 +12,17 @@ using UnityEngine.Serialization;
 public class PlayerInfoManager : MonoBehaviour
 {
     public static PlayerInfoManager Instance;
-    private MechRangeType rangeType;
-    public MechRangeType RangeType => rangeType;
-    private List<PassiveSkillSO> _gainedSkill;
-    private List<WeaponData> weapons;
-    private int playerHp;
+
+    [SerializeField] private MechArcheTypeSO archeTypeSo;
+
+    //public MechRangeType RangeType => rangeType;
+    [SerializeField] private List<PassiveSkillSO> _gainedSkill;
+    [SerializeField] private List<WeaponData> weapons; //현재 장착중인 무기
+    [SerializeField] private BonusStat runtimeStat = new();
+    [SerializeField] private int playerHp;
+    [SerializeField] private int playerMaxHp;
+    public int PlayerHp => playerHp;
+    public int PlayerMaxHp => playerMaxHp;
     private int playerBreakdown; // 손상도
     public int Gold { get; private set; }
 
@@ -33,41 +39,49 @@ public class PlayerInfoManager : MonoBehaviour
         _gainedSkill = new List<PassiveSkillSO>();
     }
 
-    public List<WeaponData> GetPlayerWeaponSettings() { return weapons; }
+    public List<WeaponData> GetPlayerWeaponSettings() => weapons;
 
-public void SelectType(MechRangeType rangeType)
+    public void SelectType(MechArcheTypeSO rangeType)
     {
-        this.rangeType = rangeType;
-        Debug.Log($"플레이어 기체 타입 선택 : {this.rangeType}");
+        archeTypeSo = rangeType;
+        playerHp = playerMaxHp = archeTypeSo.mechBaseStatus.maxHp;
+        weapons = archeTypeSo.weaponLoadOut.weapons;
+        Debug.Log($"플레이어 기체 타입 선택 : {archeTypeSo.rangeType}");
     }
+
+    public BonusStat GetStatus() => runtimeStat;
+
     /// <summary> 새로 획득한 스킬을 보유중인 스킬 리스트에 추가</summary>
     /// <param name="newSkill">획득한 스킬</param>
-    public void GetSkill(PassiveSkillSO newSkill)
+    public void AddSkill(PassiveSkillSO newSkill)
     {
         _gainedSkill.Add(newSkill);
         Debug.Log("새로운 스킬 추가. 현재 획득한 스킬");
-        foreach (var skill in _gainedSkill)
-        {
-            Debug.Log(skill);
-        }
+        runtimeStat += newSkill.status;
+        playerHp += (int)newSkill.status.increaseHp;
+        playerMaxHp += (int)newSkill.status.increaseHp;
+        playerHp = Mathf.Clamp(playerHp,0,playerMaxHp);
     }
 
-    
     /// <summary> 상시 발동형인 패시브의 스탯 증가량을 다 더해서 전달</summary>
     /// <returns> 패시브 스킬이 적용된 스킬들의 </returns>
-    public BonusStat GetStatus()
-    {
-        BonusStat returnStatus = new BonusStat();
-        foreach (var skill in _gainedSkill)
-        {
-            if (!skill.isConditional)
-            {
-                returnStatus += skill.status;
-            }
-        }
-        return returnStatus;
-    }
 
+    public void SetHp(int hp, int maxHp)
+    {
+        playerHp = hp;
+        playerMaxHp = maxHp;
+    }
     public void GetGold(int gold) => Gold += gold;
-    public void UseGold(int gold) => Gold -= gold;
+
+    public bool UseGold(int gold)
+    {
+        if (Gold < gold)
+        {
+            Debug.Log("사용할 골드가 부족합니다");
+            return false;
+        }
+
+        Gold -= gold;
+        return true;
+    }
 }

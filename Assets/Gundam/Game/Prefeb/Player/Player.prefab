@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 629879419020989361}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: UpperArm_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8879476464058132161}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: LowerArm_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -76,7 +76,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5756522706740261603}
   - component: {fileID: 8473719707039281255}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -119,7 +119,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7836009800744422990}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -150,7 +150,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7981324842229098260}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -181,7 +181,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1135175652378596573}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -212,7 +212,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8077175601976464439}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: Toe_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -243,7 +243,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4134245297475062120}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: UpperTorso
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -284,7 +284,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 906590887234356690}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: UpperLeg_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -320,9 +320,10 @@ GameObject:
   - component: {fileID: 6386064991569887814}
   - component: {fileID: 9164877072807395920}
   - component: {fileID: 8652831208596763541}
-  m_Layer: 11
-  m_Name: MainCamera
-  m_TagString: Untagged
+  - component: {fileID: 6714002461992602797}
+  m_Layer: 8
+  m_Name: Main Camera
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -336,7 +337,7 @@ Transform:
   m_GameObject: {fileID: 3497417966080783187}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.13, z: -2.09}
+  m_LocalPosition: {x: 0, y: 2.48, z: -2.15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -390,7 +391,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 80
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -432,8 +433,7 @@ MonoBehaviour:
   m_RequiresDepthTextureOption: 2
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
-  m_Cameras:
-  - {fileID: 0}
+  m_Cameras: []
   m_RendererIndex: -1
   m_VolumeLayerMask:
     serializedVersion: 2
@@ -461,6 +461,18 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!114 &6714002461992602797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3497417966080783187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1245997174dd104184bfc105965707e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3808241430415163037
 GameObject:
   m_ObjectHideFlags: 0
@@ -470,7 +482,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4977040500467462939}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: UpperLeg_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -502,7 +514,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5750116596538832817}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: LowerTorso
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -537,7 +549,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8037181785182449752}
   - component: {fileID: 5187176906556305528}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: MGBarrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -578,6 +590,7 @@ MonoBehaviour:
   _finalStat:
     Damage: 0
     RPM: 0
+    Interval: 0
     Ammo: 0
     ReloadingTime: 0
     AttackRadius: 0
@@ -593,7 +606,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3011587512075916598}
   - component: {fileID: 6269659274893811316}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: MediumMechStrikerChassis
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -695,7 +708,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1040966114100139064}
   - component: {fileID: 58480401262426271}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: MediumMechStrikerArmLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -796,7 +809,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4402010888651347960}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: MediumMechHumanoidSkeleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -828,7 +841,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5600381432000344012}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: Shoulder_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -860,7 +873,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4141556358455965692}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: UpperArm_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -893,7 +906,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6207670149207959065}
   - component: {fileID: 7597858890577420039}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -936,7 +949,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5312569677983118390}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: Toe_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -967,7 +980,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8827053277017000655}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: LowerLeg_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -999,7 +1012,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4261675790810835860}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: Foot_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1032,7 +1045,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8194722374790026158}
   - component: {fileID: 2080932228258218113}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1075,7 +1088,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5061377895348758049}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: LowerLeg_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1108,7 +1121,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7779113754974185289}
   - component: {fileID: 608924752898701998}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1151,7 +1164,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7332357732753959856}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: SRMPacks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1189,7 +1202,7 @@ GameObject:
   - component: {fileID: 2366077270890643059}
   - component: {fileID: 7451765941465195562}
   - component: {fileID: 958143900628093297}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: Animator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1254,7 +1267,6 @@ MonoBehaviour:
   laungeExtends: {x: 1, y: 0.7, z: 0.9}
   targetMask: 0
   _comboIndex: 0
-  _meleeLocked: 0
 --- !u!114 &958143900628093297
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1271,6 +1283,7 @@ MonoBehaviour:
   _finalStat:
     Damage: 0
     RPM: 0
+    Interval: 0
     Ammo: 0
     ReloadingTime: 0
     AttackRadius: 0
@@ -1286,7 +1299,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2314512060411907736}
   - component: {fileID: 8654571006812757586}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: MeleeAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1332,6 +1345,7 @@ GameObject:
   - component: {fileID: 7571041802620759517}
   - component: {fileID: 4036503972323028801}
   - component: {fileID: 1784107491899790223}
+  - component: {fileID: 1712489306860905703}
   - component: {fileID: 3712047795178444955}
   - component: {fileID: 7442657278648407697}
   - component: {fileID: 234399633312982794}
@@ -1340,13 +1354,14 @@ GameObject:
   - component: {fileID: 2167141613378068789}
   - component: {fileID: 8737243420982665287}
   - component: {fileID: 8106506635133852601}
-  m_Layer: 11
-  m_Name: v7_Player_melee
+  - component: {fileID: 6666845623869082075}
+  m_Layer: 8
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4759844915875550814
 Transform:
   m_ObjectHideFlags: 0
@@ -1375,9 +1390,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b0b7001445646549961170c8f0476bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _behavior: {fileID: 0}
-  _curWeaponParts: {fileID: 5187176906556305528}
-  _meleeCombo: {fileID: 0}
+  meleeComboAttack: {fileID: 0}
 --- !u!114 &4036503972323028801
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1406,11 +1419,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18ac2b7f3220eb04498d2ea2271edda2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponPartsList:
-  - {fileID: 958143900628093297}
-  - {fileID: 4570806554152520749}
-  - {fileID: 4583685263233235896}
-  - {fileID: 5187176906556305528}
+--- !u!114 &1712489306860905703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7088662222987889006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12b914eaa03ddf14aacc8f66635ac4c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stat: {fileID: 0}
+  candidateWeaponList: []
+  usableWeaponParts: []
+  curWeapons: {fileID: 0}
 --- !u!114 &3712047795178444955
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1436,20 +1460,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 576a878c6aa07184c96d0ca1c9563af9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RuntimeBonusStat:
-    increseDmg: 0
+  runtimeBonusStat:
+    increaseDmg: 0
     multipleDmg: 0
-    increseFireRate: 0
+    increaseFireRate: 0
     multipleFireRate: 0
     multipleRange: 0
-    increseAmmo: 0
+    increaseAmmo: 0
     multipleAmmo: 0
     multipleReload: 0
-    increseSpeed: 0
-    increseDamageReduction: 0
+    increaseSpeed: 0
+    increaseDamageReduction: 0
     multipleDamageReduction: 0
     multipleAttackRadius: 0
-  _baseStatue: {fileID: 11400000, guid: 0e56e961ea1dc2449b033ab47aa833fc, type: 2}
+    increaseHp: 0
+  archeType: {fileID: 11400000, guid: 27769ba7699dbf6478300c2bc852ca51, type: 2}
   mechSkills: []
 --- !u!114 &234399633312982794
 MonoBehaviour:
@@ -1551,6 +1576,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c6a0c75e1bd2b64287ce9690ae39d22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6666845623869082075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7088662222987889006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1008f0b282d97c84da5e2e6f526da75c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _id: {fileID: 0}
 --- !u!1 &7246127227422840654
 GameObject:
   m_ObjectHideFlags: 0
@@ -1560,7 +1598,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2061048045793150325}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: Shoulder_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1593,7 +1631,7 @@ GameObject:
   m_Component:
   - component: {fileID: 706566920784129592}
   - component: {fileID: 3362016760319878867}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: MediumMechStrikerArmRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1694,7 +1732,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8109524117561351236}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1725,7 +1763,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5415141435278160602}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: Foot_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1757,7 +1795,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 763043888221253154}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1789,7 +1827,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3761453659642738561}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: LowerArm_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1821,7 +1859,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4299805574566715987}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1857,7 +1895,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: ec97b858517fe0f4d9498b6c056499c9, type: 3}
       propertyPath: m_Layer
-      value: 11
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ec97b858517fe0f4d9498b6c056499c9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1928,7 +1966,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 942b71fd15d075b4d9baba24e099f91a, type: 3}
       propertyPath: m_Layer
-      value: 11
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 942b71fd15d075b4d9baba24e099f91a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1995,7 +2033,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 8167e71aa6150ec4da9a6124bcbacdde, type: 3}
       propertyPath: m_Layer
-      value: 11
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 8167e71aa6150ec4da9a6124bcbacdde, type: 3}
       propertyPath: m_LocalScale.x
@@ -2088,6 +2126,7 @@ MonoBehaviour:
   _finalStat:
     Damage: 0
     RPM: 0
+    Interval: 0
     Ammo: 0
     ReloadingTime: 0
     AttackRadius: 0
@@ -2217,7 +2256,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 8b09bb82e66206746a4d5ac97de82a18, type: 3}
       propertyPath: m_Layer
-      value: 11
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 8b09bb82e66206746a4d5ac97de82a18, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2284,7 +2323,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 1f3d39f5a8ce405428f00d209d6569bb, type: 3}
       propertyPath: m_Layer
-      value: 11
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 1f3d39f5a8ce405428f00d209d6569bb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2355,7 +2394,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 8167e71aa6150ec4da9a6124bcbacdde, type: 3}
       propertyPath: m_Layer
-      value: 11
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 8167e71aa6150ec4da9a6124bcbacdde, type: 3}
       propertyPath: m_LocalScale.x
@@ -2454,6 +2493,7 @@ MonoBehaviour:
   _finalStat:
     Damage: 0
     RPM: 0
+    Interval: 0
     Ammo: 0
     ReloadingTime: 0
     AttackRadius: 0
@@ -2577,7 +2617,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 8b09bb82e66206746a4d5ac97de82a18, type: 3}
       propertyPath: m_Layer
-      value: 11
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 8b09bb82e66206746a4d5ac97de82a18, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2644,7 +2684,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: ec97b858517fe0f4d9498b6c056499c9, type: 3}
       propertyPath: m_Layer
-      value: 11
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ec97b858517fe0f4d9498b6c056499c9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2715,7 +2755,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 036596c2134114c4b90dbe65af669e28, type: 3}
       propertyPath: m_Layer
-      value: 11
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 036596c2134114c4b90dbe65af669e28, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2798,6 +2838,7 @@ MonoBehaviour:
   _finalStat:
     Damage: 0
     RPM: 0
+    Interval: 0
     Ammo: 0
     ReloadingTime: 0
     AttackRadius: 0
@@ -2817,7 +2858,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: af0887b4283825a43b6a73e02f204897, type: 3}
       propertyPath: m_Layer
-      value: 11
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: af0887b4283825a43b6a73e02f204897, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2884,7 +2925,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: dfa20a528bb4fe54795d9ec344ea4c9a, type: 3}
       propertyPath: m_Layer
-      value: 11
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: dfa20a528bb4fe54795d9ec344ea4c9a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2951,7 +2992,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 8b09bb82e66206746a4d5ac97de82a18, type: 3}
       propertyPath: m_Layer
-      value: 11
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 8b09bb82e66206746a4d5ac97de82a18, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3018,7 +3059,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 1f3d39f5a8ce405428f00d209d6569bb, type: 3}
       propertyPath: m_Layer
-      value: 11
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 1f3d39f5a8ce405428f00d209d6569bb, type: 3}
       propertyPath: m_IsActive
@@ -3093,7 +3134,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 942b71fd15d075b4d9baba24e099f91a, type: 3}
       propertyPath: m_Layer
-      value: 11
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 942b71fd15d075b4d9baba24e099f91a, type: 3}
       propertyPath: m_LocalPosition.x

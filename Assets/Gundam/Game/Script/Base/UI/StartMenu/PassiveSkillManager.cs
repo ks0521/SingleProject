@@ -29,7 +29,7 @@ public class PassiveSkillManager : MonoBehaviour
     /// <summary> 선택한 스킬을 플레이어 패시브 리스트에 추가</summary>
     public void ChoiceSkill(PassiveSkillSO selectSkill)
     {
-        PlayerInfoManager.Instance.GetSkill(selectSkill);
+        PlayerInfoManager.Instance.AddSkill(selectSkill);
     }
     
     public void MakeReward(Scenes clearScene)
