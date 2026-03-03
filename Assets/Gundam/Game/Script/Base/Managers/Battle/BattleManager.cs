@@ -45,8 +45,10 @@ public class BattleManager : MonoBehaviour
     {
         MechHealth health = GameObject.FindWithTag("Player").GetComponent<MechHealth>();
         Debug.Log("Call BattleManager");
-        PlayerInfoManager.Instance.SetHp(health.Hp, health.MaxHp);
-        Debug.Log($"전투 후 남은 체력 : {health.Hp} / {health.MaxHp}");
+        int repairhp = (int)(health.Hp * 1.7); //70% 회복
+        if (repairhp > health.MaxHp) repairhp = health.MaxHp;
+        PlayerInfoManager.Instance.SetHp(repairhp, health.MaxHp);
+        Debug.Log($"전투 후 남은 체력 : {repairhp} / {health.MaxHp}");
         ScenesManager.Instance.canPopUpReward = true; //전투 보상창 띄울수 있다는 플래그만 변경
         ScenesManager.Instance.LoadScene((int)Scenes.WorldMap,LoadType.BattleClear);
     }

@@ -1,8 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Base.UI.WeaponSlot;
-using SO.Weapon;
-using UnityEditor.Compilation;
 using UnityEngine;
 
 namespace SO.Mech

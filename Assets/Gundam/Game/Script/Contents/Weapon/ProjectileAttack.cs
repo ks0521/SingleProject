@@ -105,10 +105,8 @@ namespace SO.Weapon
 
         async UniTaskVoid TimeOut(CancellationToken token)
         {
-            Debug.Log($"timeout : {_finalStat.Range}sec");
             await UniTask.Delay(TimeSpan.FromSeconds(_finalStat.Range),
                 cancellationToken: token);
-            Debug.Log("시간초과 ");
             GetComponent<PooledObject>()?.Return();
         }
 

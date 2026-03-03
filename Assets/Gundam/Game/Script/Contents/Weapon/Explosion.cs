@@ -54,7 +54,6 @@ namespace SO.Weapon
             if (expType == ExplosionType.Damaging)
             {
                 Collider[] hits = Physics.OverlapSphere(transform.position, _finalRadius,_targetLayerMask);
-                Debug.Log($"Explosion, {hits.Length} has hit");
 
                 foreach (var target in hits)
                 {

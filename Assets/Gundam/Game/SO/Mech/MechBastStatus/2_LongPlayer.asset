@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42cc9975ad6437e4e8575c76df70c0b4, type: 3}
   m_Name: 2_LongPlayer
   m_EditorClassIdentifier: Assembly-CSharp::BaseStatueSO
-  walkSpeed: 2
-  runSpeed: 2
-  maxHp: 400
+  walkSpeed: 3
+  runSpeed: 3
+  maxHp: 620

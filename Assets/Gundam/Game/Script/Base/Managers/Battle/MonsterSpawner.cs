@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using Base.Manager.Test;
 using Base.NPC;
 using Contnts.Player;
+using Cysharp.Threading.Tasks;
 using SO.Mech;
 using UnityEngine;
 using Random = System.Random;
@@ -57,9 +59,14 @@ public class MonsterSpawner : MonoBehaviour
 
     private void OnEnable()
     {
-        StartSpawn(StageManager.Instance.battlePreset);
+        DelayedSpawn(this.GetCancellationTokenOnDestroy()).Forget();
     }
 
+    async UniTaskVoid DelayedSpawn(CancellationToken token)
+    {
+        await UniTask.Yield(cancellationToken: token);
+        StartSpawn(StageManager.Instance.battlePreset);
+    }
     public void StartSpawn(in BattleSpawnPresetSO preset)
     {
         PlayerSpawn();
@@ -137,7 +144,10 @@ public class MonsterSpawner : MonoBehaviour
         pooledPlayer.GetComponent<PlayerAim>().Init();
         pooledPlayer.SetActive(true);
         _allyList.Add(pooledPlayer);
+        OnAllyNpcRemain?.Invoke(_allyList.Count);
+        Debug.Log("List추가완료");
         hudManager.PlayerActivated();
+        Debug.Log("hud활성화완료");
     }
 
     void DieHooking(GameObject mech)

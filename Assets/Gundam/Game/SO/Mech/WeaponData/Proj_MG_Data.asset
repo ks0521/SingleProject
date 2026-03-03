@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Proj_MG_Data
   m_EditorClassIdentifier: 
   attackType: 0
-  damage: 10
+  damage: 15
   RPM: 300
-  ammo: 15
-  reloadingTime: 2
+  ammo: 8
+  reloadingTime: 3
   attackRadius: 0
   ID: {fileID: 11400000, guid: d0f7842c867271a4dbd7ad49c0f20f85, type: 2}
   projectileStat:

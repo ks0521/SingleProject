@@ -16,10 +16,11 @@ public class UIPresenter : MonoBehaviour
     private void Awake()
     {
         hudManager = GetComponent<HUDManager>();
+        Debug.Log("Hud 이벤트 구독");
         hudManager.OnPlayerActived += Init;
     }
 
-    void Init()
+    public void Init()
     {
         Debug.Log("HUD 초기화 시작");
         GameObject player = GameObject.FindWithTag("Player");

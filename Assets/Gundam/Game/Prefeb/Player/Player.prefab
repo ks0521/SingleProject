@@ -1448,6 +1448,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stat: {fileID: 0}
+  _maxHp: 0
+  _hp: 0
 --- !u!114 &7442657278648407697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2131,7 +2133,7 @@ MonoBehaviour:
     ReloadingTime: 0
     AttackRadius: 0
     Range: 0
-  weaponImg: {fileID: 0}
+  weaponImg: {fileID: 21300000, guid: 67b0b72a212982b40ad4aa2682f5d593, type: 3}
 --- !u!120 &5411948937705015222
 LineRenderer:
   serializedVersion: 2
@@ -2498,7 +2500,7 @@ MonoBehaviour:
     ReloadingTime: 0
     AttackRadius: 0
     Range: 0
-  weaponImg: {fileID: 0}
+  weaponImg: {fileID: 21300000, guid: 67b0b72a212982b40ad4aa2682f5d593, type: 3}
 --- !u!120 &5131987153922939908
 LineRenderer:
   serializedVersion: 2

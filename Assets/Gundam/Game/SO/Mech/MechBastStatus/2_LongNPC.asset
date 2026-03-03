@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BaseStatueSO
   walkSpeed: 2
   runSpeed: 2
-  maxHp: 350
+  maxHp: 170

@@ -31,6 +31,7 @@ namespace Base.Managers
     {
         public static ScenesManager Instance;
         private bool _isLoading;
+        public bool _isVictory;
         public bool canPopUpReward;
         private CanvasGroup _clearHUD;
         private void Awake()
@@ -44,7 +45,7 @@ namespace Base.Managers
             DontDestroyOnLoad(gameObject);
         }
 
-        public void GameClear()
+        public void GameEnd()
         {
             Time.timeScale = 1;
             Cursor.lockState = CursorLockMode.None;
@@ -66,7 +67,8 @@ namespace Base.Managers
             StageManager.Instance.EnterStage((Scenes)scene);
             if (StageManager.Instance.Stage > 6)
             {
-                GameClear();
+                _isVictory = true;
+                GameEnd();
                 return;
             }
             if (loadType == LoadType.Default)

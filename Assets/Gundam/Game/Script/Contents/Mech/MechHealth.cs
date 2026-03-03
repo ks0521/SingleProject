@@ -1,4 +1,5 @@
 using System;
+using Base.Managers;
 using Base.PoolSO;
 using Base.Utilities;
 using UnityEngine;
@@ -61,6 +62,12 @@ namespace SO.Mech
 
         public void Die()
         {
+            if (gameObject.CompareTag("Player"))
+            {
+                Debug.Log($"playerDid, {_hp}");
+                Cursor.lockState = CursorLockMode.None;
+                ScenesManager.Instance.GameEnd();
+            }
             _isDead = true; 
             Debug.Log($"{gameObject.name} Die");
             OnDie?.Invoke(this);
@@ -70,6 +77,10 @@ namespace SO.Mech
         public float Hit(float damage)
         {
             Hp -= (int)damage;
+            if (gameObject.CompareTag("Player"))
+            {
+                Debug.Log($"playerHit, {_hp} / {_maxHp}");
+            }
             _Behavior?.HitStop(0.15f);
             OnHitStopped?.Invoke(0.15f);
             return 0;
