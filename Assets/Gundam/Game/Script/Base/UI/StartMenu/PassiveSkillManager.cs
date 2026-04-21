@@ -56,7 +56,7 @@ public class PassiveSkillManager : MonoBehaviour
             do
             {
                 pickedSkill = DrawSkill(rewardWeight);
-            } while (!pickedList.Contains(pickedSkill) && ++count < 200);
+            } while (pickedList.Contains(pickedSkill) && ++count < 200);
             skill.SetSkill(pickedSkill);
             pickedList.Add(pickedSkill);
         }
