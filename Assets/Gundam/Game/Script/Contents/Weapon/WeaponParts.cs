@@ -10,6 +10,11 @@ using UnityEngine.Serialization;
 
 namespace SO.Weapon
 {
+    public interface IWeaponHandler
+    {
+        public void Init(WeaponData initWeapon);
+        public void Attack(in AimData aim, in FinalStat stat);
+    }
     /// <summary> 실제 공격시점에 적용되는 최종 정보</summary>
     [Serializable]
     public struct FinalStat
@@ -35,7 +40,7 @@ namespace SO.Weapon
         private Collider _parentCollider; //부모 콜라이더(Collider Ignore용)
         private MeleeComboAttack _meleeAttack; //근접공격용 컴포넌트
         private CancellationToken _token;
-        
+        [SerializeField] private IWeaponHandler weaponHandler;
         private float curDelay; //현재 공격 후딜레이
         private float curReloading; //현재 재장전
         private float curAmmo; //현재 장탄수
@@ -74,6 +79,11 @@ namespace SO.Weapon
             _lineRenderer = GetComponent<LineRenderer>();
             _meleeAttack = GetComponent<MeleeComboAttack>();
             FirePoint = GetComponentInChildren<FirePointMarker>().transform;
+            weaponHandler = GetComponent<IWeaponHandler>();
+            if (weaponHandler != null)
+            {
+                weaponHandler.Init(weaponData);
+            }
             if (FirePoint == null)
             {
                 Debug.LogWarning($"{this.gameObject.name}부위 발사위치 탐색하지 못함");
@@ -128,7 +138,8 @@ namespace SO.Weapon
             else if (weaponData.attackType == AttackType.Melee) //근접 공격
                 MeleeAttack();
             else 
-                ProjectileAttack(aim);
+                //ProjectileAttack(aim);
+                weaponHandler.Attack(aim,_finalStat);
             //근접공격은 잔탄량 없고 MeleeAttack 내에서 딜레이 조절
             if (weaponData.attackType != AttackType.Melee)  
             {

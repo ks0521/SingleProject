@@ -1,12 +1,9 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using SO.Player;
 using SO.Weapon;
 using UnityEngine;
 using DG.Tweening;
 using TMPro;
-using UnityEditor;
 using UnityEngine.UI;
 
 namespace Base.UI.WeaponSlot
@@ -69,9 +66,29 @@ namespace Base.UI.WeaponSlot
             hudManager.OnPlayerActived += Init;
         }
 
+        private void OnDisable()
+        {
+            if (hudManager != null)
+            {
+                hudManager.OnPlayerActived -= Init;
+            }
+
+            if (weaponInventory != null)
+            {
+                weaponInventory.OnChangeWeaponPart -= ChangeWeapon;
+            }
+        }
+
         void Init()
         {
-            weaponInventory = GameObject.FindWithTag("Player").GetComponent<MechWeaponInventory>();
+            GameObject player = GameObject.FindWithTag("Player");
+            if (player == null || !player.TryGetComponent(out weaponInventory))
+            {
+                Debug.LogWarning("WeaponSlot Init failed: Player or MechWeaponInventory not found.");
+                gameObject.SetActive(false);
+                return;
+            }
+
             weaponInventory.OnChangeWeaponPart += ChangeWeapon;
             //현재 자기 무기슬롯 번호보다 무기리스트가 적거나 자기순서의 무기파츠가 없을때 스스로 비활성화
             if (weaponInventory.Count <= _order || weaponInventory.Get(_order) == null)

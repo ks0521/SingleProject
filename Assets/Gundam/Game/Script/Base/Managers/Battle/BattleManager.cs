@@ -23,7 +23,7 @@ public class BattleManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _curTime += Time.deltaTime;
+        _curTime += Time.fixedDeltaTime;
         if (_curTime >= 1f)
         {
             OnTimerChecked?.Invoke(); //1초마다 타이머 이벤트 뿌림
@@ -34,16 +34,28 @@ public class BattleManager : MonoBehaviour
     async UniTaskVoid DelayCall()
     {
         await UniTask.NextFrame();
-        MonsterSpawner.Instance.OnAllEnemiesBroken += BattleClear;
+        if (MonsterSpawner.Instance != null)
+        {
+            MonsterSpawner.Instance.OnAllEnemiesBroken += BattleClear;
+        }
     }
     private void OnDisable()
     {
-        MonsterSpawner.Instance.OnAllEnemiesBroken -= BattleClear;
+        if (MonsterSpawner.Instance != null)
+        {
+            MonsterSpawner.Instance.OnAllEnemiesBroken -= BattleClear;
+        }
     }
 
     void BattleClear()
     {
-        MechHealth health = GameObject.FindWithTag("Player").GetComponent<MechHealth>();
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player == null || !player.TryGetComponent(out MechHealth health))
+        {
+            Debug.LogWarning("BattleClear failed: Player or MechHealth not found.");
+            return;
+        }
+
         Debug.Log("Call BattleManager");
         int repairhp = (int)(health.Hp * 1.7); //70% 회복
         if (repairhp > health.MaxHp) repairhp = health.MaxHp;
