@@ -6,19 +6,31 @@ Unity/C# 기반 3D 메카 로그라이크 TPS 프로젝트입니다.
 - **프로젝트 성격**: 1인 개발 포트폴리오 프로젝트
 - **개발 기간**: 약 1개월 MVP 개발
 - **개발 환경**: PC, Unity 2022 LTS+, C#
+- [**기획서**](https://www.notion.so/2f110afad1cd80fd868de0a4df86b3fe?source=copy_link)
+  
+## 기술 스택
 
-## Overview
+- **Engine**: Unity (URP)
+- **Language**: C#
+- **Async**: UniTask
+- **Tween**: DOTween
+- **Data**: ScriptableObject
+- **Physics**: Rigidbody, Raycast, SphereCast, OverlapSphere
+- **Runtime Pattern**: Object Pooling, Event-driven structure
+  
+## 개요
 
 플레이어는 메카를 조작해 전투에 개입하고, 전투 보상으로 빌드를 성장시키며 노드 기반 맵을 진행합니다.
 
-핵심 목표는 완성 게임 홍보보다 다음 역량을 코드 구조로 증명하는 것입니다.
+게임 제작간 핵심 로직은 다음과 같습니다.
 
-- 플레이어/NPC 조작 주체 분리와 공용 실행 계층 설계
-- 무기 데이터, 장착 구조, 공격 실행 책임 분리
-- ScriptableObject 기반의 기체/무기/AI 데이터 관리
-- 전투 반복 구간의 오브젝트 풀링과 이벤트 흐름 구성
+- 플레이어('PlayerController')/NPC('NpcController') 조작 주체 분리와 공용 실행 계층('MechBehavior') 설계
+- 무기 데이터 - 장착 구조 - 공격실행 책임 분리
+- ScriptableObject 기반 데이터 중심 구조
+- 상태 기반 AI와 거리중심 전투 로직 구현
+- 오브젝트 풀링과 이벤트 기반 전투 런타임 구조 구성
 
-## Controls
+## 조작법
 
 | 입력 | 동작 |
 | --- | --- |
@@ -27,12 +39,12 @@ Unity/C# 기반 3D 메카 로그라이크 TPS 프로젝트입니다.
 | `1 ~ 4` | 무기 변경 |
 | `Ctrl` | 점프 |
 
-## Core Features
+## 핵심 특징
 
 ### 1) 전투 시스템
 - Rigidbody 기반 이동 및 조준/사격 처리
 - 카메라 중심 Raycast 기반 타겟팅
-- `IHittable` 기반 피격 처리, 경직/사망 흐름 분리
+- 인터페이스 기반 피격 처리, 경직/사망 흐름 분리
 - 전투 루프에서 플레이어 피드백 이벤트 연동
 
 ### 2) 무기 시스템
@@ -44,7 +56,7 @@ Unity/C# 기반 3D 메카 로그라이크 TPS 프로젝트입니다.
 ### 3) AI 시스템
 - 상태 기반 전투 로직(Seek, Approach, Attack, Retreat, Reposition, Stunned)
 - 거리/시야/안전거리 기반 상태 전환
-- 근/중/원거리 타입별 파라미터 분리
+- 근/중/원거리 타입별 상태 전환 파라미터 분리
 - 회전 속도 제한과 타겟 교체 조건으로 전투 템포 제어
 
 ### 4) 데이터 구조
@@ -61,7 +73,7 @@ Unity/C# 기반 3D 메카 로그라이크 TPS 프로젝트입니다.
 - 풀 부족 시 확장, 수명 종료/충돌 시 반환 처리
 - `MonsterSpawner`를 통한 적 생성 및 전투 흐름 연결
 
-## Architecture
+## 구조 설계
 
 ### 핵심 클래스 역할
 
@@ -85,7 +97,7 @@ PlayerController / NPCController
         -> PoolManager 재사용 / MonsterSpawner 전투 진행
 ```
 
-## Current State
+## 진행도
 
 ### 구현 완료
 - 플레이어 이동/점프 및 조준/공격
@@ -100,22 +112,6 @@ PlayerController / NPCController
 - **WorldMap**: Repair / Elite / Boss 노드 미구현
 - **Store**: 장비 교체 / 강화 / 지침 UI 미구현
 
-## Tech Stack
 
-- **Engine**: Unity (URP)
-- **Language**: C#
-- **Async**: UniTask
-- **Tween**: DOTween
-- **Data**: ScriptableObject
-- **Physics**: Rigidbody, Raycast, SphereCast, OverlapSphere
-- **Runtime Pattern**: Object Pooling, Event-driven structure
 
-## Portfolio Point
 
-이 프로젝트에서 중점적으로 보여주고자 한 역량은 다음과 같습니다.
-
-1. 입력 주체(Player/NPC)와 실행 계층(`MechBehavior`)의 분리 설계
-2. 무기 데이터-장착-공격 실행의 책임 분리
-3. ScriptableObject 기반 데이터 중심 구조
-4. 상태 기반 AI와 거리 중심 전투 로직 구현
-5. 풀링/이벤트 기반의 전투 런타임 구조 구성
